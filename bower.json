@@ -1,0 +1,34 @@
+{
+  "name": "Lectures",
+  "authors": [
+    "Andriy Rybak <andriy.r@frazerconsultants.com>"
+  ],
+  "description": "startup",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "underscore": "~1.8.3",
+    "bootstrap": "~3.3.5",
+    "angular-route": "~1.4.8",
+    "angular-touch": "~1.4.8",
+    "lesshat": "~3.0.2",
+    "font-awesome": "~4.4.0",
+    "angular-sanitize": "~1.4.8",
+    "ui-bootstrap": "~0.14.3",
+    "bower": "*",
+    "install": "~1.0.4",
+    "angular-bootstrap": "~0.14.3",
+    "angular-animate": "~1.4.8",
+    "ngSticky": "~1.8.6"
+  }
+}

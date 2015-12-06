@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Home",
+    "children": [
+      {
+        "title": "Latest"
+      },
+      {
+        "title": "Most Interesting"
+      }
+    ]
+  },
+  {
+    "title": "Tech",
+    "children": [
+      {
+        "title": "Enterprise"
+      },
+      {
+        "title": "Sience"
+      }
+    ]
+  },
+  {
+    "title": "Finance",
+    "children": [
+      {
+        "title": "Markets"
+      },
+      {
+        "title": "Your Money"
+      },
+      {
+        "title": "Wealth Adviser"
+      }
+    ]
+  },
+  {
+    "title": "Strategy"
+  },
+  {
+    "title": "Life"
+  },
+  {
+    "title": "Sports"
+  },
+  {
+    "title": "Video"
+  },
+  {
+    "title": "Featured"
+  },
+  {
+    "title": "About BI",
+    "children": [
+      {
+        "title": "Life"
+      },
+      {
+        "title": "Sports"
+      },
+      {
+        "title": "Video"
+      }
+    ]
+  }
+]

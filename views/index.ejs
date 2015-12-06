@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-controller="mainCtrl">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-touch/angular-touch.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ngSticky/dist/sticky.min.js"></script>
+
+    <script>
+        (function (window) {
+            var menuStr = '<%- JSON.stringify(menuObj) %>';
+            try {
+                window.menuObj = JSON.parse(menuStr);
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }(window))
+    </script>
+
+    <script type="text/javascript" src="/app/module.js"></script>
+    <script type="text/javascript" src="/app/bootstrap.js"></script>
+</head>
+
+<body ng-init="isCollapsed=true">
+<nav role="navigation"
+     ng-class="{'content-expanded':!isCollapsed}"
+     class="navbar navbar-inverse top">
+    <div class="container-fluid">
+        <div sticky sticky-class="is-sticky" body-class="has-sticky" class="navbar-header">
+            <div class="navbar-brand">
+                <h3 class="title">Business Insider</h3>
+
+                <div class="container-search">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group inner-addon left-addon"><i class="fa fa-search"></i>
+                            <input type="text" ng-click="isCollapsed =! isCollapsed" class="form-control">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button type="button" class="navbar-toggle left account"><i class="fa fa-th-large"></i></button>
+            <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle left close"><i
+                        class="fa fa-close"></i></button>
+            <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle search"><i
+                        class="fa fa-search"></i></button>
+        </div>
+        <div collapse="isCollapsed" class="collapse navbar-collapse" ng-init="activeTab=menu">
+            <div class="section section-wide">
+                <div class="btn-group justified nav-tabs">
+                    <a class="btn btn-red" ng-click="activeTab='menu'">menu</a>
+                    <a class="btn btn-red" ng-click="activeTab='tests'">tests</a>
+                    <a class="btn btn-red" ng-click="activeTab='history'">history</a>
+                </div>
+            </div>
+            <div class="section section-wide section-condensed">
+                <menu ng-show="activeTab==='menu'"></menu>
+                <div ng-show="activeTab==='tests'">tests</div>
+                <div ng-show="activeTab==='history'">history</div>
+            </div>
+            <div class="section section-wide footer">
+                <p>
+                    © 2015 Copyright Andriy Rybak Inc., All rights reserved.<br>
+                    Use of this app constitutes acceptance of our<br>
+                    Terms of Service and Privacy Policy.
+                </p>
+            </div>
+        </div>
+    </div>
+</nav>
+<content>
+    <div class="section"><%= loremIpsum %></div>
+</content>
+</body>
+</html>

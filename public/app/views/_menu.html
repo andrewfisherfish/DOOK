@@ -1,0 +1,4 @@
+<div ng-repeat="item in menu">
+    <h1><a href="" ng-bind="item.title"></a></h1>
+    <h4 ng-repeat="subItem in item.children"><a href="" ng-bind="subItem.title"></a></h4>
+</div>

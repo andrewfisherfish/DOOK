@@ -1,0 +1,22 @@
+@import "_imports.less";
+@import "_variables.less";
+@import "_animate.less";
+@import "_forms.less";
+@import "_navbar.less";
+@import "_fonts.less";
+@import "_sections.less";
+
+p.text {
+    font-family: Georgia, Times, sans-serif;
+}
+
+.justified {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    > * {
+        display: table-cell;
+        width: 1%;
+        float: none !important;
+    }
+}
