@@ -42,7 +42,7 @@
                 var onChange = getOnChange(element, $bodyElement, options);
                 var scrolling = new Scrolling($document, $scrollableElement, options, onChange);
 
-                handle = throttle(angular.bind(scrolling, scrolling.handle), 50);
+                handle = throttle(angular.bind(scrolling, scrolling.handle), 250);
 
                 handle();
 

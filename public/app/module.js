@@ -12,18 +12,20 @@
         module.$provide = $provide;
     }]);
 
-    module.value('menuObj', window.menuObj);
+    module.value('fakeData', window.fakeData);
 
-    module.directive('menu', ['menuObj', function (menuObj) {
-        return {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/app/views/_menu.html',
-            link: function (scope) {
-                scope.menu = menuObj;
+    _.each(['test', 'history', 'menu'], function (name) {
+        module.directive(name, ['fakeData', function (fakeData) {
+            return {
+                restrict: 'E',
+                replace: true,
+                templateUrl: '/app/views/' + name + '.html',
+                link: function (scope) {
+                    scope.items = fakeData.history;
+                }
             }
-        }
-    }]);
+        }]);
+    });
 
     module.run(['$rootScope', function ($rootScope) {
 

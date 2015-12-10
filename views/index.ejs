@@ -16,8 +16,13 @@
     <script>
         (function (window) {
             var menuStr = '<%- JSON.stringify(menuObj) %>';
+            window.fakeData = {};
             try {
-                window.menuObj = JSON.parse(menuStr);
+                _.extend(window.fakeData, {
+                    menu: JSON.parse(menuStr),
+                    test: JSON.parse(menuStr),
+                    history: JSON.parse(menuStr)
+                });
             }
             catch (error) {
                 console.log(error)
@@ -30,10 +35,10 @@
     <script type="text/javascript" src="/app/bootstrap.js"></script>
 </head>
 
-<body ng-class="{'no-scroll':!isCollapsed}">
+<body ng-class="{'no-scroll':!isCollapsed}"
+      ng-init="isCollapsed=true;activeTab='test'">
 
 <nav role="navigation"
-     ng-init="isCollapsed=true"
      ng-class="{'content-expanded':!isCollapsed,'sticky-scroll-container':!isCollapsed}"
      class="navbar navbar-inverse top">
     <div class="container-fluid">
@@ -56,19 +61,19 @@
             <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle search"><i
                         class="fa fa-search"></i></button>
         </div>
-        <div ng-if="!isCollapsed" class="navbar-collapse" ng-init="activeTab='menu'">
-            <div class="section section-wide">
+        <div ng-if="!isCollapsed" class="row footer-parent">
+            <div class="section">
                 <div class="btn-group justified nav-tabs">
                     <a class="btn btn-red" ng-class="{'active':activeTab=='menu'}" ng-click="activeTab='menu'">menu</a>
-                    <a class="btn btn-red" ng-class="{'active':activeTab=='tests'}"
-                       ng-click="activeTab='tests'">tests</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='test'}"
+                       ng-click="activeTab='test'">tests</a>
                     <a class="btn btn-red" ng-class="{'active':activeTab=='history'}" ng-click="activeTab='history'">history</a>
                 </div>
             </div>
             <div class="section section-wide section-condensed">
                 <menu ng-show="activeTab==='menu'"></menu>
-                <div ng-show="activeTab==='tests'">tests</div>
-                <div ng-show="activeTab==='history'">history</div>
+                <test ng-show="activeTab==='test'"></test>
+                <history ng-show="activeTab==='history'"></history>
             </div>
             <div class="section section-wide footer">
                 <p>
