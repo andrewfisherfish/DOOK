@@ -5,7 +5,7 @@
     var module = angular.module('Lectures', [
         'ngTouch',
         'ui.bootstrap',
-        'sticky'
+        'Lectures.UI'
     ]);
 
     module.config(['$provide', function ($provide) {
@@ -19,13 +19,14 @@
             restrict: 'E',
             replace: true,
             templateUrl: '/app/views/_menu.html',
-            link: function (scope, el, attr) {
+            link: function (scope) {
                 scope.menu = menuObj;
             }
         }
     }]);
 
     module.run(['$rootScope', function ($rootScope) {
+
     }]);
 
     module.controller('mainCtrl', ['$scope', function ($scope) {

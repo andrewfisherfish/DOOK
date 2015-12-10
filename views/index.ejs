@@ -12,7 +12,6 @@
     <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="/bower_components/ngSticky/dist/sticky.min.js"></script>
 
     <script>
         (function (window) {
@@ -26,23 +25,27 @@
         }(window))
     </script>
 
+    <script type="text/javascript" src="/app/UI.stickyNav.js"></script>
     <script type="text/javascript" src="/app/module.js"></script>
     <script type="text/javascript" src="/app/bootstrap.js"></script>
 </head>
 
-<body ng-init="isCollapsed=true">
+<body ng-class="{'no-scroll':!isCollapsed}">
+
 <nav role="navigation"
-     ng-class="{'content-expanded':!isCollapsed}"
+     ng-init="isCollapsed=true"
+     ng-class="{'content-expanded':!isCollapsed,'sticky-scroll-container':!isCollapsed}"
      class="navbar navbar-inverse top">
     <div class="container-fluid">
-        <div sticky sticky-class="is-sticky" body-class="has-sticky" class="navbar-header">
+        <div sticky-nav scroller-selector="!isCollapsed?'nav':undefined"
+             class="navbar-header">
             <div class="navbar-brand">
                 <h3 class="title">Business Insider</h3>
 
                 <div class="container-search">
                     <form class="navbar-form navbar-left">
                         <div class="form-group inner-addon left-addon"><i class="fa fa-search"></i>
-                            <input type="text" ng-click="isCollapsed =! isCollapsed" class="form-control">
+                            <input type="text" class="form-control">
                         </div>
                     </form>
                 </div>
@@ -53,12 +56,13 @@
             <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle search"><i
                         class="fa fa-search"></i></button>
         </div>
-        <div collapse="isCollapsed" class="collapse navbar-collapse" ng-init="activeTab=menu">
+        <div ng-if="!isCollapsed" class="navbar-collapse" ng-init="activeTab='menu'">
             <div class="section section-wide">
                 <div class="btn-group justified nav-tabs">
-                    <a class="btn btn-red" ng-click="activeTab='menu'">menu</a>
-                    <a class="btn btn-red" ng-click="activeTab='tests'">tests</a>
-                    <a class="btn btn-red" ng-click="activeTab='history'">history</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='menu'}" ng-click="activeTab='menu'">menu</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='tests'}"
+                       ng-click="activeTab='tests'">tests</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='history'}" ng-click="activeTab='history'">history</a>
                 </div>
             </div>
             <div class="section section-wide section-condensed">
@@ -76,8 +80,11 @@
         </div>
     </div>
 </nav>
+
 <content>
-    <div class="section"><%= loremIpsum %></div>
+    <div class="section">
+        <p ng-repeat="i in [0,1,2,3,4,5]"><%= loremIpsum %></p>
+    </div>
 </content>
 </body>
 </html>

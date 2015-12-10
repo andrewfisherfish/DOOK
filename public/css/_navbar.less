@@ -1,9 +1,14 @@
 body {
     .navbar {
         border: none;
+        padding-top: @navbar-height;
         &.content-expanded {
             margin-bottom: 0;
-
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
         }
         .navbar-toggle {
             color: @navbar-inverse-color;
@@ -30,6 +35,15 @@ body {
         }
         .navbar-header {
             min-height: 48px;
+            background-color: @navbar-inverse-bg;
+            border-bottom: 1px solid @navbar-inverse-border;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+            //Sticky styles
+            position: fixed !important;
+            z-index: 3;
+            top: 0;
+            width: 100%;
         }
         .container-search {
             padding-left: 60px;
@@ -125,21 +139,19 @@ body {
     &.has-sticky {
         .navbar {
             &:not(.content-expanded) {
-                .navbar-toggle.search {
-                    display: none;
-                }
                 .navbar-brand {
-                    padding: 6px;
-                    height: initial;
-                    .title {
-                        display: none;
-                    }
+                    padding: 12px 6px 6px 6px;
+                    height: 48px;
                     .container-search {
-                        .fadeInUp();;
+                        .fadeOutUp();
+                        display: none;
                     }
                 }
             }
             &.content-expanded {
+                .navbar-header {
+
+                }
                 .navbar-toggle.search {
                     display: none;
                 }
@@ -161,9 +173,6 @@ body {
                 }
             }
             .navbar-header.is-sticky {
-                background-color: @navbar-inverse-bg;
-                border-bottom: 1px solid @navbar-inverse-border;
-                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
                 .navbar-search {
                     .navbar-vertical-align(105px);
                 }
@@ -187,7 +196,12 @@ body {
         .navbar {
             &:not(.content-expanded) {
                 .container-search {
-                    .fadeOutDown();
+                    display: none;
+                }
+                .navbar-brand {
+                    .title {
+
+                    }
                 }
             }
             &.content-expanded {
@@ -232,6 +246,10 @@ body {
             }
         }
     }
+}
+
+body.no-scroll {
+    overflow-y: hidden;
 }
 
 .justified > * {
