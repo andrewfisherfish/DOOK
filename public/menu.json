@@ -39,7 +39,18 @@
     "title": "Strategy"
   },
   {
-    "title": "Life"
+    "title": "Life",
+    "children": [
+      {
+        "title": "Markets"
+      },
+      {
+        "title": "Your Money"
+      },
+      {
+        "title": "Wealth Adviser"
+      }
+    ]
   },
   {
     "title": "Sports"
@@ -48,7 +59,18 @@
     "title": "Video"
   },
   {
-    "title": "Featured"
+    "title": "Featured",
+    "children": [
+      {
+        "title": "Markets"
+      },
+      {
+        "title": "Your Money"
+      },
+      {
+        "title": "Wealth Adviser"
+      }
+    ]
   },
   {
     "title": "About BI",

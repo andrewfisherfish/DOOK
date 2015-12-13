@@ -12,6 +12,7 @@
     <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-filter/dist/angular-filter.min.js"></script>
 
     <script>
         (function (window) {
@@ -19,9 +20,7 @@
             window.fakeData = {};
             try {
                 _.extend(window.fakeData, {
-                    menu: JSON.parse(menuStr),
-                    test: JSON.parse(menuStr),
-                    history: JSON.parse(menuStr)
+                    items: JSON.parse(menuStr)
                 });
             }
             catch (error) {
@@ -35,19 +34,23 @@
     <script type="text/javascript" src="/app/bootstrap.js"></script>
 </head>
 
-<body ng-class="{'no-scroll':!isCollapsed}"
-      ng-init="isCollapsed=true;activeTab='test'">
+<body ng-class="{'no-scroll':isMenu || isSearch}"
+      ng-init="isMenu=false;isSearch=false;isNavbarExtended=false;isFullScreen=false;activeTab='contents'">
 
 <nav role="navigation"
-     ng-class="{'content-expanded':!isCollapsed,'sticky-scroll-container':!isCollapsed}"
+     ng-show="!isFullScreen"
+     ng-class="{'content-expanded':isMenu || isSearch,'sticky-scroll-container':isMenu || isSearch,'is-extended':isNavbarExtended}"
      class="navbar navbar-inverse top">
     <div class="container-fluid">
-        <div sticky-nav scroller-selector="!isCollapsed?'nav':undefined"
+        <div sticky-nav scroller-selector="isMenu||isSearch?'nav':undefined"
              class="navbar-header">
             <div class="navbar-brand">
-                <h3 class="title">Business Insider</h3>
-
-                <div class="container-search">
+                <h3 ng-show="!isSearch"
+                    class="title">How To Avoid Murder</h3>
+                <h4 ng-show="!isSearch"
+                    class="title">Chapter 11</h4>
+                <div ng-show="isSearch"
+                     class="container-search">
                     <form class="navbar-form navbar-left">
                         <div class="form-group inner-addon left-addon"><i class="fa fa-search"></i>
                             <input type="text" class="form-control">
@@ -55,25 +58,95 @@
                     </form>
                 </div>
             </div>
-            <button type="button" class="navbar-toggle left account"><i class="fa fa-th-large"></i></button>
-            <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle left close"><i
+            <div class="container-menu" ng-show="!isNavbarExtended">
+                <button type="button" class="navbar-toggle navbar-expand-plus col-xs-12"
+                        ng-click="isNavbarExtended =! isNavbarExtended"><i class="fa fa-caret-down"></i>
+                </button>
+            </div>
+            <div class="section section-condensed container-menu" ng-show="isNavbarExtended">
+                <div class="row">
+                    <button type="button" class="navbar-toggle col-xs-3"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="navbar-toggle col-xs-3"><i class="fa fa-check-square-o"></i></button>
+                    <button type="button" class="navbar-toggle col-xs-3"><i class="fa fa-bookmark-o"></i></button>
+                    <button type="button" class="navbar-toggle col-xs-3"><i class="fa fa-sign-out"></i></button>
+                </div>
+                <button type="button" class="navbar-toggle navbar-expand-plus col-xs-12"
+                        ng-click="isNavbarExtended =! isNavbarExtended"><i class="fa fa-caret-up"></i>
+                </button>
+            </div>
+            <button type="button" ng-click="isSearch=false;isMenu =! isMenu"
+                    ng-show="!isMenu && !isSearch"
+                    class="navbar-toggle switcher left account-menu"><i
+                        class="fa fa-bars"></i></button>
+            <button type="button" ng-click="isMenu =! isMenu"
+                    ng-show="isMenu"
+                    class="navbar-toggle switcher left close"><i
                         class="fa fa-close"></i></button>
-            <button type="button" ng-click="isCollapsed =! isCollapsed" class="navbar-toggle search"><i
+            <button type="button" ng-click="isMenu=false;isSearch =! isSearch"
+                    ng-show="!isSearch"
+                    class="navbar-toggle switcher search"><i
                         class="fa fa-search"></i></button>
+            <button type="button" ng-click="isSearch=! isSearch"
+                    ng-show="isSearch"
+                    class="navbar-toggle switcher right close"><i
+                        class="fa fa-close"></i></button>
         </div>
-        <div ng-if="!isCollapsed" class="row footer-parent">
+        <div ng-if="isSearch" class="row search-results-container footer-parent">
+            <div class="section section-wide results">
+                <h3>text</h3>
+                <div class="section">
+                    <search-text-result item="item" ng-repeat="item in items"></search-text-result>
+                </div>
+                <div class="section">
+                    <button type="button" class="btn btn-theme-color justified">Load More</button>
+                </div>
+            </div>
+            <div class="section section-wide results">
+                <h3>chapters</h3>
+                <div class="section">
+                    <search-chapter-result item="item" ng-repeat="item in items"></search-chapter-result>
+                </div>
+                <div class="section">
+                    <button type="button" class="btn btn-theme-color justified">Load More</button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="isMenu" class="row footer-parent">
             <div class="section">
                 <div class="btn-group justified nav-tabs">
-                    <a class="btn btn-red" ng-class="{'active':activeTab=='menu'}" ng-click="activeTab='menu'">menu</a>
-                    <a class="btn btn-red" ng-class="{'active':activeTab=='test'}"
-                       ng-click="activeTab='test'">tests</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='contents'}" ng-click="activeTab='contents'">contents</a>
+                    <a class="btn btn-red" ng-class="{'active':activeTab=='bookmarks'}"
+                       ng-click="activeTab='bookmarks'">bookmarks</a>
                     <a class="btn btn-red" ng-class="{'active':activeTab=='history'}" ng-click="activeTab='history'">history</a>
                 </div>
             </div>
-            <div class="section section-wide section-condensed">
-                <menu ng-show="activeTab==='menu'"></menu>
-                <test ng-show="activeTab==='test'"></test>
-                <history ng-show="activeTab==='history'"></history>
+            <div ng-if="activeTab==='history'" class="section section-wide section-condensed">
+                <div ng-repeat="(key,val) in items | groupBy: 'formattedDateTime' | orderBy:'-key'"
+                     class="media list-group-item history-group">
+                    <div class="media-middle history-group-title">
+                        <h4><span class="fa fa-calendar media-left"></span>{{val[0].dateTime |
+                            date:'MMMM, yyyy'}}</h4>
+                    </div>
+                    <history item="item" ng-repeat="item in val"></history>
+                </div>
+                <div class="section">
+                    <button type="button" class="btn btn-theme-color justified">Load More</button>
+                </div>
+            </div>
+            <div ng-if="activeTab==='bookmarks'" class="section section-wide section-condensed">
+                <div ng-repeat="(key,val) in items | groupBy: 'title' | orderBy:'-val[0].dateTime'"
+                     class="media list-group-item bookmark-group">
+                    <div class="media-middle bookmark-group-title">
+                        <h4>{{key}}</h4>
+                    </div>
+                    <bookmark item="item" ng-repeat="item in val"></bookmark>
+                </div>
+                <div class="section">
+                    <button type="button" class="btn btn-theme-color justified">Load More</button>
+                </div>
+            </div>
+            <div ng-if="activeTab==='contents'" class="section section-wide section-condensed">
+                <contents item="item" ng-repeat="item in items"></contents>
             </div>
             <div class="section section-wide footer">
                 <p>
@@ -88,8 +161,9 @@
 
 <content>
     <div class="section">
-        <p ng-repeat="i in [0,1,2,3,4,5]"><%= loremIpsum %></p>
+        <p class="text" ng-repeat="i in [0,1,2,3,4,5]"><%= loremIpsum %></p>
     </div>
 </content>
+
 </body>
 </html>
