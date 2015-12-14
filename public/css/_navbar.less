@@ -1,25 +1,35 @@
 body {
     .navbar {
-
+        &.is-extended {
+            .container-menu {
+                .navbar-hr-top(@navbar-inverse-border);
+            }
+        }
         .container-menu {
             overflow: hidden;
             position: absolute;
             bottom: 0;
             text-align: center;
             width: 100%;
-            .navbar-hr-top(@navbar-inverse-border);
-            .row > .navbar-toggle {
-                border: none;
-                color: @navbar-inverse-color;
-                float: left;
+            .row > div {
+                margin: 7px 0 7px 0;
+                padding: 0;
+                > .navbar-toggle {
+                    background-color: rgba(0, 0, 0, 0.1);
+                    border: none;
+                    color: @navbar-inverse-color;
+                    float: initial;
+                    padding: 0;
+                    margin: 0;
+                    width: 90%;
+                    border-radius: 10px;
+                }
             }
             .navbar-expand-plus {
                 padding: 0;
                 margin: 0;
-
-                background-color: transparent;
-                background-image: none;
                 border: none;
+                .navbar-hr-top(@navbar-inverse-border);
                 color: @navbar-inverse-color;
             }
         }
@@ -109,12 +119,12 @@ body {
     }
     &.has-sticky {
         .navbar {
+            &.is-full-screen {
+                padding-top: 0 !important;
+            }
             .navbar-brand {
                 h4 {
                     font-size: 1.5em;
-                }
-                h3 {
-                    display: none;
                 }
             }
             &:not(.is-extended) {
@@ -133,10 +143,12 @@ body {
                     height: @navbar-height-min-extended;
                 }
                 .container-menu {
-                    .row > .navbar-toggle {
-                        margin: 0;
-                        .fa {
-                            font-size: 1em;
+                    .row > div {
+                        > .navbar-toggle {
+                            height: 40px;
+                            .fa {
+                                font-size: 1em;
+                            }
                         }
                     }
                 }
@@ -148,7 +160,7 @@ body {
             }
             &.content-expanded {
                 .navbar-brand {
-                    padding: 6px;
+                    padding: 9px 6px 6px 6px;
                     height: initial;
                 }
             }
@@ -182,17 +194,18 @@ body {
             &.is-extended {
                 padding-top: @navbar-height-extended;
                 .navbar-brand {
-                    /*padding: 12px 6px 6px 6px;*/
                     height: @navbar-height-extended;
                 }
                 .navbar-header {
                     height: @navbar-height-extended;
                 }
                 .container-menu {
-                    .row > .navbar-toggle {
-                        margin: 9px 0 0 0;
-                        .fa {
-                            font-size: 3em;
+                    .row > div {
+                        > .navbar-toggle {
+                            height: 80px;
+                            .fa {
+                                font-size: 3em;
+                            }
                         }
                     }
                 }

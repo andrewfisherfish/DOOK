@@ -15,7 +15,7 @@
 
     module.value('fakeData', window.fakeData);
 
-    module.run(['$rootScope', '$filter', function ($rootScope, $filter) {
+    module.run(['$rootScope', '$filter', 'uiState', function ($rootScope, $filter, uiState) {
         _.each(fakeData.items, function (item, index) {
             _.extend(item, {
                 text: '...nec magna eros quis ac nec tortor nunc massa. Non sit neque diam mus nulla. Suspendisse porta ...',
@@ -25,6 +25,8 @@
         });
 
         $rootScope.items = fakeData.items;
+
+        $rootScope.uiState = uiState;
     }]);
 
     module.controller('mainCtrl', ['$scope', function ($scope) {
@@ -57,6 +59,28 @@
         }]);
     });
 
+    module.directive('onPhraseMenu', ['$uibModal', function ($uibModal) {
+        return {
+            link: function (scope, el) {
+                el.bind('click', function () {
+                    scope.$apply(function () {
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: '/app/views/modal-selection-context-menu.html',
+                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            }],
+                            size: 'sm',
+                            windowClass: 'quick-menu'
+                        });
+                    })
+                });
+            }
+        }
+    }]);
+
     module.directive('footerParent', [function () {
         return {
             restrict: 'C',
@@ -69,7 +93,7 @@
         }
     }]);
 
-    module.directive('footer', ['$timeout', function ($timeout) {
+    module.directive('footer', [function () {
         return {
             restrict: 'C',
             require: '^footerParent',
@@ -79,4 +103,5 @@
             }
         }
     }]);
+
 }(angular, _));

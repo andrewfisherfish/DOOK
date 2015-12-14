@@ -3,16 +3,17 @@
 
     var module = angular.module('Lectures.UI', []);
 
-    module.directive('stickyNav', ['$document', '$window', 'throttle', directive]);
+    module.directive('uiStickyNav', ['$document', '$window', 'throttle', 'uiState', directive]);
 
-    function directive($document, $window, throttle) {
+    function directive($document, $window, throttle, uiState) {
         return {
             restrict: 'AE',
             scope: {
                 cssClassHidden: '@?',
                 bodyCssClassHidden: '@?',
                 showAtBottom: '@?',
-                scrollerSelector: '='
+                scrollerSelector: '=',
+                isSticky: '='
             },
             link: link
         };
@@ -39,7 +40,7 @@
 
                 var $scrollableElement = $bodyElement.find(selector)[0] || $window;
 
-                var onChange = getOnChange(element, $bodyElement, options);
+                var onChange = getOnChange(scope, uiState);
                 var scrolling = new Scrolling($document, $scrollableElement, options, onChange);
 
                 handle = throttle(angular.bind(scrolling, scrolling.handle), 250);
@@ -56,10 +57,11 @@
             scope.$on('destroy', destroy);
         }
 
-        function getOnChange(element, $bodyElement, options) {
+        function getOnChange(scope, uiState) {
             return function change(hidden) {
-                element.toggleClass(options.cssClassHidden, hidden);
-                $bodyElement.toggleClass(options.bodyCssClassHidden, hidden);
+                scope.$apply(function () {
+                    uiState.switch('isSticky', hidden);
+                })
             }
         }
     }
@@ -94,8 +96,7 @@
             if (this.current >= 1) {
                 if (scrolling.down()) {
                     if (this.options.showAtBottom) {
-                        var bottom = scrolling.atBottom();
-                        hidden = !bottom;
+                        hidden = !scrolling.atBottom();
                     } else {
                         hidden = true;
                     }
@@ -141,5 +142,27 @@
             }
         }
     }
+
+
+    module.service('uiState', ['$rootScope', function ($rootScope) {
+        this.get = function (name) {
+            return $rootScope[name];
+        };
+
+        this.is = function (name, val) {
+            if (_.isUndefined(val))
+                return $rootScope[name] === true;
+            else
+                return $rootScope[name] === val;
+        };
+
+        this.switch = function (name, val) {
+            if (_.isUndefined(val))
+                $rootScope[name] = !$rootScope[name];
+            else {
+                $rootScope[name] = val;
+            }
+        }
+    }]);
 
 }(angular);
