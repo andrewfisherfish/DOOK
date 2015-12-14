@@ -67,6 +67,7 @@ p.text {
 .media.search-text-result {
     a {
         color: @navbar-inverse-color;
+        text-decoration: none;
     }
     h4 {
         text-align: center;
@@ -110,6 +111,9 @@ p.text {
         a {
             color: @navbar-inverse-color;
             text-decoration: none;
+            &:hover, &:focus {
+                text-decoration: none;
+            }
         }
         .title {
             font-weight: bold;
@@ -176,7 +180,7 @@ p.text {
     position: relative;
     min-height: 100%;
     .footer {
-        background-color: #185f7d;
+        background-color: @navbar-inverse-bg;
 
         .navbar-hr-top(@navbar-inverse-border);
 
@@ -194,12 +198,11 @@ p.text {
     }
 }
 
-.modal.fade:not(.in) .modal-dialog {
-    -webkit-transform: translate3d(0, 25%, 0);
-    transform: translate3d(0, 25%, 0);
-}
-
 .modal.quick-menu {
+    &.fade:not(.in) .modal-dialog {
+        -webkit-transform: translate3d(0, 25%, 0);
+        transform: translate3d(0, 25%, 0);
+    }
     .modal-dialog {
         position: absolute;
         width: 100%;

@@ -1,4 +1,4 @@
-!function (angular) {
+!function (angular, _) {
     'use strict';
 
     var module = angular.module('Lectures.UI', []);
@@ -144,25 +144,30 @@
     }
 
 
-    module.service('uiState', ['$rootScope', function ($rootScope) {
+    module.service('uiState', [function () {
+        var statesContainer = {};
         this.get = function (name) {
-            return $rootScope[name];
+            return statesContainer[name];
         };
 
         this.is = function (name, val) {
             if (_.isUndefined(val))
-                return $rootScope[name] === true;
+                return statesContainer[name] === true;
             else
-                return $rootScope[name] === val;
+                return statesContainer[name] === val;
         };
 
         this.switch = function (name, val) {
+            if (_.isObject(name)) {
+                _.extend(statesContainer, name);
+                return;
+            }
             if (_.isUndefined(val))
-                $rootScope[name] = !$rootScope[name];
+                statesContainer[name] = !statesContainer[name];
             else {
-                $rootScope[name] = val;
+                statesContainer[name] = val;
             }
         }
     }]);
 
-}(angular);
+}(angular, _);

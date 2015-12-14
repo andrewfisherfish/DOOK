@@ -35,13 +35,15 @@
 </head>
 
 <body ng-class="{'no-scroll':uiState.get('isMenu',false) || isSearch,'has-sticky':uiState.get('isSticky')}"
-      ng-init="uiState.switch('isMenu',false);
-      uiState.switch('isSearch',false);
-      uiState.switch('isNavbarExtended',false);
-      uiState.switch('isFullScreen',false);
-      uiState.switch('isSticky',false);
-      uiState.switch('activeSearchTab','text');
-      uiState.switch('activeTab','contents');">
+      ng-init="uiState.switch({
+      'isMenu':false,
+      'isSearch':false,
+      'isNavbarExtended':false,
+      'isFullScreen':false,
+      'isSticky':false,
+      'activeSearchTab':'text',
+      'activeTab':'contents'
+      });">
 <nav role="navigation"
      ng-class="{'content-expanded':uiState.get('isMenu') || uiState.get('isSearch'),'sticky-scroll-container':uiState.get('isMenu') || isSearch,'is-extended':uiState.get('isNavbarExtended'),'is-full-screen':uiState.get('isFullScreen')}"
      class="navbar navbar-inverse top">
