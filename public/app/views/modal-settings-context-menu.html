@@ -1,0 +1,27 @@
+<div class="modal-header section">
+    <h2 class="title">SETTINGS</h2>
+</div>
+<div class="modal-body section">
+    <div class="row">
+        <div class="col-xs-3">
+            <button type="button" class="navbar-toggle settings"><i class="fa fa-home"></i></button>
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="navbar-toggle settings"><i class="fa fa-bookmark-o"></i></button>
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="navbar-toggle settings"><i class="fa fa-font"></i></button>
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="navbar-toggle settings"
+                    ng-class="{'active':uiState.get('isFullScreen')}"
+                    ng-click="uiState.switch('isFullScreen');cancel()"><i class="fa fa-arrows-alt"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal-footer section">
+    <div class="row">
+        <button class="btn col-xs-12 cancel-btn" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

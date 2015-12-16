@@ -7,7 +7,7 @@
 
     <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-touch/angular-touch.min.js"></script>
+    <script type="text/javascript" src="/bower_components/mnTouch/mn-touch.js"></script>
     <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
@@ -29,34 +29,47 @@
         }(window))
     </script>
 
-    <script type="text/javascript" src="/app/UI.stickyNav.js"></script>
+    <script type="text/javascript" src="/app/Lectures.UI.js"></script>
     <script type="text/javascript" src="/app/module.js"></script>
     <script type="text/javascript" src="/app/bootstrap.js"></script>
 </head>
 
-<body ng-class="{'no-scroll':uiState.get('isMenu',false) || isSearch,'has-sticky':uiState.get('isSticky')}"
+<body ng-class="{
+'no-scroll':uiState.is('isMenu') || uiState.is('isSearch'),
+'has-sticky':uiState.get('isSticky')
+}" class="{{uiState.get('textTheme')}}"
       ng-init="uiState.switch({
       'isMenu':false,
       'isSearch':false,
       'isNavbarExtended':false,
       'isFullScreen':false,
       'isSticky':false,
+      'isAtTop':false,
       'activeSearchTab':'text',
-      'activeTab':'contents'
+      'activeTab':'contents',
+      'textTheme':'text-theme-white'
       });">
 <nav role="navigation"
-     ng-class="{'content-expanded':uiState.get('isMenu') || uiState.get('isSearch'),'sticky-scroll-container':uiState.get('isMenu') || isSearch,'is-extended':uiState.get('isNavbarExtended'),'is-full-screen':uiState.get('isFullScreen')}"
+     ng-class="{
+     'content-expanded':uiState.get('isMenu') || uiState.get('isSearch'),
+     'sticky-scroll-container':uiState.get('isMenu') || isSearch,
+     'is-extended':uiState.get('isNavbarExtended'),
+     'is-full-screen':uiState.get('isFullScreen'),
+     'is-at-top':uiState.get('isAtTop')
+     }"
      class="navbar navbar-inverse top">
     <div class="container-fluid">
         <div ui-sticky-nav scroller-selector="uiState.get('isMenu')||uiState.get('isSearch')?'nav':undefined"
-             ng-class="{'is-sticky':uiState.get('isSticky')}"
-             ng-hide="uiState.get('isSticky') && uiState.get('isFullScreen')"
+             ng-class="{'is-sticky':uiState.is('isSticky')}"
              class="navbar-header">
-            <div class="navbar-brand">
-                <h3 ng-hide="uiState.get('isSearch') || uiState.get('isSticky')"
-                    class="title">How To Avoid Murder</h3>
+            <div ng-hide="!uiState.is('isAtTop') && uiState.is('isFullScreen')"
+                 class="navbar-brand">
+                <h3 ng-hide="uiState.is('isSearch') || uiState.is('isSticky')"
+                    class="title sub-top">How To Avoid Murder</h3>
                 <h4 ng-hide="uiState.get('isSearch')"
                     class="title">Chapter 11</h4>
+                <h3 ng-hide="uiState.get('isSearch') || uiState.get('isSticky')"
+                    class="title sub-bottom">Something More To Tell</h3>
                 <div ng-show="uiState.get('isSearch')"
                      class="container-search">
                     <form class="navbar-form navbar-left">
@@ -64,35 +77,6 @@
                             <input type="text" class="form-control">
                         </div>
                     </form>
-                </div>
-            </div>
-            <div class="container-menu" ng-show="!uiState.get('isNavbarExtended')">
-                <button type="button" class="navbar-toggle navbar-expand-plus col-xs-12"
-                        ng-click="uiState.switch('isNavbarExtended')"><i class="fa fa-caret-down"></i>
-                </button>
-            </div>
-            <div class="section section-condensed container-menu" ng-show="uiState.get('isNavbarExtended')">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <button type="button" class="navbar-toggle"><i class="fa fa-home"></i></button>
-                    </div>
-                    <div class="col-xs-3">
-                        <button type="button" class="navbar-toggle "><i class="fa fa-edit"></i></button>
-                    </div>
-                    <div class="col-xs-3">
-                        <button type="button" class="navbar-toggle"><i class="fa fa-bookmark-o"></i></button>
-                    </div>
-                    <div class="col-xs-3">
-                        <button type="button" class="navbar-toggle"
-                                ng-class="{'active':uiState.get('isFullScreen')}"
-                                ng-click="uiState.switch('isFullScreen')"><i class="fa fa-arrows-alt"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <button type="button" class="navbar-toggle navbar-expand-plus col-xs-12"
-                            ng-click="uiState.switch('isNavbarExtended')"><i class="fa fa-caret-up"></i>
-                    </button>
                 </div>
             </div>
             <button type="button" ng-click="uiState.switch('isSearch',false);uiState.switch('isMenu')"
@@ -149,7 +133,10 @@
                        ng-click="uiState.switch('activeTab','history')">history</a>
                 </div>
             </div>
-            <div ng-if="uiState.is('activeTab','history')" class="section section-wide section-condensed">
+            <div ng-if="uiState.is('activeTab','history')"
+                 mn-touch
+                 swipe-left="alert(777)"
+                 class="section section-wide section-condensed">
                 <div ng-repeat="(key,val) in items | groupBy: 'formattedDateTime' | orderBy:'-key'"
                      class="media list-group-item history-group">
                     <div class="media-middle history-group-title">
@@ -162,7 +149,10 @@
                     <button type="button" class="btn btn-theme-color justified">Load More</button>
                 </div>
             </div>
-            <div ng-if="uiState.is('activeTab','bookmarks')" class="section section-wide section-condensed">
+            <div ng-if="uiState.is('activeTab','bookmarks')"
+                 mn-touch
+                 swipe-left="alert(777)"
+                 class="section section-wide section-condensed">
                 <div ng-repeat="(key,val) in items | groupBy: 'title' | orderBy:'-val[0].dateTime'"
                      class="media list-group-item bookmark-group">
                     <div class="media-middle bookmark-group-title">
@@ -174,7 +164,10 @@
                     <button type="button" class="btn btn-theme-color justified">Load More</button>
                 </div>
             </div>
-            <div ng-if="uiState.is('activeTab','contents')" class="section section-wide section-condensed">
+            <div ng-if="uiState.is('activeTab','contents')"
+                 mn-touch
+                 swipe-left="alert(777)"
+                 class="section section-wide section-condensed">
                 <contents item="item" ng-repeat="item in items"></contents>
             </div>
             <div class="section section-wide footer">
@@ -190,9 +183,36 @@
 
 <content>
     <div class="section">
-        <p class="text" on-phrase-menu ng-repeat="i in [0,1,2,3,4,5]"><%= loremIpsum %></p>
+        <p class="text-page" ng-repeat="i in [0,1,2,3,4,5]"><%= loremIpsum %></p>
     </div>
 </content>
+
+<nav role="navigation"
+     ng-class="{
+     'sticky-scroll-container':uiState.get('isMenu') || isSearch,
+     'is-full-screen':uiState.get('isFullScreen'),
+     'is-at-top':uiState.get('isAtTop')
+     }"
+     class="navbar navbar-inverse bottom">
+    <div class="container-fluid">
+        <div ui-sticky-nav scroller-selector="uiState.get('isMenu')||uiState.get('isSearch')?'nav':undefined"
+             ng-class="{'is-sticky':uiState.get('isSticky')}"
+             class="navbar-header">
+            <button type="button"
+                    ng-click="openSettingsDialog()"
+                    class="navbar-toggle suggesters"><i
+                        class="fa fa-cog"></i></button>
+            <button type="button"
+                    ng-click="openQuestionDialog()"
+                    class="navbar-toggle suggesters"><i
+                        class="fa fa-question"></i></button>
+            <button type="button"
+                    ng-click="openOnWordDialog()"
+                    class="navbar-toggle suggesters"><i
+                        class="fa fa-info"></i></button>
+        </div>
+    </div>
+</nav>
 
 </body>
 </html>

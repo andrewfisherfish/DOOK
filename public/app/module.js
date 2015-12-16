@@ -3,10 +3,10 @@
  */
 (function (angular, _) {
     var module = angular.module('Lectures', [
-        'ngTouch',
         'ui.bootstrap',
         'Lectures.UI',
-        'angular.filter'
+        'angular.filter',
+        'mn'
     ]);
 
     module.config(['$provide', function ($provide) {
@@ -29,8 +29,46 @@
         $rootScope.uiState = uiState;
     }]);
 
-    module.controller('mainCtrl', ['$scope', function ($scope) {
-
+    module.controller('mainCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
+        $scope.openSettingsDialog = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/views/modal-settings-context-menu.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'sm',
+                windowClass: 'quick-menu'
+            });
+        };
+        $scope.openQuestionDialog = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/views/modal-question-context-menu.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'sm',
+                windowClass: 'quick-menu'
+            });
+        };
+        $scope.openOnWordDialog = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/views/modal-selection-context-menu.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'sm',
+                windowClass: 'quick-menu'
+            });
+        }
     }]);
 
     var helper = {
@@ -63,19 +101,7 @@
         return {
             link: function (scope, el) {
                 el.bind('click', function () {
-                    scope.$apply(function () {
-                        var modalInstance = $uibModal.open({
-                            animation: true,
-                            templateUrl: '/app/views/modal-selection-context-menu.html',
-                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-                                $scope.cancel = function () {
-                                    $uibModalInstance.dismiss('cancel');
-                                };
-                            }],
-                            size: 'sm',
-                            windowClass: 'quick-menu'
-                        });
-                    })
+
                 });
             }
         }

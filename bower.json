@@ -31,6 +31,8 @@
     "angular-animate": "~1.4.8",
     "ngSticky": "~1.8.6",
     "angular-auto-hide-sticky-header": "https://github.com/marhalpert/angular.autoHideStickyHeader.git",
-    "angular-filter": "~0.5.8"
+    "angular-filter": "~0.5.8",
+    "mnTouch": "https://github.com/ilmente/mnTouch.git",
+    "awesome-bootstrap-checkbox": "https://github.com/flatlogic/awesome-bootstrap-checkbox.git#~0.3.5"
   }
 }

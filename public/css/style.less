@@ -22,11 +22,40 @@
     border-color: @navbar-inverse-border;
 }
 
-p.text {
+p.text-page {
     font-family: @settings-text-font-family;
     text-align: justify;
     text-indent: 30px;
-    color: @settings-text-color;
+}
+
+body {
+    content {
+        display: block;
+    }
+    &.text-theme-black {
+        content {
+            background-color: @settings-bg-color-black;
+        }
+        p.text-page {
+            color: @settings-text-color-black;
+        }
+    }
+    &.text-theme-white {
+        content {
+            background-color: @settings-bg-color-white;
+        }
+        p.text-page {
+            color: @settings-text-color-white;
+        }
+    }
+    &.text-theme-sepia {
+        content {
+            background-color: @settings-bg-color-sepia;
+        }
+        p.text-page {
+            color: @settings-text-color-sepia;
+        }
+    }
 }
 
 .justified {
@@ -44,6 +73,15 @@ p.text {
     background-color: transparent;
     border: none;
     margin: 0;
+}
+
+.list-group-item {
+    &:first-child {
+        border-top: none;
+    }
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .search-results-container {
@@ -203,6 +241,10 @@ p.text {
         -webkit-transform: translate3d(0, 25%, 0);
         transform: translate3d(0, 25%, 0);
     }
+    .btn.cancel-btn {
+        background-color: @modal-content-bg;
+        padding: 15px 0;
+    }
     .modal-dialog {
         position: absolute;
         width: 100%;
@@ -213,16 +255,13 @@ p.text {
             background-color: transparent;
             box-shadow: none;
             border: none;
-            button {
-                background-color: @modal-content-bg;
-            }
             .navbar-toggle {
                 margin: 0;
                 padding: 10px 0;
                 float: initial;
                 width: 100%;
                 .fa {
-                    font-size: 3em;
+                    font-size: 2em;
                 }
             }
             .modal-header {

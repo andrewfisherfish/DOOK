@@ -9,9 +9,6 @@
         return {
             restrict: 'AE',
             scope: {
-                cssClassHidden: '@?',
-                bodyCssClassHidden: '@?',
-                showAtBottom: '@?',
                 scrollerSelector: '=',
                 isSticky: '='
             },
@@ -19,11 +16,7 @@
         };
 
         function link(scope, element) {
-            var options = {
-                cssClassHidden: scope.cssClassHidden || 'is-sticky',
-                bodyCssClassHidden: scope.bodyCssClassHidden || 'has-sticky',
-                showAtBottom: scope.showAtBottom ? scope.showAtBottom === 'true' : false
-            };
+            var options = {};
 
             var $bodyElement = $document.find('body');
 
@@ -58,10 +51,22 @@
         }
 
         function getOnChange(scope, uiState) {
-            return function change(hidden) {
-                scope.$apply(function () {
-                    uiState.switch('isSticky', hidden);
-                })
+            return {
+                onUpDown: function (isSticky) {
+                    scope.$apply(function () {
+                        uiState.switch('isSticky', isSticky);
+                    })
+                },
+                atTop: function (isAtTop) {
+                    scope.$apply(function () {
+                        uiState.switch('isAtTop', isAtTop);
+                    })
+                },
+                atBottom: function (isAtBottom) {
+                    scope.$apply(function () {
+                        uiState.switch('isAtBottom', isAtBottom);
+                    })
+                }
             }
         }
     }
@@ -82,6 +87,10 @@
 
     angular.extend(Scrolling.prototype, {
 
+        atTop: function () /* boolean */ {
+            return (this.current || 0) <= 52;
+        },
+
         atBottom: function () /* boolean */ {
             return (this.current + this.wHeight) >= this.dHeight;
         },
@@ -91,19 +100,11 @@
         },
 
         handle: function () /* void */ {
-            var hidden = false;
             var scrolling = this.update();
-            if (this.current >= 1) {
-                if (scrolling.down()) {
-                    if (this.options.showAtBottom) {
-                        hidden = !scrolling.atBottom();
-                    } else {
-                        hidden = true;
-                    }
-                }
-            }
 
-            this.change(hidden);
+            this.change.onUpDown(this.current >= 1 && scrolling.down());
+            this.change.atTop(scrolling.atTop());
+            this.change.atBottom(scrolling.atBottom());
         },
 
         update: function () /* Scrolling */ {
@@ -143,9 +144,9 @@
         }
     }
 
-
     module.service('uiState', [function () {
         var statesContainer = {};
+
         this.get = function (name) {
             return statesContainer[name];
         };
