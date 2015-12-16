@@ -10,7 +10,7 @@ var loremIpsum = fs.readFileSync(path.join(__dirname, '../public/lorem-ipsum.txt
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express', loremIpsum: loremIpsum, menuObj: menu});
+    res.render('book', {title: 'Express', loremIpsum: loremIpsum, menuObj: menu});
 });
 
 module.exports = router;

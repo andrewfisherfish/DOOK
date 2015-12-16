@@ -171,4 +171,27 @@
         }
     }]);
 
+    module.directive('footerParent', [function () {
+        return {
+            restrict: 'C',
+            scope: false,
+            controller: ['$element', function ($element) {
+                this.setPadding = function (val) {
+                    $element.css({'padding-bottom': val + 'px'});
+                }
+            }]
+        }
+    }]);
+
+    module.directive('footer', [function () {
+        return {
+            restrict: 'C',
+            require: '^footerParent',
+            scope: false,
+            link: function (scope, el, attr, ctrl) {
+                ctrl.setPadding(el[0].offsetHeight);
+            }
+        }
+    }]);
+
 }(angular, _);

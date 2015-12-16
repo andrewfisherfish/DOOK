@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-controller="mainCtrl">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/book.css">
+
+    <%- include scripts.ejs %>
+
+    <script>
+        (function (window, _) {
+            var menuStr = '<%- JSON.stringify(menuObj) %>';
+            window.fakeData = {};
+            try {
+                _.extend(window.fakeData, {
+                    items: JSON.parse(menuStr)
+                });
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }(window, _))
+    </script>
+
+    <script type="text/javascript" src="/accountApp/module.js"></script>
+    <script type="text/javascript" src="/accountApp/bootstrap.js"></script>
+</head>
+
+<body ng-class="{}"
+      class=""
+      ng-init="uiState.switch({});">
+
+
+</body>
+</html>

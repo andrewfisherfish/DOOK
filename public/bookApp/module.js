@@ -2,7 +2,7 @@
  * Created by andre on 11/22/2015.
  */
 (function (angular, _) {
-    var module = angular.module('Lectures', [
+    var module = angular.module('Book', [
         'ui.bootstrap',
         'Lectures.UI',
         'angular.filter',
@@ -33,7 +33,7 @@
         $scope.openSettingsDialog = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: '/app/views/modal-settings-context-menu.html',
+                templateUrl: '/bookApp/views/modal-settings-context-menu.html',
                 controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
@@ -46,7 +46,7 @@
         $scope.openQuestionDialog = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: '/app/views/modal-question-context-menu.html',
+                templateUrl: '/bookApp/views/modal-question-context-menu.html',
                 controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
@@ -59,7 +59,7 @@
         $scope.openOnWordDialog = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: '/app/views/modal-selection-context-menu.html',
+                templateUrl: '/bookApp/views/modal-selection-context-menu.html',
                 controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
@@ -78,7 +78,6 @@
     };
 
     _.each([
-        'test',
         'history',
         'contents',
         'bookmark',
@@ -89,45 +88,12 @@
             return {
                 restrict: 'E',
                 replace: true,
-                templateUrl: '/app/views/' + directiveName + '.html',
+                templateUrl: '/bookApp/views/' + directiveName + '.html',
                 scope: {
                     item: '='
                 }
             }
         }]);
     });
-
-    module.directive('onPhraseMenu', ['$uibModal', function ($uibModal) {
-        return {
-            link: function (scope, el) {
-                el.bind('click', function () {
-
-                });
-            }
-        }
-    }]);
-
-    module.directive('footerParent', [function () {
-        return {
-            restrict: 'C',
-            scope: false,
-            controller: ['$element', function ($element) {
-                this.setPadding = function (val) {
-                    $element.css({'padding-bottom': val + 'px'});
-                }
-            }]
-        }
-    }]);
-
-    module.directive('footer', [function () {
-        return {
-            restrict: 'C',
-            require: '^footerParent',
-            scope: false,
-            link: function (scope, el, attr, ctrl) {
-                ctrl.setPadding(el[0].offsetHeight);
-            }
-        }
-    }]);
 
 }(angular, _));

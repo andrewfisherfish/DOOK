@@ -3,19 +3,12 @@
 <head>
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/book.css">
 
-    <script type="text/javascript" src="/bower_components/underscore/underscore-min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/bower_components/mnTouch/mn-touch.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-filter/dist/angular-filter.min.js"></script>
+    <%- include scripts.ejs %>
 
     <script>
-        (function (window) {
+        (function (window, _) {
             var menuStr = '<%- JSON.stringify(menuObj) %>';
             window.fakeData = {};
             try {
@@ -26,12 +19,11 @@
             catch (error) {
                 console.log(error)
             }
-        }(window))
+        }(window, _))
     </script>
 
-    <script type="text/javascript" src="/app/Lectures.UI.js"></script>
-    <script type="text/javascript" src="/app/module.js"></script>
-    <script type="text/javascript" src="/app/bootstrap.js"></script>
+    <script type="text/javascript" src="/bookApp/module.js"></script>
+    <script type="text/javascript" src="/bookApp/bootstrap.js"></script>
 </head>
 
 <body ng-class="{
