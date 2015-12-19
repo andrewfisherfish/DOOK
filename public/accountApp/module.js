@@ -1,8 +1,8 @@
 /**
  * Created by andre on 11/22/2015.
  */
-(function (angular, _) {
-    var module = angular.module('Account', [
+(function (angular, document, _) {
+    var module = angular.module('Lectures.Account', [
         'ui.bootstrap',
         'Lectures.UI',
         'angular.filter',
@@ -19,4 +19,4 @@
 
     }]);
 
-}(angular, _));
+}(angular, document, _));

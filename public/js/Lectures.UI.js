@@ -88,7 +88,7 @@
     angular.extend(Scrolling.prototype, {
 
         atTop: function () /* boolean */ {
-            return (this.current || 0) <= 52;
+            return (this.current || 0) <= 50;
         },
 
         atBottom: function () /* boolean */ {
@@ -147,26 +147,29 @@
     module.service('uiState', [function () {
         var statesContainer = {};
 
-        this.get = function (name) {
-            return statesContainer[name];
+        this.get = function (name, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
+            return container[name];
         };
 
-        this.is = function (name, val) {
-            if (_.isUndefined(val))
-                return statesContainer[name] === true;
+        this.is = function (name, val, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
+            if (_.isUndefined(val) || _.isNull(val))
+                return container[name] === true;
             else
-                return statesContainer[name] === val;
+                return container[name] === val;
         };
 
-        this.switch = function (name, val) {
+        this.switch = function (name, val, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
             if (_.isObject(name)) {
-                _.extend(statesContainer, name);
+                _.extend(container, name);
                 return;
             }
-            if (_.isUndefined(val))
-                statesContainer[name] = !statesContainer[name];
+            if (_.isUndefined(val) || _.isNull(val))
+                container[name] = !container[name];
             else {
-                statesContainer[name] = val;
+                container[name] = val;
             }
         }
     }]);
@@ -192,6 +195,37 @@
                 ctrl.setPadding(el[0].offsetHeight);
             }
         }
+    }]);
+
+    module.directive('bindHtmlCompile', ['$compile', function ($compile) {
+        return {
+            restrict: 'A',
+            compile: function () {
+                return function (scope, element, attr) {
+                    var compileScope = scope;
+
+                    var init = function (value) {
+                        element.html(value && value.toString());
+
+                        if (attr.bindHtmlScope) {
+                            compileScope = scope.$eval(attr.bindHtmlScope);
+                        }
+
+                        $compile(element.contents())(compileScope);
+                    };
+
+                    var getHtml = function () {
+                        return scope.$eval(attr.bindHtmlCompile);
+                    };
+
+                    if ('watch' in attr) {
+                        scope.$watch(getHtml, init);
+                    } else {
+                        init(getHtml());
+                    }
+                }
+            }
+        };
     }]);
 
 }(angular, _);

@@ -1,5 +1,59 @@
+// ==========================================
+//   Libraries
+// ==========================================
 @import "_imports.less";
+// ==========================================
+//   Variables
+// ==========================================
 @import "_variables.less";
+
+@navbar-inverse-bg: @theme-bg-color;
+@navbar-inverse-border: @theme-border-color;
+@navbar-inverse-color: @theme-color;
+@navbar-menu-hr: #4e83bc;
+
+@navbar-section-margin: 32px;
+
+@navbar-copyright-color: rgba(255, 255, 255, 0.20);
+
+@screen-sm: 700px;
+
+@navbar-expand-plus-height: 5px; //25px;
+
+@navbar-height: 80px;
+
+@navbar-height-extended: 202px;
+
+@navbar-height-min: 51px; //69px;
+
+@navbar-height-min-extended: 124px;
+
+@transition-duration: 300ms;
+
+@body-bg: transparent;
+
+@navbar-margin-bottom: 0;
+
+@inactive-text: @navbar-menu-hr;
+
+@inactive-title: #90C2D1;
+
+@font-size-base: 16px;
+
+@settings-text-font-family: Georgia, Times, sans-serif;
+
+@settings-text-color-white: #666;
+@settings-text-color-black: #fff;
+@settings-text-color-sepia: #fff;
+
+@settings-bg-color-white: #fff;
+@settings-bg-color-black: #000;
+@settings-bg-color-sepia: #cca26e;
+
+@modal-content-border-color: transparent;
+// ==========================================
+//   Mobile Angular Ui Stuffs For Desktop
+// ==========================================
 @import "_animate.less";
 @import "_forms.less";
 @import "_navbar.less";
@@ -118,7 +172,9 @@ body {
 .media.bookmark-group {
     color: @navbar-inverse-color;
     .media.bookmark {
-        padding-bottom: 15px;
+        .date-container {
+            overflow: hidden;
+        }
         a {
             color: @navbar-inverse-color;
             text-decoration: none;
@@ -145,7 +201,9 @@ body {
 .media.history-group {
     color: @navbar-inverse-color;
     .media.history {
-        padding-bottom: 15px;
+        .date-container {
+            overflow: hidden;
+        }
         a {
             color: @navbar-inverse-color;
             text-decoration: none;
@@ -236,6 +294,19 @@ body {
     }
 }
 
+.modal.modal-preview {
+    .modal-header {
+        .title {
+            text-align: center;
+        }
+    }
+    .top-buttons {
+        a {
+
+        }
+    }
+}
+
 .modal.quick-menu {
     &.fade:not(.in) .modal-dialog {
         -webkit-transform: translate3d(0, 25%, 0);
@@ -289,4 +360,54 @@ body {
     &:active, &.active {
         background-color: rgba(0, 0, 0, 0.5) !important;
     }
+}
+
+.media.removable {
+    position: relative;
+    overflow-y: hidden;
+    &.has-sidebar {
+        .media-sidebar {
+            transform: translate3d(0, 0, 0);
+        }
+        .media-content {
+            transform: translate3d(200px, 0, 0);
+        }
+    }
+    &:not(.has-sidebar) {
+        .media-sidebar {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+    .media-content {
+        display: block;
+        transition: transform 0.5s;
+    }
+    .media-sidebar {
+        transition: transform 0.5s;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 200px;
+        .sidebar-control {
+            margin: 0;
+            text-transform: uppercase;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+            font-weight: bold;
+            &.open {
+                background-color: white;
+                color: #000;
+            }
+            &.remove {
+                background-color: red;
+                color: #fff;
+            }
+        }
+    }
+}
+
+preview {
+    color: red;
 }

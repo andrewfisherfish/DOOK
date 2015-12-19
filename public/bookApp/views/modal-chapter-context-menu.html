@@ -1,0 +1,10 @@
+<div class="modal-header section">
+    <div>
+        <a href="#" class="pull-left" ng-click="open();">Open</a>
+        <a href="#" class="pull-right" ng-click="cancel();">Close</a>
+    </div>
+    <h2 class="title" ng-bind="tagPhrase"></h2>
+</div>
+<div class="modal-body section">
+    <p class="text-page" watch bind-html-compile="loremIpsum"></p>
+</div>

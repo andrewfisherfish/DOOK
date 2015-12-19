@@ -24,6 +24,17 @@ body {
         }
     }
     .navbar.top {
+        .navbar-brand {
+            h4.title {
+                i {
+                    font-size: 14px;
+                    padding: 5px;
+                    vertical-align: middle;
+                    display: inline-block;
+                    position: absolute;
+                }
+            }
+        }
         &.is-extended {
             .container-menu {
                 .navbar-hr-top(@navbar-inverse-border);
@@ -122,7 +133,7 @@ body {
 
         &.top {
             .navbar-brand .title {
-                font-family: 'headline-semi-bold', Helvetica, Arial, sans-serif;
+                font-family: @theme-font-family;
                 font-weight: normal;
                 color: @navbar-inverse-color;
                 margin: initial;
@@ -336,6 +347,18 @@ body.no-scroll {
     }
 }
 
+.navbar-toggle.navbar-settings {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+    float: initial;
+    height: 100%;
+    width: 100%;
+    font-size: 2em;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+}
+
 .navbar-toggle.settings {
     background-color: rgba(0, 0, 0, 0.1);
     border: none;
@@ -344,4 +367,15 @@ body.no-scroll {
     margin: 0;
     width: 90%;
     border-radius: 10px;
+}
+
+.row-vertical {
+    height: 100%;
+    padding: 10px 0;
+}
+
+.col-vertical-3 {
+    height: 100/4%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

@@ -1,13 +1,27 @@
-<div class="media bookmark">
-    <a href="#">
-        <div class="media-left media-middle">
-            <p class="text-preview" ng-bind="item.text"></p>
-        </div>
-        <div class="media-right media-middle">
-            <i class="fa fa-chevron-right"></i>
-        </div>
-        <div class="media-middle">
-            <i class="date-time pull-right" ng-bind="item.dateTime | date:'medium'"></i>
+<div class="media bookmark removable"
+     ng-class="{'has-sidebar':$root.uiState.is('subMenuOpened',undefined,this.states)}">
+    <div class="media-sidebar">
+        <input type="button" class="navbar-toggle sidebar-control open col-xs-6" value="open"/>
+        <input type="button" class="navbar-toggle sidebar-control remove col-xs-6" value="remove"/>
+    </div>
+    <a href="#"
+       class="media-content"
+       ng-init="this.states={};$root.uiState.switch({'subMenuOpened':false},undefined,this.states)"
+       ng-click="$root.uiState.switch('subMenuOpened',false,this.states);"
+       ng-swipe-left="$root.uiState.switch('subMenuOpened',false,this.states);"
+       ng-swipe-right="$root.uiState.switch('subMenuOpened',true,this.states);">
+
+        <div class="section section-condensed">
+            <div class="media-left media-middle">
+                <p class="text-preview" ng-bind="item.text"></p>
+            </div>
+            <div class="media-right media-middle">
+                <i class="fa fa-chevron-right"></i>
+            </div>
+
+            <div class="media-middle date-container">
+                <i class="date-time pull-right">Page 23</i>
+            </div>
         </div>
     </a>
 </div>

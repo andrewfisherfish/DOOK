@@ -3,7 +3,7 @@
 <head>
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/book.css">
+    <link rel="stylesheet" href="/css/account.css">
 
     <%- include scripts.ejs %>
 
@@ -30,15 +30,204 @@
       class=""
       ng-init="uiState.switch({});">
 
-<div class="sidebar"></div>
+<nav role="navigation"
+     ng-class="{
+     'content-expanded':uiState.get('isMenu') || uiState.get('isSearch'),
+     'sticky-scroll-container':uiState.get('isMenu') || isSearch,
+     'is-extended':uiState.get('isNavbarExtended'),
+     'is-full-screen':uiState.get('isFullScreen'),
+     'is-at-top':uiState.get('isAtTop')
+     }"
+     class="navbar navbar-inverse top">
+    <div class="container-fluid">
+    </div>
+</nav>
 
-<div class="container">
-    <div class="media">
-        <div class="media-body">
-             dsfg dfgdfg dfgdg dfg dfgdf gf
+<content>
+    <div class="section section-info-row">
+        <div class="container container-info-row">
+            <div class="row row-centered row-margined-top">
+                <div class="col-sm-12"><h1 class="info-row-title">Platea bibendum</h1></div>
+            </div>
+            <div class="row row-centered row-margined-bottom">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <h4 class="info-row-desc">Dolor dolor ornare feugiat odio id. Orci in nascetur. Orci ad consectetuer
+                        velit purus urna vitae
+                        convallis praesent.</h4>
+                </div>
+            </div>
+            <div class="row row-centered">
+                <p class="info-row-text">
+                    Le'shani Lashes were seeking a website that reflected the look & feel of the brand.
+                    They wanted the website to be minimal, sleek and stylish but most importantly, user-friendly for
+                    visitors
+                    and themselves when in the backend.
+                </p>
+            </div>
         </div>
     </div>
-</div>
+    <div class="section section-info-row">
+        <div class="container container-info-row container-what-we-do">
+            <div class="row row-centered row-margined-top">
+                <div class="col-sm-12"><h1 class="info-row-title">What We Do</h1></div>
+            </div>
+            <div class="row row-centered row-margined-bottom">
+                <div class="hidden-xs col-sm-8 col-sm-offset-2">
+                    <h4 class="info-row-desc">Dolor dolor ornare feugiat odio id. Orci in nascetur. Orci ad consectetuer
+                        velit purus urna vitae
+                        convallis praesent.</h4>
+                </div>
+            </div>
+            <div class="row row-centered">
+                <div class="col-sm-4">
+                    <div class="what-we-do-icon">
+                        <i class="fa fa-info"></i>
+                    </div>
+                    <div>
+                        <h1 class="title">Ac Nunc Lacinia</h1>
+                        <p>Viverra ac nunc ligula integer parturient vel tristique fusce.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="what-we-do-icon">
+                        <i class="fa fa-headphones"></i>
+                    </div>
+                    <div>
+                        <h1 class="title">Vitae Malesuada</h1>
+                        <p>A pellentesque risus a elementum molestiae. Quam enim id. Quis quis pede amet vitae malesuada
+                            amet suscipit eleifend. Rutrum massa donec feugiat eu iaculis.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="what-we-do-icon">
+                        <i class="fa fa-street-view"></i>
+                    </div>
+                    <div>
+                        <h1 class="title">Pulvinar</h1>
+                        <p>Donec rutrum sagittis. Autem faucibus mollis curabitur eu morbi. Metus fringilla nisl.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="section section-info-row">
+        <div class="container container-info-row container-what-we-do">
+            <div class="row row-centered row-margined-top">
+                <div class="col-sm-12"><h1 class="info-row-title">Pricing</h1></div>
+            </div>
+            <div class="row row-centered row-margined-bottom">
+                <div class="hidden-xs col-sm-8 col-sm-offset-2">
+                    <h4 class="info-row-desc">Find a plan that fits your need.</h4>
+                </div>
+            </div>
+            <div class="row row-centered">
+                <div class="col-sm-4 pricing-plan">
+                    <div class="list-group">
+                        <div class="list-group-item top">
+                            <h4 class="name">Standard</h4>
+                            <h1 class="price"><span>$</span>80<span>/MO</span></h1>
+                            <i class="desc">Metus quam pede enim placerat risus.</i>
+                        </div>
+                        <div class="list-group-item info">
+                            A sed eu nam vulputate nonummy
+                        </div>
+                        <div class="list-group-item info">
+                            Eros quisque arcu non sed aenean
+                        </div>
+                        <div class="list-group-item info">
+                            Semper nisl ultricies vivamus orci
+                        </div>
+                        <div class="list-group-item info">
+                            Magna purus facilisis
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 pricing-plan">
+                    <div class="list-group">
+                        <div class="list-group-item top">
+                            <h4 class="name">Corporate</h4>
+                            <h1 class="price"><span>$</span>120<span>/MO</span></h1>
+                            <i class="desc">Suspendisse porta quam suspendisse vel.</i>
+                        </div>
+                        <strong class="list-group-item info">
+                            A sed eu nam vulputate nonummy
+                        </strong>
+                        <div class="list-group-item info">
+                            Semper nisl ultricies vivamus orci
+                        </div>
+                        <div class="list-group-item info">
+                            Magna purus facilisis
+                        </div>
+                        <div class="list-group-item info">
+                            Eros quisque arcu non sed aenean
+                        </div>
+                        <div class="list-group-item info">
+                            Semper nisl ultricies vivamus orci
+                        </div>
+                        <div class="list-group-item info">
+                            Magna purus facilisis
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 pricing-plan">
+                    <div class="list-group">
+                        <div class="list-group-item top">
+                            <h4 class="name">Premium</h4>
+                            <h1 class="price"><span>$</span>200<span>/Y</span></h1>
+                            <i class="desc">Non massa ligula nibh interdum quis.</i>
+                        </div>
+                        <strong class="list-group-item info">
+                            A sed eu nam vulputate nonummy
+                        </strong>
+                        <strong class="list-group-item info">
+                            Eros quisque arcu non sed aenean
+                        </strong>
+                        <div class="list-group-item info">
+                            Semper nisl ultricies vivamus orci
+                        </div>
+                        <div class="list-group-item info">
+                            Magna purus facilisis
+                        </div>
+                        <div class="list-group-item info">
+                            A sed eu nam vulputate nonummy
+                        </div>
+                        <strong class="list-group-item info">
+                            Eros quisque arcu non sed aenean
+                        </strong>
+                        <div class="list-group-item info">
+                            Semper nisl ultricies vivamus orci
+                        </div>
+                        <div class="list-group-item info">
+                            Magna purus facilisis
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-info-row">
+        <div class="container container-info-row">
+            <div class="row row-centered row-margined-top">
+                <div class="col-sm-12"><h1 class="info-row-title">Want To Join?</h1></div>
+            </div>
+            <div class="row row-centered row-margined-bottom">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <h4 class="info-row-desc">Sign in using your Facebook account.</h4>
+                </div>
+            </div>
+            <div class="row row-centered">
+                <a href="" class="col-sm-4 col-sm-offset-4 btn btn-social btn-lg btn-facebook signin-btn">
+                    <i class="fa fa-facebook"></i>
+                    <div>sign in</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</content>
+
 
 </body>
 </html>
