@@ -23,7 +23,6 @@
     </script>
 
     <script type="text/javascript" src="/bookApp/module.js"></script>
-    <script type="text/javascript" src="/bookApp/dto.js"></script>
     <script type="text/javascript" src="/bookApp/bootstrap.js"></script>
 </head>
 
@@ -200,13 +199,8 @@
     </div>
 </nav>
 
-<content>
-    <div class="section"
-         ng-init="openText()">
-        <p class="text-page"
-           ng-if="loremIpsumReady"
-           bind-html-compile="loremIpsum"></p>
-    </div>
+<content class="section">
+    <p class="text-page" display-text></p>
 </content>
 
 <nav role="navigation"

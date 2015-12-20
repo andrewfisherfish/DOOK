@@ -16,20 +16,44 @@
 
 nav.navbar {
     margin: 0;
+    .navbar-brand {
+        margin-left: initial !important;
+    }
+    .navbar-toggle {
+        display: initial;
+    }
+    .navbar-brand,
+    .navbar-toggle {
+        color: #fff;
+    }
 }
 
 content {
     .section.section-info-row {
         &:nth-child(odd) {
             background-color: @theme-color;
-            color: #000;
+            color: #666;
             .info-row-title {
-
+                color: #434343;
             }
         }
         &:nth-child(even) {
             background-color: @theme-bg-color;
             color: #fff;
+        }
+
+        .container-q-and-a {
+            font-family: @font-descriptions;
+            .info-row-title {
+                text-transform: none;
+            }
+            p {
+                text-align: left;
+                font-weight: 400;
+                font-style: normal;
+                line-height: 28px;
+                margin-bottom: 20px;
+            }
         }
 
         .container-what-we-do {
@@ -61,6 +85,9 @@ content {
             margin: 0;
         }
         .pricing-plan {
+            .list-group {
+                background-color: #fff;
+            }
             .info {
                 text-align: left;
                 font-family: @font-descriptions;
@@ -127,4 +154,11 @@ content {
 
 .navbar {
     border-radius: 0;
+}
+
+.q-and-a {
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
 }

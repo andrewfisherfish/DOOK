@@ -13,6 +13,8 @@ body {
         &.bottom {
             min-height: 0;
             height: 0;
+            background: transparent;
+            border: none;
             .navbar-header {
                 //Sticky styles
                 position: fixed !important;
@@ -24,6 +26,13 @@ body {
         }
     }
     .navbar.top {
+        .navbar-brand {
+            margin-left: initial;
+        }
+        .navbar-toggle {
+            display: initial;
+        }
+        padding-top: @navbar-height+@navbar-expand-plus-height;
         .navbar-brand {
             h4.title {
                 i {
@@ -260,7 +269,6 @@ body {
                 }
             }
             &:not(.is-extended) {
-                padding-top: @navbar-height+@navbar-expand-plus-height;
                 .navbar-brand {
                     height: @navbar-height+@navbar-expand-plus-height;
                 }

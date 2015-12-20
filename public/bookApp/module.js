@@ -4,7 +4,7 @@
 (function (angular, document, _) {
     var module = angular.module('Lectures.Book', [
         'Lectures.UI',
-        'Lectures.Book.DTO',
+        'Lectures.DTO',
         'ui.bootstrap',
         'angular.filter',
         'ngTouch'
@@ -84,32 +84,45 @@
         }
     }]);
 
-    module.directive('displayTextContainer', ['loremIpsumService', '$compile', function (loremIpsumService, $compile) {
-        return {
-            restrict: 'A',
-            link: function (scope, el, attr) {
-                loremIpsumService.get().then(function (data) {
-                    var dataCompiled = $compile(data);
-                    el.html(dataCompiled(scope));
-                });
-            },
-            controller: ['$element', '$scope', function ($element, $scope) {
-                this.basicElement = $element;
-                this.basicScope = $scope;
-            }]
-        }
-    }]);
-
     module.directive('modal', [function () {
         return {
             restrict: 'C',
-            controller: [function () {
-
+            scope: false,
+            controller: ['$element', '$scope', function ($element, $scope) {
+                _.extend(this, {
+                    $scope: $scope,
+                    $element: $element,
+                    scrollTop: function () {
+                        $element[0].scrollTop = 0;
+                    }
+                });
             }]
         }
     }]);
 
-    module.directive('preview', ['loremIpsumService', '$uibModal', function (loremIpsumService, $uibModal) {
+    module.directive('displayText', ['loremIpsumService', '$compile', '$window', function (loremIpsumService, $compile, $window) {
+        var fillData = function (scope, element) {
+            return loremIpsumService.get().then(function (data) {
+                element.html(data);
+                $compile(element.contents())(scope);
+                return data;
+            }).then(function () {
+                $window.scrollTo(0, 0);
+            });
+        };
+        return {
+            restrict: 'A',
+            link: fillData,
+            controller: ['$element', '$scope', function ($element, $scope) {
+                fillData($scope, $element);
+                this.open = function () {
+                    return fillData($scope, $element);
+                }
+            }]
+        }
+    }]);
+
+    module.directive('preview', ['loremIpsumService', '$uibModal', '$compile', function (loremIpsumService, $uibModal, $compile) {
         return {
             require: ['?^modal', '?^displayText'],
             scope: false,
@@ -117,40 +130,45 @@
                 var modalInstance;
                 var modalCtrl = ctrl[0];
                 var displayTextCtrl = ctrl[1];
+                var tagPhrase = el.html();
+
                 var openHere = function () {
                     return loremIpsumService.get().then(function (data) {
-                        scope.tagPhrase = el.html();
+                        scope.tagPhrase = tagPhrase;
                         scope.loremIpsum = data;
-                    });
+                    }).then(modalCtrl.scrollTop);
                 };
                 var openFromModal = function () {
                     modalInstance = $uibModal.open({
                         animation: true,
                         templateUrl: '/bookApp/views/modal-chapter-context-menu.html',
-                        controller: ['$scope', '$uibModalInstance', 'loremIpsum', 'displayTextCtrl',
-                            function ($scope, $uibModalInstance, loremIpsum, displayTextCtrl) {
-                                $scope.tagPhrase = el.html();
-                                $scope.loremIpsum = loremIpsum;
-                                $scope.open = function () {
-                                    openHere().then($uibModalInstance.dismiss);
-                                };
-                                $scope.cancel = function () {
-                                    $uibModalInstance.dismiss('cancel');
-                                };
+                        controller: ['$scope', '$uibModalInstance', 'loremIpsum',
+                            function ($scope, $uibModalInstance, loremIpsum) {
+                                _.extend($scope, {
+                                    isModal: true,
+                                    tagPhrase: tagPhrase,
+                                    loremIpsum: loremIpsum,
+                                    open: function () {
+                                        displayTextCtrl.open()
+                                            .then($uibModalInstance.dismiss);
+                                    },
+                                    cancel: function () {
+                                        $uibModalInstance.dismiss('cancel');
+                                    }
+                                });
                             }
                         ],
                         resolve: {
-                            displayTextCtrl: displayTextCtrl,
-                            loremIpsum: [function () {
+                            loremIpsum: ['loremIpsumService', function (loremIpsumService) {
                                 return loremIpsumService.get();
                             }]
                         },
-                        size: 'sm',
                         windowClass: 'modal-preview'
                     });
                 };
+
                 el.bind('click', function () {
-                    scope.$apply(_.isObject(modalCtrl) ? openHere : openFromModal);
+                    scope.$apply(scope.isModal ? openHere : openFromModal);
                 });
             }
         }

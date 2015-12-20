@@ -2,12 +2,12 @@
  * Created by andre on 12/19/2015.
  */
 (function (angular, document, _) {
-    var module = angular.module('Lectures.Book.DTO', []);
+    var module = angular.module('Lectures.DTO', []);
 
-    module.service('loremIpsumService', ['$http', function ($http) {
+    module.service('loremIpsumService', ['$http', '$compile', function ($http, $compile) {
         _.extend(this, {
             get: function (messageLength) {
-                messageLength = messageLength || 1500;
+                messageLength = messageLength || 2500;
                 return $http({
                     method: 'GET',
                     url: '/api/loremIpsum'
