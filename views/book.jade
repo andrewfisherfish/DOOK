@@ -1,0 +1,146 @@
+html(ng-controller="mainCtrl")
+    head
+        title
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" href="/css/book.css")
+
+        include ./scripts.jade
+
+        script.
+            (function (window, _) {
+                var menuStr = '#{JSON.stringify(menuObj)}';
+                window.fakeData = {};
+                try {
+                    _.extend(window.fakeData, {
+                        items: JSON.parse(menuStr)
+                    });
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }(window, _))
+
+        script(src="/bookApp/module.js")
+        script(src="/bookApp/bootstrap.js")
+
+body(ng-class="{'no-scroll':uiState.is('isContents') || uiState.is('isSearch') || uiState.is('isMenu'), 'has-sticky':uiState.get('isSticky')}",
+class="{{uiState.get('textTheme')}}"
+ng-init="uiState.switch({'isContents':false,'isSearch':false,'isMenu':false,'isNavbarExtended':false,'isFullScreen':false,'isSticky':false,'isAtTop':false,'activeSearchTab':'text','activeTab':'contents','textTheme':'text-theme-white'});")
+nav(role="navigation",
+ng-class="{'content-expanded':uiState.is('isContents') || uiState.is('isSearch') || uiState.is('isMenu'),'sticky-scroll-container':uiState.is('isContents') || uiState.is('isSearch')|| uiState.is('isMenu'),'is-extended':uiState.is('isNavbarExtended'),'is-full-screen':uiState.is('isFullScreen'), 'is-at-top':uiState.is('isAtTop')}",
+class="navbar navbar-inverse top")
+    .container-fluid
+        .navbar-header(ui-sticky-nav='', scroller-selector="uiState.is('isContents')||uiState.is('isSearch')||uiState.is('isMenu')?'nav':undefined", ng-class="{'is-sticky':uiState.is('isSticky')}")
+            .navbar-brand(ng-hide="!uiState.is('isAtTop') && uiState.is('isFullScreen')")
+                h3.title.sub-top(ng-hide="uiState.is('isSearch') || uiState.is('isSticky')") How To Avoid Murder
+                h4.title(ng-hide="uiState.get('isSearch')")
+                    a(href="#")
+                        span(ng-click="uiState.switch({'isSearch':false,'isMenu':false});uiState.switch('isContents');")
+                            | Chapter 11
+                            i.fa.fa-chevron-down(ng-if="!uiState.is('isContents')")
+                        i.fa.fa-chevron-up(ng-if="uiState.is('isContents')")
+                h3.title.sub-bottom(ng-hide="uiState.get('isSearch') || uiState.get('isSticky')") Something More To Tell
+                .container-search(ng-show="uiState.get('isSearch')")
+                    form.navbar-form.navbar-left
+                        .form-group.inner-addon.left-addon
+                            i.fa.fa-search
+                            input.form-control(type='text')
+            button.navbar-toggle.switcher.left.account-menu(type='button', ng-click="uiState.switch({'isSearch':false,'isContents':false,'isMenu':true});", ng-show="!uiState.is('isMenu') && !uiState.is('isSearch')")
+                i.fa.fa-bars
+            button.navbar-toggle.switcher.left.close(type='button', ng-click="uiState.switch('isMenu',false)", ng-show="uiState.is('isMenu')")
+                i.fa.fa-close
+            button.navbar-toggle.switcher.search(type='button', ng-click="uiState.switch('isContents',false);uiState.switch('isMenu',false);uiState.switch('isSearch')", ng-show="!uiState.is('isSearch')")
+                i.fa.fa-search
+            button.navbar-toggle.switcher.right.close(type='button', ng-click="uiState.switch('isSearch')", ng-show="uiState.is('isSearch')")
+                i.fa.fa-close
+        .row.row-vertical(ng-if="uiState.is('isMenu')")
+            .col-xs-12.col-vertical-3
+                button.navbar-toggle.navbar-settings(type='button')
+                    i.fa.fa-home
+            .col-xs-12.col-vertical-3
+                button.navbar-toggle.navbar-settings(type='button')
+                    i.fa.fa-bookmark-o
+            .col-xs-12.col-vertical-3
+                button.navbar-toggle.navbar-settings(type='button')
+                    i.fa.fa-font
+            .col-xs-12.col-vertical-3
+                button.navbar-toggle.navbar-settings(type='button', ng-class="{'active':uiState.get('isFullScreen')}", ng-click="uiState.switch('isFullScreen');cancel()")
+                    i.fa.fa-arrows-alt
+        .row.search-results-container.footer-parent(ng-if="uiState.is('isSearch')")
+            .section
+                .btn-group.justified.nav-tabs
+                    a.btn.btn-red(ng-class="{'active':uiState.is('activeSearchTab','text')}", ng-click="uiState.switch('activeSearchTab','text')") text
+                    a.btn.btn-red(ng-class="{'active':uiState.is('activeSearchTab','chapters')}", ng-click="uiState.switch('activeSearchTab','chapters')") chapters
+            .section.section-wide.results(ng-if="uiState.is('activeSearchTab','text')")
+                .section
+                    search-text-result(item='item', ng-repeat='item in items')
+                .section
+                    button.btn.btn-theme-color.justified(type='button') Load More
+            .section.section-wide.results(ng-if="uiState.is('activeSearchTab','chapters')")
+                .section
+                    search-chapter-result(item='item', ng-repeat='item in items')
+                .section
+                    button.btn.btn-theme-color.justified(type='button') Load More
+        .row.footer-parent(ng-if="uiState.is('isContents')")
+            .section
+                .btn-group.justified.nav-tabs
+                    a.btn.btn-red(ng-class="{'active':uiState.is('activeTab','contents')}", ng-click="uiState.switch('activeTab','contents')") contents
+                    a.btn.btn-red(ng-class="{'active':uiState.is('activeTab','bookmarks')}", ng-click="uiState.switch('activeTab','bookmarks')") bookmarks
+                    a.btn.btn-red(ng-class="{'active':uiState.is('activeTab','history')}", ng-click="uiState.switch('activeTab','history')") history
+            .section.section-wide.section-condensed(ng-if="uiState.is('activeTab','history')")
+                .media.history-group(ng-repeat="(key,val) in items | groupBy: 'formattedDateTime' | orderBy:'-key'")
+                    .section.section-condensed.media-middle.history-group-title
+                        h4
+                            span.fa.fa-calendar.media-left
+                            | {{val[0].dateTime |
+                            |                             date:'MMMM, yyyy'}}
+                    history(item='item', ng-repeat='item in val')
+                .section
+                    button.btn.btn-theme-color.justified(type='button') Load More
+            .section.section-wide.section-condensed(ng-if="uiState.is('activeTab','bookmarks')")
+                .media.bookmark-group(ng-repeat="(key,val) in items | groupBy: 'title' | orderBy:'-val[0].dateTime'")
+                    .media-middle.bookmark-group-title
+                        h4 {{key}}
+                    bookmark(item='item', ng-repeat='item in val')
+                .section
+                    button.btn.btn-theme-color.justified(type='button') Load More
+            .section.section-wide.section-condensed(ng-if="uiState.is('activeTab','contents')")
+                contents(item='item', ng-repeat='item in items')
+            .section.section-wide.footer
+                p
+                    | © 2015 Copyright Andriy Rybak Inc., All rights reserved.
+                    br
+                    |                     Use of this app constitutes acceptance of our
+                    br
+                    |                     Terms of Service and Privacy Policy.
+
+content(class="section")
+    p(class="text-page" display-text)
+
+//<nav role="navigation"
+//     ng-if="!uiState.is('isContents') && !uiState.is('isSearch') && !uiState.is('isMenu')"
+//     ng-class="{
+//     'sticky-scroll-container':uiState.get('isContents') || isSearch,
+//     'is-full-screen':uiState.get('isFullScreen'),
+//     'is-at-top':uiState.get('isAtTop')
+//     }"
+//     class="navbar navbar-inverse bottom">
+//    <div class="container-fluid">
+//        <div ui-sticky-nav scroller-selector="uiState.get('isContents')||uiState.get('isSearch')?'nav':undefined"
+//             ng-class="{'is-sticky':uiState.is('isSticky')}"
+//             class="navbar-header">
+//            <button type="button"
+//                    ng-click="openSettingsDialog()"
+//                    class="navbar-toggle suggesters"><i
+//                        class="fa fa-cog"></i></button>
+//            <button type="button"
+//                    ng-click="openQuestionDialog()"
+//                    class="navbar-toggle suggesters"><i
+//                        class="fa fa-question"></i></button>
+//            <button type="button"
+//                    ng-click="openOnWordDialog()"
+//                    class="navbar-toggle suggesters"><i
+//                        class="fa fa-info"></i></button>
+//        </div>
+//    </div>
+//</nav>

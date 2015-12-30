@@ -26,6 +26,13 @@ body {
         }
     }
     .navbar.top {
+        .container > .navbar-header,
+        .container-fluid > .navbar-header,
+        .container > .navbar-collapse,
+        .container-fluid > .navbar-collapse {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
         .navbar-brand {
             margin-left: initial;
         }
@@ -129,13 +136,24 @@ body {
                 box-shadow: none;
                 margin: initial;
                 padding: initial;
-                input {
-                    height: 34px;
+                .fix() {
+                    float: none !important;
+                    display: block !important;
+                    width: 100% !important;
                 }
-                i {
-                    color: @navbar-menu-hr;
-                    font-size: 16px;
-                    line-height: 14px;
+                .fix();
+                .form-group {
+                    .fix();
+                    input {
+                        padding-left: 45px;
+                        .fix();
+                        height: 34px;
+                    }
+                    i {
+                        color: @navbar-menu-hr;
+                        font-size: 1.5em;
+                        line-height: 14px;
+                    }
                 }
             }
         }
@@ -144,8 +162,13 @@ body {
             .navbar-brand .title {
                 font-family: @theme-font-family;
                 font-weight: normal;
-                color: @navbar-inverse-color;
                 margin: initial;
+                color: @navbar-inverse-color;
+                text-decoration: none;
+                a {
+                    color: @navbar-inverse-color;
+                    text-decoration: none;
+                }
             }
             .nav-tabs a {
                 text-decoration: none;

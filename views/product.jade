@@ -1,0 +1,37 @@
+extends ./layout.jade
+block header
+    .container-fluid.product-details-header(ng-controller="productCtrl as ctrl")
+        div.product-details-image(style="{{'background-image:url('+ctrl.productImageSrc+')'}}")
+        div.product-details-title
+            h1(fill-with-lorem-ipsum="15",is-title)
+            .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2.search-tags
+                search-tag(ng-repeat="i in [0,1,2,3,4,5,6]",href="#")
+
+    .container-fluid.product-details-header.row.section(ng-controller="productCtrl as ctrl")
+        div.product-details-avatars
+            user(model="item", ng-repeat="item in ctrl.authors")
+        div.product-details-names
+            div AUTHOR
+                span(ng-if="::ctrl.authors.length>1") S
+                | :
+            div(ng-repeat="item in ctrl.authors")
+                a(href="",fill-with-lorem-ipsum="15",is-name)
+        p.product-details-description.col-lg-8.col-lg-offset-2(fill-with-lorem-ipsum="325",is-text)
+        .clearfix
+
+        .row.row-centered
+            ul.product-info.product-details.col-centered.col-xs-6.col-sm-5.col-md-4.col-lg-3
+                li Lectures:
+                    span 10 + 2 bonus
+                li Price:
+                    span.price(fill-with-lorem-ipsum, is-price)
+
+        .product-details-bottom.row.row-centered.section(ng-controller="productCtrl as ctrl")
+            .col-sm-3.col-sm-centered
+                a.btn-lg.btn(href="#") Buy
+            .col-sm-1.col-sm-centered.or OR
+            .col-sm-3.col-sm-centered
+                a.btn-lg.btn(href="#") Reserve
+
+block content
+    .section.section-info-row

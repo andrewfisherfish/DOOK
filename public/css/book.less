@@ -7,10 +7,13 @@
 // ==========================================
 @import "_variables.less";
 
-@navbar-inverse-bg: @theme-bg-color;
-@navbar-inverse-border: @theme-border-color;
+@navbar-inverse-bg: #3b3e43;
+//@theme-bg-color;
+@navbar-inverse-border: #24262b;
+//@theme-border-color;
 @navbar-inverse-color: @theme-color;
-@navbar-menu-hr: #4e83bc;
+@navbar-menu-hr: #4f5257;
+//#4e83bc;
 
 @navbar-section-margin: 32px;
 
@@ -18,13 +21,15 @@
 
 @screen-sm: 700px;
 
-@navbar-expand-plus-height: 5px; //25px;
+@navbar-expand-plus-height: 5px;
+//25px;
 
 @navbar-height: 80px;
 
 @navbar-height-extended: 202px;
 
-@navbar-height-min: 51px; //69px;
+@navbar-height-min: 51px;
+//69px;
 
 @navbar-height-min-extended: 124px;
 
@@ -166,6 +171,9 @@ body {
     }
     &:not(:last-of-type) {
         .navbar-hr-bottom(@navbar-menu-hr);
+    }
+    p {
+        font-size: 14px;
     }
 }
 
@@ -410,4 +418,36 @@ body {
 
 preview {
     color: red;
+}
+
+.animate-if {
+
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave {
+    transition: opacity 250ms;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.animate-show {
+    opacity: 1;
+}
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove {
+    transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+    opacity: 0;
 }

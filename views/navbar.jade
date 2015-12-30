@@ -1,0 +1,48 @@
+nav(role="navigation",
+ng-init="uiState.switch({'isNavbarCollapsed':true,'isNavbarSearch':false})",
+ng-class="{'is-navbar-collapsed':uiState.is('isNavbarCollapsed'),'is-navbar-search':uiState.is('isNavbarSearch')}",
+class="navbar navbar-inverse top")
+    .container-fluid
+        .navbar-header.navbar-search-hide
+            a.navbar-brand(href='/')
+                span.logo
+                    img(src='img/logo-white.svg')
+            ul.nav.pull-right.ul-buttons.container.navbar-toggle-ul
+                li.pull-right
+                    button.navbar-button(ng-click="uiState.switch('isNavbarCollapsed')", type='button')
+                        i.fa.fa-bars
+                li.pull-right
+                    button.navbar-button(ng-click="uiState.switch({'isNavbarSearch':true,'isNavbarCollapsed':true})", type='button')
+                        i.fa.fa-search
+                li.pull-right
+                    button.navbar-button(type='button')
+                        i.fa.fa-user
+        .navbar-search.navbar-search-show
+            .navbar-brand-search
+                .form-group.inner-addon.left-addon
+                    i.fa.fa-search
+                    input.form-control(type='search')
+            button.navbar-toggle-like(ng-click="uiState.switch('isNavbarSearch')", type='button')
+                i.fa.fa-close
+        .navbar-collapse.navbar-search-hide
+            ul.nav.navbar-nav.content-menu
+                li
+                    a(href='/Products')
+                        h4 Products
+                li
+                    a(href='/Pricing')
+                        h4 Pricing
+                li
+                    a(href='/About')
+                        h4 About
+            ul.nav.navbar-nav.navbar-right.ul-buttons.user-menu
+                li
+                    button.navbar-button(type='button')
+                        i.fa.fa-user
+                li
+                    button.navbar-button(ng-click="uiState.switch({'isNavbarSearch':true,'isNavbarCollapsed':true})", type='button')
+                        i.fa.fa-search
+
+
+
+    block header
