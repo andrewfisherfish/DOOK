@@ -15,8 +15,37 @@
 
     module.value('fakeData', window.fakeData);
 
-    module.run(['$rootScope', 'uiState', function ($rootScope, uiState) {
+    module.run(['$rootScope', 'uiState', '$window', function ($rootScope, uiState, $window) {
         $rootScope.uiState = uiState;
+
+        (function initStateResizer() {
+
+            var sizes = {
+                'screen-xs-max': 480 - 1,
+                'screen-sm-max': 768 - 1,
+                'screen-md-max': 992 - 1
+            };
+
+            var getSize = function () {
+                return {
+                    'h': $window.innerHeight,
+                    'w': $window.innerWidth
+                };
+            };
+
+            var initStates = function (newValue) {
+                uiState.switch('screen-xs', newValue.w < sizes['screen-xs-max']);
+                uiState.switch('screen-sm', newValue.w < sizes['screen-sm-max'] && newValue.w >= sizes['screen-xs-max']);
+                uiState.switch('screen-md', newValue.w < sizes['screen-md-max'] && newValue.w >= sizes['screen-sm-max']);
+                uiState.switch('screen-lg', newValue.w >= sizes['screen-md-max']);
+            };
+
+            initStates(getSize());
+
+            angular.element($window).bind('resize', function () {
+                initStates(getSize());
+            });
+        }());
     }]);
 
     module.controller('mainCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
@@ -162,6 +191,16 @@
             templateUrl: '/indexApp/views/user.html',
             link: function (scope, el, attr) {
 
+            }
+        }
+    }]);
+
+    module.directive('userLoggedIn', [function () {
+        return {
+            replace: true,
+            templateUrl: '/indexApp/views/user-logged-in.html',
+            link: function (scope, el, attr) {
+                scope.model = getUsers(1, true)[0];
             }
         }
     }]);

@@ -1,4 +1,8 @@
-html(ng-controller="mainCtrl")
+html(
+ng-init="uiState.switch('isLoggedIn',false)",
+ng-controller="mainCtrl",
+ng-class="{'is-logged-in':uiState.is('isLoggedIn',false)}"
+)
     head
         title
         meta(name="viewport" content="width=device-width, initial-scale=1")

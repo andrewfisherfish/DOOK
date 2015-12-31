@@ -147,17 +147,56 @@
     module.service('uiState', [function () {
         var statesContainer = {};
 
-        this.get = function (name, customStatesContainer) {
+        var uiState = this;
+
+        uiState.get = function (name, customStatesContainer) {
             var container = customStatesContainer || statesContainer;
             return container[name];
         };
 
-        this.is = function (name, val, customStatesContainer) {
+        uiState.is = function (name, val, customStatesContainer) {
             var container = customStatesContainer || statesContainer;
+
+            if (name == 'screen-md') {
+                console.log(container[name]);
+            }
+
             if (_.isUndefined(val) || _.isNull(val))
                 return container[name] === true;
             else
                 return container[name] === val;
+        };
+
+        var multiSwitch = function (val, args) {
+            var customStatesContainer;
+            if (_.isObject(args[args.length - 1])) {
+                customStatesContainer = args[args.length - 1];
+                args.pop();
+            }
+            var container = customStatesContainer || statesContainer;
+            _.each(args, function (propName) {
+                if (!_.isString(propName)) {
+                    throw new Error('uiState: prop name should be string.');
+                }
+
+                if (_.isBoolean(container[propName])
+                    || _.isUndefined(container[propName])
+                    || _.isNull(container[propName])) {
+                    container[propName] = val;
+                }
+            });
+        };
+
+        uiState.switchOn = function () {
+            multiSwitch(true, arguments);
+
+            return uiState;
+        };
+
+        uiState.switchOff = function () {
+            multiSwitch(false, arguments);
+
+            return uiState;
         };
 
         this.switch = function (name, val, customStatesContainer) {
@@ -171,6 +210,8 @@
             else {
                 container[name] = val;
             }
+
+            return uiState;
         }
     }]);
 

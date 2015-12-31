@@ -1,6 +1,6 @@
 extends ./layout.jade
 block content
-    .section.section-wide.section-condensed.section-info-row
+    .section.section-wide.section-condensed.section-info-row(ng-init="uiState.switch('tagsAreVisible',false)")
         .container.container-info-row.container-product
             .row.row-centered.row-margined-top.row-margined-bottom
                 h1.info-row-title Products
@@ -10,8 +10,10 @@ block content
                         i.fa.fa-search
                         input.form-control(type="search")
             .row.row-centered.row-margined-bottom
-                .col-xs-12.col-xs-offset-0.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1.col-lg-10.col-lg-offset-1.search-tags
+                .col-xs-12.col-xs-offset-0.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1.col-lg-10.col-lg-offset-1.search-tags.hide-on-sm(ng-class="{'hide-on-sm-disabled':uiState.is('tagsAreVisible',true)}")
                     search-tag(ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]")
+                .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2.search-tags-toggle.show-on-sm(ng-if="uiState.is('tagsAreVisible',false)")
+                    button.btn.btn-lg(ng-click="uiState.switch('tagsAreVisible')") More Options
         .container.container-info-row.container-product
             .row
                 .col-sm-6.col-md-4
