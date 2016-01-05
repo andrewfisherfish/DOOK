@@ -6,6 +6,7 @@
         'ui.bootstrap',
         'Lectures.UI',
         'Lectures.DTO',
+        'Lectures.Utils',
         'angular.filter'
     ]);
 
@@ -51,48 +52,6 @@
     module.controller('mainCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
 
     }]);
-
-    module.directive('fillWithLoremIpsum', ['loremIpsumService', '$compile',
-        function (loremIpsumService, $compile) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attr) {
-                    var length = (attr.fillWithLoremIpsum || 1000) * 1;
-                    if ('max' in attr && 'min' in attr) {
-                        length = getRandomInt(attr.min * 1, attr.max * 1)
-                    }
-                    loremIpsumService.get(length).then(function (data) {
-                        $compile(element.contents())(scope);
-
-                        if ('isPrice' in attr) {
-                            data = getRandomInt(50, 100);
-                        }
-
-                        if ('isTitle' in attr || 'isName' in attr) {
-                            data = data.replace(/[^a-zA-Z-\s]/g, '');
-                        }
-
-                        if ('isName' in attr) {
-                            var name = [
-                                (data.charAt(0).toUpperCase() + data.substring(1, 5).toLowerCase()).replace(/[^a-zA-Z]/g, ''),
-                                (data.charAt(6).toUpperCase() + data.substring(6, 11).toLowerCase()).replace(/[^a-zA-Z]/g, '')
-                            ];
-
-                            data = name.join(' ');
-                        }
-
-                        if ('isText' in attr) {
-                            if (data.charAt(data.length - 1) != '.')
-                                data += '.';
-                        }
-
-                        element.html(data);
-                        return data;
-                    });
-                }
-            }
-        }
-    ]);
 
     var getRandomInt = function (min, max) {
         if (min === max)return min;

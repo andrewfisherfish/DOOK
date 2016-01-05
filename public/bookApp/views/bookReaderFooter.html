@@ -1,0 +1,10 @@
+<div class="book-reader-footer">
+    <button type="button"
+            ng-repeat="item in minimized"
+            ng-click="remove(item,$index)"
+            random-background-color
+            preview="{{item.tagPhrase}}"
+            class="navbar-toggle suggesters">
+        <span class="letter" ng-bind="item.caption"></span>
+    </button>
+</div>

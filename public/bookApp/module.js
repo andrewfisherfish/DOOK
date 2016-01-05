@@ -5,6 +5,7 @@
     var module = angular.module('Lectures.Book', [
         'Lectures.UI',
         'Lectures.DTO',
+        'Lectures.Utils',
         'ui.bootstrap',
         'angular.filter',
         'ngTouch'
@@ -18,16 +19,6 @@
 
     module.run(['$rootScope', '$filter', 'uiState', 'loremIpsumService',
         function ($rootScope, $filter, uiState, loremIpsumService) {
-            _.each(fakeData.items, function (item, index) {
-                _.extend(item, {
-                    text: '...nec magna eros quis ac nec tortor nunc massa. Non sit neque diam mus nulla. Suspendisse porta ...',
-                    dateTime: helper.randomDate(new Date(2012, 0, 1), new Date())
-                });
-                item.formattedDateTime = $filter('date')(item.dateTime, 'yyyyMM');
-            });
-
-            $rootScope.items = fakeData.items;
-
             $rootScope.uiState = uiState;
 
             var openText = function () {
@@ -100,37 +91,104 @@
         }
     }]);
 
-    module.directive('displayText', ['loremIpsumService', '$compile', '$window', function (loremIpsumService, $compile, $window) {
-        var fillData = function (scope, element) {
-            return loremIpsumService.get().then(function (data) {
-                element.html(data);
-                $compile(element.contents())(scope);
-                return data;
-            }).then(function () {
-                $window.scrollTo(0, 0);
-            });
-        };
+    module.directive('bookReaderParent', ['loremIpsumService', '$compile', '$window', function (loremIpsumService, $compile, $window) {
         return {
             restrict: 'A',
-            link: fillData,
             controller: ['$element', '$scope', function ($element, $scope) {
-                fillData($scope, $element);
+                var self = this;
+                this.minimized = [];
+                this.minimizedPush = function (data) {
+                    var index = _.findIndex(self.minimized, function (o) {
+                        return o.tagPhrase === data.tagPhrase;
+                    });
+
+                    if (index > -1) {
+                        self.minimized.splice(index, 1);
+                    }
+
+                    var cutOffLen = self.minimized.length - Math.floor($window.innerWidth / 65) + 1;
+
+                    if (cutOffLen > 0) {
+                        self.minimized.splice(0, cutOffLen);
+                    }
+
+                    self.minimized.push(data);
+                };
                 this.open = function () {
-                    return fillData($scope, $element);
+                    throw new Error('text container is not initialized yet');
                 }
             }]
         }
     }]);
 
+    module.directive('bookReaderFooter', ['loremIpsumService', '$compile', '$window',
+        function (loremIpsumService, $compile, $window) {
+            return {
+                restrict: 'A',
+                replace: true,
+                require: '^bookReaderParent',
+                templateUrl: '/bookApp/views/bookReaderFooter.html',
+                link: function (scope, element, attr, ctrl) {
+                    scope.$watch(function () {
+                        return ctrl.minimized;
+                    }, function (list) {
+                        scope.minimized = list;
+                    });
+
+                    scope.remove = function (item, $index) {
+                        ctrl.minimized.splice($index, 1);
+                    };
+                }
+            }
+        }
+    ]);
+
+    module.directive('randomBackgroundColor', ['helper', function (helper) {
+        return function (scope, element, attr) {
+            element.css('background-color', 'rgba(' + helper.randomInt(0, 255) + ',' + helper.randomInt(0, 255) + ',' + helper.randomInt(0, 255) + ',0.8)');
+        }
+    }]);
+
+    module.directive('bookReaderText', ['loremIpsumService', '$compile', '$window', 'uiState',
+        function (loremIpsumService, $compile, $window, uiState) {
+            var fillData = function (scope, element, attr, ctrl) {
+                return loremIpsumService.get().then(function (data) {
+                    element.html(data);
+                    $compile(element.contents())(scope);
+                    return data;
+                }).then(function () {
+                    $window.scrollTo(0, 0);
+                });
+            };
+            return {
+                restrict: 'A',
+                require: '^bookReaderParent',
+                link: function (scope, element, attr, ctrl) {
+                    fillData(scope, element);
+                    ctrl.open = function () {
+                        uiState.switchOff('isContents', 'isMenu', 'isSearch');
+                        return fillData(scope, element);
+                    };
+                },
+                controller: ['$element', '$scope', function ($element, $scope) {
+                    fillData($scope, $element);
+                }]
+            }
+        }
+    ]);
+
+
     module.directive('preview', ['loremIpsumService', '$uibModal', '$compile', function (loremIpsumService, $uibModal, $compile) {
         return {
-            require: ['?^modal', '?^displayText'],
+            require: ['?^modal', '?^bookReaderText', '^bookReaderParent'],
             scope: false,
+            restrict: 'AE',
             link: function (scope, el, attr, ctrl) {
                 var modalInstance;
                 var modalCtrl = ctrl[0];
-                var displayTextCtrl = ctrl[1];
-                var tagPhrase = el.html();
+                var bookReaderTextCtrl = ctrl[1];
+                var bookReaderParentCtrl = ctrl[2];
+                var tagPhrase = attr.preview || el.html();
 
                 var openHere = function () {
                     return loremIpsumService.get().then(function (data) {
@@ -148,8 +206,15 @@
                                     isModal: true,
                                     tagPhrase: tagPhrase,
                                     loremIpsum: loremIpsum,
+                                    minimize: function () {
+                                        bookReaderParentCtrl.minimizedPush({
+                                            caption: tagPhrase.slice(0, 2),
+                                            tagPhrase: tagPhrase
+                                        });
+                                        $uibModalInstance.dismiss();
+                                    },
                                     open: function () {
-                                        displayTextCtrl.open()
+                                        bookReaderParentCtrl.open()
                                             .then($uibModalInstance.dismiss);
                                     },
                                     cancel: function () {
@@ -173,12 +238,6 @@
             }
         }
     }]);
-
-    var helper = {
-        randomDate: function (start, end) {
-            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-        }
-    };
 
     _.each([
         'history',

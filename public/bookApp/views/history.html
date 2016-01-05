@@ -13,15 +13,16 @@
 
         <div class="section section-condensed">
             <div class="media-left media-middle">
-                <h4 class="title" ng-bind="item.title"></h4>
-                <p class="text-preview" ng-bind="item.text"></p>
+                <h4 class="title" fill-with-lorem-ipsum is-title max="35" min="15"></h4>
+
+                <p class="text-preview" fill-with-lorem-ipsum is-title max="85" min="35"></p>
             </div>
             <div class="media-right media-middle">
                 <i class="fa fa-chevron-right"></i>
             </div>
 
             <div class="media-middle date-container">
-                <i class="date-time pull-right" ng-bind="item.dateTime | date:'medium'"></i>
+                <i class="date-time pull-right" fill-with-lorem-ipsum is-date is-medium></i>
             </div>
         </div>
     </a>

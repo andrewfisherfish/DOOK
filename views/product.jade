@@ -19,10 +19,13 @@ block header
         p.product-details-description.col-lg-8.col-lg-offset-2(fill-with-lorem-ipsum="325",is-text)
         .clearfix
 
-        .row.row-centered
+        .row-centered
             ul.product-info.product-details.col-centered.col-xs-6.col-sm-5.col-md-4.col-lg-3
-                li Lectures:
-                    span 10 + 2 bonus
+                li Category:
+                    span
+                        a(href="#") Books
+                li Pages:
+                    span 342
                 li Price:
                     span.price(fill-with-lorem-ipsum, is-price)
 
@@ -34,4 +37,33 @@ block header
                 a.btn-lg.btn(href="#") Reserve
 
 block content
+    .section.section-wide.section-info-row
+        .container.container-info-row
+            .row-centered.row-margined-top
+                .col-sm-12
+                    h1.info-row-title Table Of Contents
+        .product-details-contents
+            div.chapter(ng-repeat="i in [0,1,2,3,4,5,6]")
+                .centralizer
+                    h2
+                        span.num(ng-bind="$index+1")
+                        a(href="#")
+                            span(fill-with-lorem-ipsum, is-title, max="35", min="15")
+                            i.fa.fa-link
+                    p(fill-with-lorem-ipsum, is-title, max="205", min="105")
+                    h3.hidden-xs(ng-repeat="i in [0,1,2,3,4,5,6]")
+                        a(href="#")
+                            span(fill-with-lorem-ipsum, is-title, max="105", min="15")
+                            i.fa.fa-link
     .section.section-info-row
+        .container.container-info-row.product-details-tests
+            .row.row-centered.row-margined-top
+                .col-sm-12
+                    h1.info-row-title Check Yourself
+            .row.row-centered.row-margined-bottom
+                .col-sm-8.col-sm-offset-2.hidden-xs
+                    h4.info-row-desc(fill-with-lorem-ipsum='165')
+            .row.row-centered.row-margined-bottom
+                .col-sm-6.col-md-4.col-lg-4.col-sm-centered
+                    a.btn.btn-lg(href="#")
+                        div Start Test

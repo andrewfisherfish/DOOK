@@ -1,6 +1,6 @@
 nav(role="navigation",
 ng-init="uiState.switch({'isNavbarNavigation':uiState.is('screen-md')||uiState.is('screen-lg'),'isNavbarSearch':false,'isNavbarLogin':false})",
-ng-class="{'is-navbar-navigation':uiState.is('isNavbarNavigation'),'is-navbar-login':uiState.is('isNavbarLogin'),'is-navbar-search':uiState.is('isNavbarSearch')}",
+ng-class="{'is-navbar-navigation':uiState.is('isNavbarNavigation'),'is-navbar-login':uiState.is('isNavbarLogin'),'is-navbar-search':uiState.is('isNavbarSearch'),'user-menu-on':uiState.is('userMenuOn')}",
 class="navbar navbar-inverse top")
     .container-fluid
         .navbar-header.navbar-search-hide
@@ -10,13 +10,19 @@ class="navbar navbar-inverse top")
             ul.nav.pull-right.ul-buttons.container.navbar-toggle-ul
                 li.pull-right
                     button.navbar-button(ng-click="uiState.switchOff('isNavbarLogin','isNavbarSearch').switch('isNavbarNavigation')", type='button')
-                        i.fa.fa-bars
+                        i.fa.fa-bars(ng-show="uiState.is('isNavbarNavigation',false)")
+                        i.fa.fa-close(ng-show="uiState.is('isNavbarNavigation',true)")
                 li.pull-right
                     button.navbar-button.login(ng-if="uiState.is('isLoggedIn',false)",ng-click="uiState.switch('isLoggedIn',true)", type='button')
                         h4.hide-on-xs Log In
                         i.fa.fa-user
                 li.pull-right
-                    button.navbar-button.user(ng-if="uiState.is('isLoggedIn',true)",ng-click="uiState.switchOff('isNavbarSearch','isNavbarNavigation').switch('isNavbarLogin')", type='button')
+                    button.navbar-button.user(
+                    ng-if="uiState.is('isLoggedIn',true)",
+                    type='button',
+                    ng-mouseleave="uiState.switch('userMenuOn',false)",
+                    ng-mouseenter="uiState.switch('userMenuOn',true)"
+                    )
                         user-logged-in
                 //li.pull-right
                 //    button.navbar-button(ng-click="uiState.switch({'isNavbarSearch':true,'isNavbarLogin':false,'isNavbarNavigation':false})", type='button')
@@ -30,40 +36,50 @@ class="navbar navbar-inverse top")
             button.navbar-toggle-like(ng-click="uiState.switch('isNavbarSearch')", type='button')
                 i.fa.fa-close
 
-        .navbar-search-hide
-            ul.nav.navbar-nav.content-menu.navbar-login-show
-                li
-                    a(href='/Settings')
-                        h4 Settings
-                li
-                    a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
-                        h4 Log out
-            ul.nav.navbar-nav.content-menu.navbar-navigation-show
-                li
-                    a(href='/Products')
-                        h4 Products
-                li
-                    a(href='/Authors')
-                        h4 Authors
-                li
-                    a(href='/About')
-                        h4 About
+        ul.nav.navbar-nav.content-menu.navbar-login-show.navbar-search-hide
+            li
+                a(href='/Settings')
+                    h4 Settings
+            li
+                a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
+                    h4 Log out
+        ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
+            li
+                a(href='/Products')
+                    h4 Products
+            li
+                a(href='/Authors')
+                    h4 Authors
+            li
+                a(href='/About')
+                    h4 About
 
-            ul.nav.navbar-nav.navbar-right.ul-buttons.user-menu
-                //li
-                //    button.navbar-button(ng-click="uiState.switch({'isNavbarSearch':true,'isNavbarNavigation':false})", type='button')
-                //        i.fa.fa-search
-                li
-                    button.navbar-button(ng-if="uiState.is('isNavbarLogin',true)",ng-click="uiState.switchOff('isNavbarSearch','isNavbarLogin').switch('isNavbarNavigation',true)", type='button')
-                        i.fa.fa-bars
-                li
-                    button.navbar-button.login(ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',false)",ng-click="uiState.switch('isLoggedIn',true)", type='button')
-                        h4.hide-on-xs Log In
-                        i.fa.fa-user
-                li
-                    button.navbar-button.user(ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)",ng-click="uiState.switchOff('isNavbarSearch','isNavbarNavigation').switch('isNavbarLogin',true)", type='button')
-                        user-logged-in
+        ul.nav.navbar-nav.navbar-right.ul-buttons.user-menu.navbar-search-hide
+            li
+                button.navbar-button.login(ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',false)",ng-click="uiState.switch('isLoggedIn',true)", type='button')
+                    h4.hide-on-xs Log In
+                    i.fa.fa-user
+            li
+                button.navbar-button.user(
+                ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)",
+                type='button'
+                ng-mouseleave="uiState.switch('userMenuOn',false)",
+                ng-mouseenter="uiState.switch('userMenuOn',true)"
+                )
+                    user-logged-in
 
-
+    ul.nav.navbar-nav.content-menu-sub.container-fluid(
+    ng-mouseleave="uiState.switch('userMenuOn',false)",
+    ng-mouseenter="uiState.switch('userMenuOn',true)"
+    )
+        li
+            a(
+            href='#',
+            ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"
+            )
+                h4 Log out
+        li
+            a(href='/Settings')
+                h4 Settings
 
     block header

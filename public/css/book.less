@@ -17,14 +17,14 @@
 
 @navbar-section-margin: 32px;
 
-@navbar-copyright-color: rgba(255, 255, 255, 0.20);
+@navbar-copyright-color: rgba(255, 255, 255, 0.6);
 
 @screen-sm: 700px;
 
 @navbar-expand-plus-height: 5px;
 //25px;
 
-@navbar-height: 80px;
+@navbar-height: 95px;
 
 @navbar-height-extended: 202px;
 
@@ -155,7 +155,6 @@ body {
 
 .section.results {
     &:not(:last-child) {
-        .navbar-hr-bottom(@navbar-inverse-border);
         margin-bottom: 15px;
     }
 }
@@ -271,8 +270,8 @@ body {
         padding-bottom: 12px;
     }
     h4 {
+        margin: 21px 0 0;
         a {
-            margin: 21px 0 0;
             font-size: 22.5px;
             font-family: 'headline-semi-normal', Helvetica, Arial, sans-serif;
             font-weight: 400;
@@ -298,6 +297,19 @@ body {
             line-height: 16px;
             text-align: center;
             margin: 10px 0;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .footer-social {
+            .fa {
+                font-size: 2em;
+                color: @navbar-copyright-color;
+                .btn-hovered-color(@theme-border-color);
+            }
         }
     }
 }
@@ -364,7 +376,7 @@ body {
     }
 }
 
-.navbar-toggle {
+.navbar-button {
     &:active, &.active {
         background-color: rgba(0, 0, 0, 0.5) !important;
     }
@@ -417,7 +429,7 @@ body {
 }
 
 preview {
-    color: red;
+    color: @theme-bg-color;
 }
 
 .animate-if {
@@ -450,4 +462,10 @@ preview {
 
 .animate-show.ng-hide {
     opacity: 0;
+}
+
+nav .navbar-button {
+    .fa {
+        font-size: 2em;
+    }
 }

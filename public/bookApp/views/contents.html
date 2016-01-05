@@ -1,4 +1,6 @@
 <div class="media contents">
-    <h1><a href="#" ng-bind="item.title"></a></h1>
-    <h4 ng-repeat="subItem in item.children"><a href="#" ng-bind="subItem.title"></a></h4>
+    <h1><a href="#" fill-with-lorem-ipsum is-title max="35" min="15" preview></a></h1>
+    <h4 ng-repeat="subItem in [0,1,2,3,4]">
+        <a href="#" fill-with-lorem-ipsum is-title max="35" min="15" preview></a>
+    </h4>
 </div>

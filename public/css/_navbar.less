@@ -1,5 +1,6 @@
 body {
     .navbar {
+        color: #fff;
         &.top {
             .navbar-header {
                 .navbar-hr-bottom(@navbar-inverse-border);
@@ -19,7 +20,8 @@ body {
                 //Sticky styles
                 position: fixed !important;
                 z-index: 3;
-                bottom: 0;
+                bottom: 100px;
+                height: 0;
                 width: 100%;
                 border: none;
             }
@@ -65,7 +67,7 @@ body {
             .row > div {
                 margin: 7px 0 7px 0;
                 padding: 0;
-                > .navbar-toggle {
+                > .navbar-button {
                     background-color: rgba(0, 0, 0, 0.1);
                     border: none;
                     color: @navbar-inverse-color;
@@ -103,11 +105,10 @@ body {
             height: 100%;
             overflow: auto;
         }
-        .navbar-toggle.switcher {
+        .navbar-button.switcher {
             color: @navbar-inverse-color;
             border: none;
-            padding: 1px 5px;
-            font-size: 26px;
+            padding: 0 15px;
         }
         .navbar-toggle.left {
             float: left;
@@ -231,12 +232,12 @@ body {
             }
             &:not(.content-expanded) {
                 .navbar-brand {
-                    padding: 9px 6px 6px 6px;
+                    padding: 13px 6px 6px 6px;
                 }
             }
             &.content-expanded {
                 .navbar-brand {
-                    padding: 9px 6px 6px 6px;
+                    padding: 8px 6px 6px 6px;
                     height: initial;
                 }
             }
@@ -259,7 +260,7 @@ body {
     &:not(.has-sticky) {
         .navbar.top {
             .navbar-brand {
-                padding: 9px 6px 6px 6px;
+                padding: 13px 6px 6px 6px;
                 h4.title {
                     font-size: 1.5em;
                 }
@@ -269,7 +270,7 @@ body {
                 }
                 h3.title.sub-bottom {
                     font-size: 0.7em;
-                    margin-top: 2px;
+                    margin-top: 5px;
                 }
             }
             &.is-extended {
@@ -282,7 +283,7 @@ body {
                 }
                 .container-menu {
                     .row > div {
-                        > .navbar-toggle {
+                        > .navbar-button {
                             height: 80px;
                             .fa {
                                 font-size: 3em;
@@ -302,10 +303,10 @@ body {
             &.content-expanded {
                 .container-search {
                     i {
-                        line-height: 46px;
+                        line-height: 55px;
                     }
                     input {
-                        height: 66px;
+                        height: 72px;
                         font-size: 22px;
                     }
                 }
@@ -319,14 +320,15 @@ body {
             .transition(height, @transition-duration);
         }
         &.is-full-screen:not(.is-at-top) {
-            .navbar-header .navbar-toggle.switcher {
+            .navbar-header .navbar-button.switcher {
                 .navbar-vertical-align(64px);
+                color: #333;
                 .fa {
                     font-weight: bold;
                 }
             }
         }
-        .navbar-toggle.switcher {
+        .navbar-button.switcher {
             .transition(margin, @transition-duration);
         }
         .navbar-brand {
@@ -370,21 +372,29 @@ body.no-scroll {
     border: solid 1px rgba(0, 0, 0, 0.2);
     color: @navbar-inverse-bg;
     border-radius: 100px;
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+
+    .letter {
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: Lato;
+        line-height: 30px;
+        color: #fff;
+    }
     .fa {
         font-size: 1em;
     }
 }
 
-.navbar-toggle.navbar-settings {
+.navbar-button.navbar-settings {
     background-color: rgba(0, 0, 0, 0.1);
     border: none;
     float: initial;
-    height: 100%;
+    height: 50px;
     width: 100%;
-    font-size: 2em;
+    font-size: 1em;
     color: #fff;
     padding: 0;
     margin: 0;
@@ -409,4 +419,8 @@ body.no-scroll {
     height: 100/4%;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.padding-5 {
+    padding: 5px;
 }
