@@ -2,8 +2,8 @@
  * Created by andre on 1/3/2016.
  */
 (function (angular, document, _) {
-    var module = angular.module('Lectures.Utils', [
-        'Lectures.DTO'
+    var module = angular.module('DOOK.Utils', [
+        'DOOK.DTO'
     ]);
 
     var getRandomInt = function (min, max) {
@@ -12,6 +12,9 @@
     };
 
     var helper = {
+        formatInt: function (n) {
+            return n > 9 ? "" + n : "0" + n;
+        },
         randomInt: function (min, max) {
             if (min === max)return min;
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -28,28 +31,44 @@
             return {
                 restrict: 'A',
                 link: function (scope, element, attr) {
-                    var length = (attr.fillWithLoremIpsum || 1000) * 1;
-                    if ('max' in attr && 'min' in attr) {
-                        length = getRandomInt(attr.min * 1, attr.max * 1)
+                    if ('isCover' in attr) {
+                        element.css('background-image', 'url("/img/products/product-' + helper.formatInt(helper.randomInt(1, 17)) + '.jpg")');
+                        return;
                     }
-                    loremIpsumService.get(length).then(function (data) {
-                        $compile(element.contents())(scope);
 
-                        if ('isDate' in attr) {
-                            data = helper.randomDate(new Date(2012, 0, 1), new Date())
-                        }
+                    if ('isAvatar' in attr) {
+                        element[0].src = '/img/avatar_0' + helper.randomInt(1, 5) + '.jpg';
+                        return;
+                    }
+
+                    if ('isPrice' in attr) {
+                        element.html(helper.randomInt(50, 100));
+                        return;
+                    }
+
+                    if ('isDate' in attr) {
+                        var data = helper.randomDate(new Date(2012, 0, 1), new Date());
 
                         if ('isMedium' in attr) {
-                            data = $filter('date')(data, 'medium')
+                            data = $filter('date')(data, 'medium');
                         }
 
                         if ('isFormatted' in attr) {
                             data = $filter('date')(data, 'yyyyMM');
                         }
 
-                        if ('isPrice' in attr) {
-                            data = getRandomInt(50, 100);
-                        }
+                        element.html(data);
+                        return;
+                    }
+
+                    var length = (attr.fillWithLoremIpsum || 1000) * 1;
+
+                    if ('max' in attr && 'min' in attr) {
+                        length = helper.randomInt(attr.min * 1, attr.max * 1)
+                    }
+
+                    loremIpsumService.get(length).then(function (data) {
+                        $compile(element.contents())(scope);
 
                         if ('isTitle' in attr || 'isName' in attr) {
                             data = data.replace(/[^a-zA-Z-\s]/g, '');
@@ -69,8 +88,9 @@
                                 data += '.';
                         }
 
-                        element.html(data);
                         return data;
+                    }).then(function (data) {
+                        element.html(data);
                     });
                 }
             }

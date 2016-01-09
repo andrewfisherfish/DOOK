@@ -1,7 +1,10 @@
 !function (angular, _) {
     'use strict';
 
-    var module = angular.module('Lectures.UI', []);
+    var module = angular.module('DOOK.UI', [
+        //'angular-inview',
+        'ui.bootstrap'
+    ]);
 
     module.directive('uiStickyNav', ['$document', '$window', 'throttle', 'uiState', directive]);
 
@@ -154,12 +157,24 @@
             return container[name];
         };
 
-        uiState.is = function (name, val, customStatesContainer) {
+        uiState.isAny = function () {
+            var customStatesContainer;
+            if (_.isObject(arguments[arguments.length - 1])) {
+                customStatesContainer = arguments[arguments.length - 1];
+                arguments.pop();
+            }
             var container = customStatesContainer || statesContainer;
 
-            if (name == 'screen-md') {
-                console.log(container[name]);
-            }
+            var name = arguments[0];
+            var values = Array.prototype.slice.call(arguments).splice(1);
+
+            return _.isUndefined(_.find(values, function (val) {
+                    return container[name] === val;
+                })) === false;
+        };
+
+        uiState.is = function (name, val, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
 
             if (_.isUndefined(val) || _.isNull(val))
                 return container[name] === true;
@@ -268,5 +283,64 @@
             }
         };
     }]);
+
+    _.each({
+        full: function (top, left, height, width) {
+            return top >= window.pageYOffset &&
+                left >= window.pageXOffset &&
+                (top + height) <= (window.pageYOffset + window.innerHeight) &&
+                (left + width) <= (window.pageXOffset + window.innerWidth)
+        },
+        any: function (top, left, height, width) {
+            return (top + height) > window.pageYOffset &&
+                (left + width) > window.pageXOffset &&
+                top < (window.pageYOffset + window.innerHeight) &&
+                left < (window.pageXOffset + window.innerWidth)
+        },
+        half: function (top, left, height, width) {
+            return ((top + height / 2 < (window.pageYOffset + window.innerHeight) &&
+                top + height / 2 > window.pageYOffset)
+                || (
+                    (top < (window.pageYOffset ) &&
+                    top + height > window.pageYOffset + window.innerHeight)
+                )) &&
+                left >= window.pageXOffset &&
+                (left + width) <= (window.pageXOffset + window.innerWidth)
+        }
+    }, function (is, key) {
+        var directiveName = 'inView' + key.charAt(0).toUpperCase() + key.slice(1);
+        module.directive(directiveName, [
+            '$window',
+            function ($window) {
+                return {
+                    scope: false,
+                    link: function (scope, element, attr) {
+                        function elementInViewport(el, type) {
+                            var top = el.offsetTop;
+                            var left = el.offsetLeft;
+                            var width = el.offsetWidth;
+                            var height = el.offsetHeight;
+
+                            while (el.offsetParent) {
+                                el = el.offsetParent;
+                                top += el.offsetTop;
+                                left += el.offsetLeft;
+                            }
+
+                            return is(top, left, height, width);
+                        }
+
+                        var windowEl = angular.element($window);
+                        var handler = function () {
+                            if (elementInViewport(element[0])) {
+                                scope.$eval(attr[directiveName]);
+                            }
+                        };
+                        windowEl.on('scroll', scope.$apply.bind(scope, handler));
+                    }
+                };
+            }
+        ]);
+    });
 
 }(angular, _);

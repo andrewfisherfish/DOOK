@@ -3,6 +3,6 @@
  */
 (function (angular, document, _) {
     angular.element(document).ready(function() {
-        angular.bootstrap(document.documentElement, ['Lectures.Account']);
+        angular.bootstrap(document.documentElement, ['DOOK.Account']);
     });
 }(angular, document, _));

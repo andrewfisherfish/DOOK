@@ -20,12 +20,16 @@ router.get('/product', function (req, res, next) {
     res.render('product', {});
 });
 
-router.get('/pricing', function (req, res, next) {
-    res.render('pricing', {});
+router.get('/authors', function (req, res, next) {
+    res.render('authors', {});
 });
 
 router.get('/about', function (req, res, next) {
     res.render('about', {});
+});
+
+router.get('/account', function (req, res, next) {
+    res.render('account', {});
 });
 
 module.exports = router;

@@ -1,48 +1,55 @@
 <div class="product {{productType}}">
     <div class="product-background"></div>
     <div class="product-body">
-
         <div class="product-image"
              style="{{'background-image:url('+productImageSrc+')'}}">
 
-            <h3 class="product-title" fill-with-lorem-ipsum="15" is-title></h3>
+            <h3 class="product-title if-short-hide" fill-with-lorem-ipsum="15" is-title></h3>
 
-            <div class="product-author ">
+            <div class="product-author if-short-hide">
                 <user class="pull-left" model="item" ng-repeat="item in authors"></user>
-            </div>
-            <div class="product-extra" uib-dropdown>
-                <button class="btn pull-right"
-                        uib-dropdown-toggle>
-                    <i class="fa fa-ellipsis-v"
-                       aria-expanded="true"></i></button>
-                <ul class="dropdown-menu pull-right" role="menu">
-                    <li role="menuitem"><a href="#">Buy</a></li>
-                    <li role="menuitem"><a href="#">Reserve</a></li>
-                    <li class="divider"></li>
-                    <li role="menuitem"><a href="#">Like</a></li>
-                </ul>
             </div>
         </div>
 
         <div class="product-bottom">
-            <p fill-with-lorem-ipsum min="50" max="300" is-title></p>
 
-            <div class="row row-centered">
+            <h4 class="product-title-short if-short-show" fill-with-lorem-ipsum="15" is-title></h4>
+
+            <p class="if-short-show" fill-with-lorem-ipsum min="20" max="50" is-title></p>
+
+            <p class="if-short-hide" fill-with-lorem-ipsum min="50" max="300" is-title></p>
+
+            <div class="row row-centered if-short-hide">
                 <ul class="product-info col-centered col-xs-8">
                     <li>Category: <span><a href="#" ng-bind="productCategory"></a></span></li>
                     <li>Authors: <span ng-repeat="item in authors">
                         <a href="#" fill-with-lorem-ipsum="15" is-name></a></span>
                     </li>
-                    <li ng-repeat="item in prodAttr" ng-bind-html="item"></li>
-                    <li>Price: <span class="price" fill-with-lorem-ipsum is-price></span></li>
+                    <li class="if-purchased-hide" ng-repeat="item in prodAttr" ng-bind-html="item"></li>
+                    <li class="if-purchased-hide">Price: <span class="price" fill-with-lorem-ipsum is-price></span></li>
                 </ul>
             </div>
 
-            <div class="button row">
+            <div class="button row if-short-hide">
                 <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <a href="{{bottomButton.link}}" class="btn" ng-bind="bottomButton.caption"></a>
                 </span>
             </div>
+        </div>
+
+        <a href="/product" class="product-link-cover if-short-show"></a>
+
+        <div class="product-extra" uib-dropdown>
+            <button class="btn pull-right"
+                    uib-dropdown-toggle>
+                <i class="fa fa-ellipsis-v"
+                   aria-expanded="true"></i></button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li role="menuitem"><a href="#">Buy</a></li>
+                <li role="menuitem"><a href="#">Reserve</a></li>
+                <li class="divider"></li>
+                <li role="menuitem"><a href="#">Like</a></li>
+            </ul>
         </div>
 
     </div>

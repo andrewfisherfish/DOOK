@@ -1,18 +1,63 @@
 extends ./layout.jade
 block header
-    .container-fluid.product-details-header(ng-controller="productCtrl as ctrl")
-        div.product-details-image(style="{{'background-image:url('+ctrl.productImageSrc+')'}}")
-        div.product-details-title
+    .container-fluid.product-details-header.subnav-container(
+    id="INFO"
+    ng-controller="productCtrl as ctrl"
+    ng-init="uiState.switch('isPurchased',false);uiState.switch('ACCOUNT_TAB','INFO')"
+    )
+        .product-details-image(fill-with-lorem-ipsum is-cover)
+        .product-details-title
             h1(fill-with-lorem-ipsum="15",is-title)
             .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2.search-tags
                 search-tag(ng-repeat="i in [0,1,2,3,4,5,6]",href="#")
+        ul(
+        class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'side-menu':'nav navbar-pills subnav'}}"
+        )
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','INFO')}"
+            ng-click="uiState.switch('ACCOUNT_TAB','INFO')"
+            )
+                a(
+                href="#INFO"
+                ).eclipse-text
+                    i.fa.fa-info
+                    span INFO
+            li.line
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','CONTENT')}"
+            ng-click="uiState.switch('ACCOUNT_TAB','CONTENT');"
+            )
+                a(
+                href="#CONTENT"
+                ).eclipse-text
+                    i.fa.fa-list-alt
+                    span CONTENT
+            li.line
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','TEST')}"
+            ng-click="uiState.switch('ACCOUNT_TAB','TEST')"
+            )
+                a(
+                href="#TEST"
+                ).eclipse-text
+                    i.fa.fa-check
+                    span TEST
 
-    .container-fluid.product-details-header.row.section(ng-controller="productCtrl as ctrl")
+
+
+    .container-fluid.product-details-header.row.section(
+    ng-controller="productCtrl as ctrl"
+    in-view-half="uiState.switch('ACCOUNT_TAB','INFO')"
+    ng-show="uiState.is('ACCOUNT_TAB','INFO')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    )
         div.product-details-avatars
             user(model="item", ng-repeat="item in ctrl.authors")
         div.product-details-names
             div AUTHOR
-                span(ng-if="::ctrl.authors.length>1") S
+                span(ng-if="::ctrl.authors.length>1") 'S
                 | :
             div(ng-repeat="item in ctrl.authors")
                 a(href="",fill-with-lorem-ipsum="15",is-name)
@@ -29,15 +74,33 @@ block header
                 li Price:
                     span.price(fill-with-lorem-ipsum, is-price)
 
-        .product-details-bottom.row.row-centered.section(ng-controller="productCtrl as ctrl")
-            .col-sm-3.col-sm-centered
-                a.btn-lg.btn(href="#") Buy
-            .col-sm-1.col-sm-centered.or OR
-            .col-sm-3.col-sm-centered
-                a.btn-lg.btn(href="#") Reserve
+        .product-details-bottom.row.row-centered.section(
+        ng-controller="productCtrl as ctrl"
+        )
+            .col-sm-3.col-sm-centered(ng-show="uiState.is('isPurchased',false)")
+                a.btn-lg.btn(
+                href="javascript:void(0)"
+                ng-click="uiState.switch('isPurchased',true)"
+                ) Buy
+            .col-sm-1.col-sm-centered.or(
+            ng-show="uiState.is('isPurchased',false)"
+            ) OR
+            .col-sm-3.col-sm-centered(ng-show="uiState.is('isPurchased',false)")
+                a.btn-lg.btn(
+                href="javascript:void(0)"
+                ng-click="uiState.switch('isPurchased',true)"
+                ) Reserve
+            .col-sm-3.col-sm-centered(ng-show="uiState.is('isPurchased')")
+                a.btn-lg.btn(
+                href="/book"
+                ) Open
 
 block content
-    .section.section-wide.section-info-row
+    .section.section-wide.section-info-row.dark-white(
+    id="CONTENT"
+    ng-show="uiState.is('ACCOUNT_TAB','CONTENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    in-view-half="uiState.switch('ACCOUNT_TAB','CONTENT')"
+    )
         .container.container-info-row
             .row-centered.row-margined-top
                 .col-sm-12
@@ -55,7 +118,12 @@ block content
                         a(href="#")
                             span(fill-with-lorem-ipsum, is-title, max="105", min="15")
                             i.fa.fa-link
-    .section.section-info-row
+    .section.section-info-row(
+    ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg')}"
+    id="TEST"
+    ng-show="uiState.is('ACCOUNT_TAB','TEST')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    in-view-half="uiState.switch('ACCOUNT_TAB','TEST')"
+    )
         .container.container-info-row.product-details-tests
             .row.row-centered.row-margined-top
                 .col-sm-12

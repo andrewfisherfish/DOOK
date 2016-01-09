@@ -2,7 +2,7 @@
  * Created by andre on 12/19/2015.
  */
 (function (angular, document, _) {
-    var module = angular.module('Lectures.DTO', []);
+    var module = angular.module('DOOK.DTO', []);
 
     module.service('loremIpsumService', ['$http', '$compile', function ($http, $compile) {
         _.extend(this, {

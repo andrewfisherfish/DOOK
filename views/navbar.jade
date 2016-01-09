@@ -1,5 +1,5 @@
 nav(role="navigation",
-ng-init="uiState.switch({'isNavbarNavigation':uiState.is('screen-md')||uiState.is('screen-lg'),'isNavbarSearch':false,'isNavbarLogin':false})",
+ng-init="uiState.switch({'isNavbarNavigation':uiState.is('screen-size','screen-md')||uiState.is('screen-size','screen-lg'),'isNavbarSearch':false,'isNavbarLogin':false})",
 ng-class="{'is-navbar-navigation':uiState.is('isNavbarNavigation'),'is-navbar-login':uiState.is('isNavbarLogin'),'is-navbar-search':uiState.is('isNavbarSearch'),'user-menu-on':uiState.is('userMenuOn')}",
 class="navbar navbar-inverse top")
     .container-fluid
@@ -44,6 +44,9 @@ class="navbar navbar-inverse top")
                 a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
                     h4 Log out
         ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
+            li(ng-if="uiState.is('isLoggedIn')")
+                a(href='/Purchased')
+                    h4 Purchased
             li
                 a(href='/Products')
                     h4 Products

@@ -2,11 +2,10 @@
  * Created by andre on 11/22/2015.
  */
 (function (angular, document, _) {
-    var module = angular.module('Lectures.Account', [
-        'ui.bootstrap',
-        'Lectures.UI',
-        'Lectures.DTO',
-        'Lectures.Utils',
+    var module = angular.module('DOOK.Account', [
+        'DOOK.UI',
+        'DOOK.DTO',
+        'DOOK.Utils',
         'angular.filter'
     ]);
 
@@ -35,16 +34,25 @@
             };
 
             var initStates = function (newValue) {
-                uiState.switch('screen-xs', newValue.w < sizes['screen-xs-max']);
-                uiState.switch('screen-sm', newValue.w < sizes['screen-sm-max'] && newValue.w >= sizes['screen-xs-max']);
-                uiState.switch('screen-md', newValue.w < sizes['screen-md-max'] && newValue.w >= sizes['screen-sm-max']);
-                uiState.switch('screen-lg', newValue.w >= sizes['screen-md-max']);
+                if (newValue.w < sizes['screen-xs-max']) {
+                    uiState.switch('screen-size', 'screen-xs');
+                } else if (newValue.w < sizes['screen-sm-max'] && newValue.w >= sizes['screen-xs-max']) {
+                    uiState.switch('screen-size', 'screen-sm');
+                } else if (newValue.w < sizes['screen-md-max'] && newValue.w >= sizes['screen-sm-max']) {
+                    uiState.switch('screen-size', 'screen-md');
+                } else if (newValue.w >= sizes['screen-md-max']) {
+                    uiState.switch('screen-size', 'screen-lg');
+                } else {
+                    uiState.switch('screen-size', 'screen-none');
+                }
             };
 
             initStates(getSize());
 
             angular.element($window).bind('resize', function () {
-                initStates(getSize());
+                $rootScope.$apply(function () {
+                    initStates(getSize());
+                });
             });
         }());
     }]);
@@ -100,7 +108,10 @@
         return {
             replace: true,
             templateUrl: '/indexApp/views/product.html',
-            link: function (scope) {
+            link: function (scope, element, attr) {
+                scope.isShort = 'short' in attr;
+                scope.isPurchased = 'purchased' in attr;
+
                 scope.authors = getUsers(3);
                 scope.productImageSrc = '/img/products/product-' + n(getRandomInt(1, 17)) + '.jpg';
 

@@ -1,145 +1,131 @@
 extends ./layout.jade
 
+block header
+    .container-fluid.profile-details-header
+        .profile-details-cover(fill-with-lorem-ipsum is-cover)
+        .profile-details-image
+            img(fill-with-lorem-ipsum is-avatar)
+        .profile-details-name
+            h1(fill-with-lorem-ipsum is-name)
+
+    .section.section-wide.section-condensed.section-info-row.dark-white(
+    ng-init="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+    )
+        ul(
+        class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'side-menu':'nav navbar-pills subnav'}}"
+        )
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','PURCHASED')}",
+            ng-click="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+            )
+                a(
+                href="#PURCHASED"
+                ).eclipse-text
+                    i.fa.fa-shopping-cart
+                    span PURCHASED
+            li.line
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','RECENT')}",
+            ng-click="uiState.switch('ACCOUNT_TAB','RECENT')"
+            )
+                a(
+                href="#RECENT"
+                ).eclipse-text
+                    i.fa.fa-history
+                    span RECENT
+            li.line
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','LIKED')}",
+            ng-click="uiState.switch('ACCOUNT_TAB','LIKED')"
+            )
+                a(
+                href="#LIKED"
+                ).eclipse-text
+                    i.fa.fa-thumbs-up
+                    span LIKED
+
 block content
-    .section.section-info-row
+    .section.section-wide.section-info-row(
+    id="PURCHASED"
+    in-view-half="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+    ng-show="uiState.is('ACCOUNT_TAB','PURCHASED')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg')}"
+    )
         .container.container-info-row
-            .row.row-centered.row-margined-top
+            .row.row-centered.row-margined-top(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
                 .col-sm-12
-                    h1.info-row-title(fill-with-lorem-ipsum='15')
-            .row.row-centered.row-margined-bottom
+                    h1.info-row-title PURCHASED
+            .row.row-centered.row-margined-bottom(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
                 .col-sm-8.col-sm-offset-2
                     h4.info-row-desc(fill-with-lorem-ipsum='165')
-            .row.row-centered
-                p.info-row-text(fill-with-lorem-ipsum='323')
-    .section.section-info-row
-        .container.container-info-row.container-what-we-do
-            .row.row-centered.row-margined-top
-                .col-sm-12
-                    h1.info-row-title What We Do
-            .row.row-centered.row-margined-bottom
-                .hidden-xs.col-sm-8.col-sm-offset-2
-                    h4.info-row-desc(fill-with-lorem-ipsum='165')
-            .row.row-centered.row-margined-bottom
-                .col-sm-4
-                    .what-we-do-icon
-                        i.fa.fa-info
-                    div
-                        h1.title(fill-with-lorem-ipsum='15')
-                        p(fill-with-lorem-ipsum='201')
-                .col-sm-4
-                    .what-we-do-icon
-                        i.fa.fa-headphones
-                    div
-                        h1.title(fill-with-lorem-ipsum='11')
-                        p(fill-with-lorem-ipsum='172')
-                .col-sm-4
-                    .what-we-do-icon
-                        i.fa.fa-street-view
-                    div
-                        h1.title(fill-with-lorem-ipsum='8')
-                        p(fill-with-lorem-ipsum='107')
-    .section.section-info-row
-        .container.container-info-row.container-what-we-do
-            .row.row-centered.row-margined-top
-                .col-sm-12
-                    h1.info-row-title Pricing
-            .row.row-centered.row-margined-bottom
-                .hidden-xs.col-sm-8.col-sm-offset-2
-                    h4.info-row-desc Find a plan that fits your need.
-            .row.row-centered
-                .col-sm-4.pricing-plan
-                    .list-group
-                        .list-group-item.top
-                            h4.name Standard
-                            h1.price
-                                span $
-                                | 80
-                                span /MO
-                            i.desc(fill-with-lorem-ipsum='36')
-                        .list-group-item.info(fill-with-lorem-ipsum='60')
-                        .list-group-item.info(fill-with-lorem-ipsum='61')
-                        .list-group-item.info(fill-with-lorem-ipsum='57')
-                        .list-group-item.info(fill-with-lorem-ipsum='48')
-                .col-sm-4.pricing-plan
-                    .list-group
-                        .list-group-item.top
-                            h4.name Corporate
-                            h1.price
-                                span $
-                                | 120
-                                span /MO
-                            i.desc(fill-with-lorem-ipsum='38')
-                        strong.list-group-item.info(fill-with-lorem-ipsum='30')
-                        .list-group-item.info(fill-with-lorem-ipsum='31')
-                        .list-group-item.info(fill-with-lorem-ipsum='23')
-                        .list-group-item.info(fill-with-lorem-ipsum='19')
-                        .list-group-item.info(fill-with-lorem-ipsum='34')
-                        .list-group-item.info(fill-with-lorem-ipsum='29')
-                .col-sm-4.pricing-plan
-                    .list-group
-                        .list-group-item.top
-                            h4.name Premium
-                            h1.price
-                                span $
-                                | 200
-                                span /Y
-                            i.desc(fill-with-lorem-ipsum='35')
-                        strong.list-group-item.info(fill-with-lorem-ipsum='30')
-                        strong.list-group-item.info(fill-with-lorem-ipsum='30')
-                        .list-group-item.info(fill-with-lorem-ipsum='31')
-                        strong.list-group-item.info(fill-with-lorem-ipsum='30')
-                        .list-group-item.info(fill-with-lorem-ipsum='19')
-                        .list-group-item.info(fill-with-lorem-ipsum='24')
-                        strong.list-group-item.info(fill-with-lorem-ipsum='39')
-                        .list-group-item.info(fill-with-lorem-ipsum='14')
-                        .list-group-item.info(fill-with-lorem-ipsum='29')
-    .section.section-info-row
-        .container.container-info-row
-            .row.row-centered.row-margined-top
-                .col-sm-12
-                    h1.info-row-title Want To Join?
-            .row.row-centered.row-margined-bottom
-                .col-sm-8.col-sm-offset-2
-                    h4.info-row-desc Sign in using your Facebook account.
-            .row.row-centered.row-margined-bottom
-                a.col-sm-4.col-sm-offset-4.btn.btn-social.btn-lg.btn-facebook.signin-btn(href='')
-                    i.fa.fa-facebook
-                    div sign in
-    .section.section-info-row
-        .container.container-info-row.container-q-and-a
-            .row.row-centered.row-margined-top.row-margined-bottom
-                .col-sm-12
-                    h1.info-row-title Friquently Asked Questions
             .row
-                .col-sm-6
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='11') ?
-                        p(fill-with-lorem-ipsum='566')
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='23') ?
-                        p(fill-with-lorem-ipsum='1000')
-                        p(fill-with-lorem-ipsum='122')
-                        p(fill-with-lorem-ipsum='344')
-                    .q-and-a
-                        h3 More questions?
-                        p
-                            | Please feel free to email us at
-                            a(href='email:andrewfisherfish@gmail.com') andrewfisherfish@gmail.com
-                            |                             with any questions you may have
-                            |                             and we'll get back to you as quickly as possible!
-                .col-sm-6
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='31') ?
-                        p(fill-with-lorem-ipsum='333')
-                        p(fill-with-lorem-ipsum='222')
-                        p(fill-with-lorem-ipsum='111')
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='25') ?
-                        p(fill-with-lorem-ipsum='344')
-                        p(fill-with-lorem-ipsum='132')
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='42') ?
-                        p(fill-with-lorem-ipsum='115')
-                    .q-and-a
-                        h3(fill-with-lorem-ipsum='33') ?
-                        p(fill-with-lorem-ipsum='121')
+                .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
+                    product(short="true")
+            .row
+                .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+                    a.show-products(href="#") show more
+
+    .section.section-info-row.dark-white(
+    id="RECENT"
+    in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
+    ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    )
+        .container-info-row
+            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .container-info-row
+                    h1.info-row-title RECENT
+                    p(fill-with-lorem-ipsum="200" is-text)
+            .col-sm-9.col-padding-0.container-product
+                .row
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
+                        product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
+                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                        a.show-products(href="#") show more
+            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .col-sm-4.col-sm-offset-4
+                    a.show-products(href="#") show more
+
+    .section.section-info-row.dark-white(
+    in-view-half="uiState.switch('ACCOUNT_TAB','LIKED')"
+    id="LIKED"
+    ng-show="uiState.is('ACCOUNT_TAB','LIKED')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    )
+        .container-info-row
+            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .container-info-row
+                    h1.info-row-title LIKED
+                    p(fill-with-lorem-ipsum="200" is-text)
+            .col-sm-9.col-padding-0.container-product
+                .row
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
+                        product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
+                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                        a.show-products(href="#") show more
+            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .col-sm-4.col-sm-offset-4
+                    a.show-products(href="#") show more
+
+
+    .section.section-info-row(
+    id="SUGGESTIONS"
+    in-view-half="uiState.switch('ACCOUNT_TAB','SUGGESTIONS')"
+    ng-show="uiState.is('ACCOUNT_TAB','SUGGESTIONS')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg')}"
+    )
+        .container-info-row
+            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .container-info-row
+                    h1.info-row-title we suggest
+                    p(fill-with-lorem-ipsum="200" is-text)
+            .col-sm-9.col-padding-0.container-product
+                .row
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
+                        product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
+                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                        a.show-products(href="#") show more
+            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .col-sm-4.col-sm-offset-4
+                    a.show-products(href="#") show more

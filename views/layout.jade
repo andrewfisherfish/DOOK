@@ -28,14 +28,21 @@ ng-class="{'is-logged-in':uiState.is('isLoggedIn',false)}"
         script(src="/indexApp/bootstrap.js")
 
 
-    body(ng-class="{}" class="" ng-init="uiState.switch({});")
+    body(
+    ng-class="{}"
+    class=""
+    ng-init="uiState.switch({});"
+    in-view-container
+    )
 
         include ./navbar.jade
 
         content
             block content
 
-        nav.navbar.navbar-inverse.page-footer
+        nav.navbar.navbar-inverse.page-footer(
+
+        )
             .row-centered.footer-social
                 a.btn(href="#")
                     i.fa.fa-facebook

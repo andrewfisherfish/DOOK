@@ -2,11 +2,10 @@
  * Created by andre on 11/22/2015.
  */
 (function (angular, document, _) {
-    var module = angular.module('Lectures.Book', [
-        'Lectures.UI',
-        'Lectures.DTO',
-        'Lectures.Utils',
-        'ui.bootstrap',
+    var module = angular.module('DOOK.Book', [
+        'DOOK.UI',
+        'DOOK.DTO',
+        'DOOK.Utils',
         'angular.filter',
         'ngTouch'
     ]);
