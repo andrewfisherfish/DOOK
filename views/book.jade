@@ -127,11 +127,36 @@ ng-init="uiState.switch({'isContents':false,'isSearch':false,'isMenu':false,'isN
     nav(role="navigation",
     ng-if="!uiState.is('isContents') && !uiState.is('isSearch') && !uiState.is('isMenu')",
     ng-class="{'sticky-scroll-container':uiState.get('isContents') || isSearch,'is-full-screen':uiState.get('isFullScreen'),'is-at-top':uiState.get('isAtTop')}"
-    class="navbar navbar-inverse bottom"
+    class="navbar navbar-inverse bottom footer-parent-relative"
     )
+        .section.text-page-footer(
+        book-reader-footer
+        )
+            h5(
+            ng-if="questions.length>0"
+            ) Check Yourself:
+            button.btn.btn-lg.col-xs-12(
+            ng-click="openQuestionDialog(true)"
+            ng-if="questions.length>0"
+            ) START
+            h5 Next Chapter:
+            a
+                h4(preview="next chapter" fill-with-lorem-ipsum max="100" min="50" is-title)
         .container-fluid
-            .navbar-header(
-            book-reader-footer,
-            ui-sticky-nav scroller-selector="uiState.get('isContents')||uiState.get('isSearch')?'nav':undefined",
+            .navbar-header.book-reader-footer(
+            ui-sticky-nav
+            scroller-selector="uiState.get('isContents')||uiState.get('isSearch')?'nav':undefined",
             ng-class="{'is-sticky':uiState.is('isSticky')}"
             )
+                button.navbar-button.suggesters.question(type='button'
+                ng-if="(questions | activeQuestionsLength)>0"
+                ng-click='openQuestionDialog()'
+                )
+                    i.fa.fa-question
+                    span.number(
+                    ng-bind="questions | activeQuestionsLength"
+                    ng-if="(questions | activeQuestionsLength)>1"
+                    )
+                button.navbar-button.suggesters(type='button', ng-repeat='item in minimized', ng-click='remove(item,$index)', random-background-color='', preview='{{item.tagPhrase}}')
+                    span.letter(ng-bind='item.caption')
+        include ./footer.jade

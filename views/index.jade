@@ -9,22 +9,11 @@ block header
             h1(fill-with-lorem-ipsum is-name)
 
     .section.section-wide.section-condensed.section-info-row.dark-white(
-    ng-init="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+    ng-init="uiState.switch('ACCOUNT_TAB','RECENT')"
     )
         ul(
         class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'side-menu':'nav navbar-pills subnav'}}"
         )
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','PURCHASED')}",
-            ng-click="uiState.switch('ACCOUNT_TAB','PURCHASED')"
-            )
-                a(
-                href="#PURCHASED"
-                ).eclipse-text
-                    i.fa.fa-shopping-cart
-                    span PURCHASED
-            li.line
             li(
             class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
             ng-class="{'active':uiState.is('ACCOUNT_TAB','RECENT')}",
@@ -38,6 +27,17 @@ block header
             li.line
             li(
             class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+            ng-class="{'active':uiState.is('ACCOUNT_TAB','PURCHASED')}",
+            ng-click="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+            )
+                a(
+                href="#PURCHASED"
+                ).eclipse-text
+                    i.fa.fa-shopping-cart
+                    span PURCHASED
+            li.line
+            li(
+            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
             ng-class="{'active':uiState.is('ACCOUNT_TAB','LIKED')}",
             ng-click="uiState.switch('ACCOUNT_TAB','LIKED')"
             )
@@ -48,6 +48,29 @@ block header
                     span LIKED
 
 block content
+    .section.section-info-row.dark-white(
+    id="RECENT"
+    in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
+    ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    )
+        .container-info-row
+            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .container-info-row
+                    h1.info-row-title RECENT
+                    p(fill-with-lorem-ipsum="200" is-text)
+            .col-sm-9.col-padding-0.container-product
+                .row
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
+                        product(
+                        less="true"
+                        short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                        )
+                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                        a.show-products(href="#") show more
+            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .col-sm-4.col-sm-offset-4
+                    a.show-products(href="#") show more
+
     .section.section-wide.section-info-row(
     id="PURCHASED"
     in-view-half="uiState.switch('ACCOUNT_TAB','PURCHASED')"
@@ -68,25 +91,6 @@ block content
                 .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
                     a.show-products(href="#") show more
 
-    .section.section-info-row.dark-white(
-    id="RECENT"
-    in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
-    ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
-    )
-        .container-info-row
-            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .container-info-row
-                    h1.info-row-title RECENT
-                    p(fill-with-lorem-ipsum="200" is-text)
-            .col-sm-9.col-padding-0.container-product
-                .row
-                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
-                        product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
-                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
-                        a.show-products(href="#") show more
-            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .col-sm-4.col-sm-offset-4
-                    a.show-products(href="#") show more
 
     .section.section-info-row.dark-white(
     in-view-half="uiState.switch('ACCOUNT_TAB','LIKED')"
@@ -115,17 +119,4 @@ block content
     ng-show="uiState.is('ACCOUNT_TAB','SUGGESTIONS')||uiState.isAny('screen-size','screen-md','screen-lg')"
     ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg')}"
     )
-        .container-info-row
-            .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .container-info-row
-                    h1.info-row-title we suggest
-                    p(fill-with-lorem-ipsum="200" is-text)
-            .col-sm-9.col-padding-0.container-product
-                .row
-                    .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
-                        product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
-                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
-                        a.show-products(href="#") show more
-            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .col-sm-4.col-sm-offset-4
-                    a.show-products(href="#") show more
+        include ./suggestions.jade

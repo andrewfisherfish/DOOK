@@ -283,14 +283,19 @@ body {
     position: relative;
     min-height: 100%;
     .footer {
-        background-color: @navbar-inverse-bg;
-
-        .navbar-hr-top(@navbar-inverse-border);
-
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+}
+
+.footer-parent,
+.footer-parent-relative {
+    .footer {
+        background-color: @navbar-inverse-bg;
         padding: 40px 0;
+        .navbar-hr-top(@navbar-inverse-border);
+
         p {
             color: @navbar-copyright-color;
             font-size: 12px;
@@ -334,7 +339,24 @@ body {
     }
     .btn.cancel-btn {
         background-color: @modal-content-bg;
-        padding: 15px 0;
+        padding: 15px;
+
+        font-size: 26px;
+        letter-spacing: 3px;
+        border-radius: 0 0;
+        margin: 0;
+        &:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+        &:last-child {
+            border-radius: 0 0 5px 5px;
+        }
+        &:first-child:last-child {
+            border-radius: 5px;
+        }
+        &:not(:first-child) {
+            border-top: solid 1px #ddd;
+        }
     }
     .modal-dialog {
         position: absolute;
@@ -360,14 +382,40 @@ body {
                 border-top-left-radius: @border-radius-large;
                 border-top-right-radius: @border-radius-large;
                 background-color: @modal-content-bg;
+                position: relative;
+
+                .btn.prev {
+                    left: 0;
+                }
+                .btn.next {
+                    right: 0;
+                }
+
+                .btn.prev,
+                .btn.next {
+                    position: absolute;
+                    background: transparent;
+                    top: 0;
+                    height: 100%;
+                }
+
+                .small-title {
+                    text-align: center;
+                    font-weight: bold;
+                    font-family: 'source_sans_problack';
+                }
+
                 .title {
                     text-align: center;
+                    font-weight: bold;
+                    font-family: Lato, Helvetica, Arial, sans-serif;
                 }
             }
             .modal-body {
                 background-color: @modal-content-bg;
                 border-bottom-left-radius: @border-radius-large;
                 border-bottom-right-radius: @border-radius-large;
+                font-family: Lato, Helvetica, Arial, sans-serif;
             }
             .modal-footer {
                 border: none;
@@ -468,4 +516,27 @@ nav .navbar-button {
     .fa {
         font-size: 2em;
     }
+}
+
+.text-page-footer {
+    .btn {
+        margin-bottom: 30px;
+        background: @theme-bg-color;
+        color: #fff;
+        font-family: 'headline-semi-bold',Helvetica,Arial,sans-serif;
+        font-size: 32px;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+    }
+    h5 {
+        font-family: 'source_sans_problack';
+    }
+    h4 {
+        font-family: 'Lato';
+    }
+    h4, h5 {
+        text-align: center;
+    }
+    border-top: solid 1px #ddd;
+    color: @settings-text-color-white;
 }

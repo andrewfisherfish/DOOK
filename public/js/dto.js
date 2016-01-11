@@ -7,7 +7,7 @@
     module.service('loremIpsumService', ['$http', '$compile', function ($http, $compile) {
         _.extend(this, {
             get: function (messageLength) {
-                messageLength = messageLength || 2500;
+                messageLength = messageLength || 10000;
 
                 return $http({
                     method: 'GET',

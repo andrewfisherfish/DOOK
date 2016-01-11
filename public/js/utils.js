@@ -21,6 +21,15 @@
         },
         randomDate: function (start, end) {
             return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        },
+        randomArray: function (min, max) {
+            var array = [];
+            if (min === max)return min;
+            var len = Math.floor(Math.random() * (max - min + 1)) + min;
+            for (var i = 0; i < len; i++) {
+                array.push(i);
+            }
+            return array;
         }
     };
 
@@ -67,31 +76,37 @@
                         length = helper.randomInt(attr.min * 1, attr.max * 1)
                     }
 
-                    loremIpsumService.get(length).then(function (data) {
-                        $compile(element.contents())(scope);
+                    function initText() {
+                        loremIpsumService.get(length).then(function (data) {
+                            $compile(element.contents())(scope);
 
-                        if ('isTitle' in attr || 'isName' in attr) {
-                            data = data.replace(/[^a-zA-Z-\s]/g, '');
-                        }
+                            if ('isTitle' in attr || 'isName' in attr) {
+                                data = data.replace(/[^a-zA-Z-\s]/g, '');
+                            }
 
-                        if ('isName' in attr) {
-                            var name = [
-                                (data.charAt(0).toUpperCase() + data.substring(1, 5).toLowerCase()).replace(/[^a-zA-Z]/g, ''),
-                                (data.charAt(6).toUpperCase() + data.substring(6, 11).toLowerCase()).replace(/[^a-zA-Z]/g, '')
-                            ];
+                            if ('isName' in attr) {
+                                var name = [
+                                    (data.charAt(0).toUpperCase() + data.substring(1, 5).toLowerCase()).replace(/[^a-zA-Z]/g, ''),
+                                    (data.charAt(6).toUpperCase() + data.substring(6, 11).toLowerCase()).replace(/[^a-zA-Z]/g, '')
+                                ];
 
-                            data = name.join(' ');
-                        }
+                                data = name.join(' ');
+                            }
 
-                        if ('isText' in attr) {
-                            if (data.charAt(data.length - 1) != '.')
-                                data += '.';
-                        }
+                            if ('isText' in attr) {
+                                if (data.charAt(data.length - 1) != '.')
+                                    data += '.';
+                            }
 
-                        return data;
-                    }).then(function (data) {
-                        element.html(data);
-                    });
+                            return data;
+                        }).then(function (data) {
+                            element.html(data);
+                        });
+                    }
+
+                    initText();
+
+                    scope.$on('reload', initText);
                 }
             }
         }

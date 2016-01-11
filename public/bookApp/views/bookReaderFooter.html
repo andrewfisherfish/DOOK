@@ -1,4 +1,13 @@
 <div class="book-reader-footer">
+    <div>
+        <button type="button"
+                ng-if="questions | activeQuestionsLength"
+                ng-click="openQuestionDialog()"
+                class="navbar-button suggesters question">
+            <i class="fa fa-question"></i>
+        </button>
+    </div>
+
     <button type="button"
             ng-repeat="item in minimized"
             ng-click="remove(item,$index)"

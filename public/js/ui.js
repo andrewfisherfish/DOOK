@@ -245,10 +245,12 @@
     module.directive('footer', [function () {
         return {
             restrict: 'C',
-            require: '^footerParent',
+            require: '?^footerParent',
             scope: false,
             link: function (scope, el, attr, ctrl) {
-                ctrl.setPadding(el[0].offsetHeight);
+                if (ctrl != null) {
+                    ctrl.setPadding(el[0].offsetHeight);
+                }
             }
         }
     }]);

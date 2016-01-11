@@ -8,6 +8,10 @@ var menu = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/menu.json'
 
 var loremIpsum = fs.readFileSync(path.join(__dirname, '../public/lorem-ipsum.txt'), 'utf8');
 
+router.get('/public', function (req, res, next) {
+    res.render('index-public', {});
+});
+
 router.get('/', function (req, res, next) {
     res.render('index', {});
 });
@@ -20,8 +24,8 @@ router.get('/product', function (req, res, next) {
     res.render('product', {});
 });
 
-router.get('/authors', function (req, res, next) {
-    res.render('authors', {});
+router.get('/tests', function (req, res, next) {
+    res.render('tests', {});
 });
 
 router.get('/about', function (req, res, next) {
