@@ -1,14 +1,11 @@
-.container-info-row
-    .col-sm-3(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+.container.container-info-row
+    .col-md-3
         .container-info-row
             h1.info-row-title we suggest
             p(fill-with-lorem-ipsum="200" is-text)
-    .col-sm-9.col-padding-0.container-product
+    .col-md-9.col-padding-0.container-product
         .row
-            .col-sm-6.col-lg-4.col-md-3th-max-hide(ng-repeat="i in [0,1,2]")
-                product(short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}")
-            .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
-                a.show-products(href="#") show more
-    .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-        .col-sm-4.col-sm-offset-4
-            a.show-products(href="#") show more
+            .col-sm-6.col-md-3th-max-hide.col-lg-4th-max-hide(ng-repeat="i in [0,1]")
+                product(
+                short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                )

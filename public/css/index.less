@@ -6,6 +6,7 @@
 //   Variables
 // ==========================================
 @import "_variables.less";
+@import "_product.less";
 
 @navbar-height: 100px;
 @navbar-inverse-bg: #3b3e43;
@@ -220,7 +221,9 @@ nav.navbar {
         top: @navbar-height;
         z-index: 1;
         li {
-            float: right;
+            @media only screen and (min-width: @screen-sm) {
+                float: right;
+            }
             height: @navbar-height;
             a {
                 .navbar-list-items();
@@ -261,12 +264,48 @@ html {
     }
 }
 
+body {
+    &.no-scroll {
+        overflow: hidden !important;
+    }
+}
+
 content {
+    .section {
+        &:not(.section-fullscreen-on) {
+            transition: width .25s, height .25s;
+            .btn-exit-fullscreen {
+                display: none !important;
+            }
+        }
+        &.section-fullscreen-on {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            transition: width .25s, height .25s;
+            top: 0;
+            z-index: 2;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .btn-exit-fullscreen {
+                color: #434343;
+                z-index: 1;
+                .btn-hovered-color(@theme-bg-color);
+                i {
+                    font-size: 3em;
+                }
+
+            }
+        }
+    }
     .section.section-info-row {
+
         &.white-on-hover:hover,
         &.white {
             background-color: #fff;
             color: #666;
+            border-top: solid 15px #ddd;
             .info-row-title {
                 color: #434343;
             }
@@ -274,6 +313,10 @@ content {
         &.dark-white {
             background-color: @theme-color;
             color: #666;
+
+            @media only screen and (min-width: @screen-sm) {
+                border-top: solid 15px #ddd;
+            }
             .info-row-title {
                 color: #434343;
             }
@@ -281,6 +324,24 @@ content {
         &.blue {
             background-color: @theme-bg-color;
             color: #fff;
+        }
+        &.top-border {
+            border-top: solid 1px #ddd;
+        }
+        &.violet {
+            background-color: #6a4ca6;
+            color: #fff;
+        }
+        &.yellow {
+            background-color: #f9b644;
+            color: #fff;
+        }
+        &.section-fullscreen-on {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #666;
+            .info-row-title {
+                color: #434343;
+            }
         }
 
         .container-q-and-a {
@@ -458,286 +519,6 @@ content {
     }
 }
 
-.product {
-    //http://prntscr.com/9jlzgv
-    .background-rgba() {
-        background: rgba(255, 255, 255, 0.8);
-    }
-
-    a {
-        text-decoration: none;
-        color: #434343;
-    }
-
-    overflow: hidden;
-    color: #434343;
-    position: relative;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    border: solid 1px #ddd;
-    background: #fff;
-
-    .btn {
-        background: transparent;
-        text-transform: uppercase;
-        font-size: 24px;
-        letter-spacing: 3px;
-    }
-
-    .product-author {
-        color: #fff;
-        a {
-            color: #fff;
-        }
-        padding: 15px;
-        overflow: hidden;
-        display: block;
-
-        position: absolute;
-        bottom: -40px;
-        width: 100%;
-
-        .name {
-            padding: 17px 0 17px 17px;
-            margin: 0;
-            font-weight: bold;
-            .eclipse();
-        }
-    }
-
-    .product-link-cover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .product-extra {
-        position: absolute;
-        top: 0;
-        right: 0;
-        ul {
-            top: 0;
-            li {
-                a {
-                    .eclipse();
-                    text-transform: uppercase;
-                    font-size: 24px;
-                    letter-spacing: 3px;
-                    &:hover {
-                        color: @theme-bg-color;
-                    }
-                }
-            }
-        }
-        button.btn {
-            font-size: 2em;
-            border: none;
-            padding: 12px 10px;
-            position: relative;
-            .btn-hovered-color(@theme-border-color);
-        }
-    }
-
-    .product-info {
-        position: relative;
-    }
-
-    .product-image {
-        position: relative;
-        margin-bottom: 20px;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding-bottom: 50%;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        &:before {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-        }
-    }
-
-    .product-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .product-body {
-        .background-rgba();
-        min-height: 250px;
-        position: relative;
-    }
-
-    .product-title {
-        font-family: 'Lato,Helvetica,Arial,sans-serif';
-        letter-spacing: 3px;
-        font-size: 30px;
-        text-transform: uppercase;
-        font-weight: bold;
-        text-shadow: 0.5px 0.5px #434343;
-
-        text-align: center;
-        padding: 0 15px 0 15px;
-        margin: 0;
-
-        position: absolute;
-        width: 100%;
-        color: #fff;
-
-        padding-top: 20%;
-        transform: translateY(-10%);
-    }
-
-    .button {
-        .btn {
-            width: 100%;
-            background-color: transparent;
-
-            border-width: 1px;
-            border-style: solid;
-
-            color: #fff;
-
-            .eclipse();
-        }
-    }
-
-    .product-bottom {
-        & > :not(:first-child) {
-
-        }
-        padding: 15px;
-        color: #4e4e4e;
-        p {
-            font-size: 18px;
-            color: #666;
-            text-align: justify;
-            word-spacing: .125rem;
-            font-family: 'Lato', sans-serif;
-
-            margin: 0 0 15px 0;
-        }
-    }
-
-    &[no-description="true"] {
-        .product-bottom {
-            p {
-                display: none !important;
-            }
-        }
-    }
-
-    &.book {
-        .product-bottom {
-            .btn {
-                background-color: @color-pink;
-                border-color: @color-pink-dark;
-
-                .btn-hovered-border-and-bg(@color-pink-dark);
-            }
-        }
-        .product-background {
-            background-image: url("/img/product-book-bg.png");
-            background-position: right center;
-            opacity: 0.2;
-        }
-    }
-
-    &.lecture {
-        .product-bottom {
-            .btn {
-                background-color: @color-green;
-                border-color: @color-green-dark;
-
-                .btn-hovered-border-and-bg(@color-green-dark);
-            }
-        }
-        .product-background {
-            background-image: url("/img/product-lecture-bg.gif");
-            opacity: 0.6;
-        }
-    }
-
-    &[purchased="true"] {
-        .if-purchased-hide {
-            display: none !important;
-        }
-    }
-
-    &:not([short="true"]) {
-        .if-short-show {
-            display: none !important;
-        }
-
-        .product-extra {
-            button {
-                color: #fff;
-            }
-        }
-    }
-
-    &[less="true"] {
-        .if-less-hide {
-            display: none !important;
-        }
-    }
-
-    &[short="true"] {
-        overflow: initial;
-
-        .btn-hovered-border-and-color(@theme-bg-color);
-
-        .if-short-hide {
-            display: none !important;
-        }
-
-        .product-extra {
-            button {
-                color: #434343;
-            }
-        }
-
-        .product-title-short {
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-
-        .product-body {
-            min-height: initial;
-            height: 130px;
-            padding: 15px;
-            .product-bottom {
-                padding: 0;
-            }
-            .product-image {
-                padding: 0;
-                margin: 0;
-                width: 100px;
-                height: 100px;
-                float: left;
-                margin-right: 20px;
-            }
-            p {
-                font-size: 14px;
-                max-height: 80px;
-                overflow: hidden;
-                margin: 0;
-            }
-        }
-    }
-}
-
 .search-tags {
     margin-top: -17px;
 }
@@ -753,7 +534,7 @@ a.media.search-tag {
     padding: 5px 10px;
     background: transparent;
 
-    &:not(.active) {
+    &:not(.active):not(.no-hover) {
         .btn-hovered-border-and-color(@theme-bg-color);
     }
 
@@ -770,6 +551,12 @@ a.media.search-tag {
         font-weight: bold;
         text-transform: uppercase;
         text-shadow: -1px 1px 0 rgba(0, 0, 0, .2);
+    }
+
+    @media only screen and (max-width: @screen-sm-max) {
+        border: none;
+        padding: 0;
+        margin: 0 15px 0 0;
     }
 }
 
@@ -1287,6 +1074,8 @@ content {
             color: #666;
             .btn-hovered-color(@theme-bg-color);
         }
+        &.yellow,
+        &.violet,
         &.blue {
             a.show-products {
                 color: #fff;
@@ -1296,11 +1085,36 @@ content {
     }
 }
 
+.col-lg-4th-max-hide {
+    @media only screen and (min-width: @screen-sm) and (max-width: @screen-lg) {
+        &:nth-child(3),
+        &:nth-child(4) {
+            display: none !important;
+        }
+    }
+}
+
+.col-lg-4th-max-hide {
+    @media only screen and (min-width: @screen-sm) and (max-width: 1900px) {
+        &:nth-child(4) {
+            display: none !important;
+        }
+    }
+}
+
 .col-md-3th-max-hide {
-    @media only screen and (min-width: @screen-xs-max) and (max-width: @screen-md-max) {
+    @media only screen and (min-width: @screen-sm) and (max-width: @screen-md) {
+        &:nth-child(4),
         &:nth-child(3) {
             display: none !important;
         }
+    }
+}
+
+.col-slg-4 {
+    @media only screen and (min-width: 1900px) {
+        float: left;
+        width: 100%/4%;
     }
 }
 
@@ -1413,3 +1227,4 @@ ul.side-menu {
         display: none !important;
     }
 }
+

@@ -1,5 +1,5 @@
 html(
-ng-init="uiState.switch('isLoggedIn',false)",
+ng-init="uiState.switch({'isLoggedIn':false,'FULL_SCREEN_TAB':null})",
 ng-controller="mainCtrl",
 ng-class="{'is-logged-in':uiState.is('isLoggedIn',false)}"
 )
@@ -29,7 +29,7 @@ ng-class="{'is-logged-in':uiState.is('isLoggedIn',false)}"
 
 
     body(
-    ng-class="{}"
+    ng-class="{'no-scroll':uiState.hasValue('FULL_SCREEN_TAB')}"
     class=""
     ng-init="uiState.switch({});"
     in-view-container

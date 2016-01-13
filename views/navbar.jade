@@ -38,11 +38,14 @@ class="navbar navbar-inverse top")
 
         ul.nav.navbar-nav.content-menu.navbar-login-show.navbar-search-hide
             li
+                a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
+                    h4 Log out
+            li
                 a(href='/Settings')
                     h4 Settings
             li
-                a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
-                    h4 Log out
+                a(href='/')
+                    h4 Dashboard
         ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
             //li(ng-if="uiState.is('isLoggedIn')")
             //    a(href='/Purchased')
@@ -76,13 +79,16 @@ class="navbar navbar-inverse top")
     ng-mouseenter="uiState.switch('userMenuOn',true)"
     )
         li
+            a(href='/')
+                h4 Dashboard
+        li
+            a(href='/Settings')
+                h4 Settings
+        li
             a(
             href='#',
             ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"
             )
                 h4 Log out
-        li
-            a(href='/Settings')
-                h4 Settings
 
     block header

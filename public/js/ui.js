@@ -173,6 +173,18 @@
                 })) === false;
         };
 
+        uiState.reset = function (name, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
+
+            container[name] = undefined;
+        };
+
+        uiState.hasValue = function (name, customStatesContainer) {
+            var container = customStatesContainer || statesContainer;
+
+            return !(_.isUndefined(container[name]) || _.isNull(container[name]));
+        };
+
         uiState.is = function (name, val, customStatesContainer) {
             var container = customStatesContainer || statesContainer;
 
