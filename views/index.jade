@@ -7,6 +7,14 @@ block header
             img(fill-with-lorem-ipsum is-avatar)
         .profile-details-name
             h1(fill-with-lorem-ipsum is-name)
+        .row-centered
+            .col-xs-12.col-sm-8.col-md-8.col-lg-5.col-padding-0.col-centered.search-product
+                .form-group.inner-addon.left-addon
+                    i.fa.fa-search
+                    input.form-control(
+                    type="search"
+                    placeholder="SEARCH"
+                    )
 
     .section.section-wide.section-condensed.section-info-row.dark-white(
     ng-init="uiState.switch('ACCOUNT_TAB','RECENT')"
@@ -48,132 +56,138 @@ block header
                     span LIKED
 
 block content
-    .section.section-wide.section-info-row.dark-white(
-    id="RECENT"
-    in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
-    ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
-    ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','RECENT')}"
-    )
-        .container-fluid
-            a.btn.btn-exit-fullscreen.pull-right(
-            ng-click="uiState.reset('FULL_SCREEN_TAB');this.$apply()"
-            )
-                i.fa.fa-close
-        .container.container-info-row
-            h1.info-row-title RECENT
-            p(
-            fill-with-lorem-ipsum="200"
-            is-text
-            ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
-            )
-        .container.container-product
-            .row
-                .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(ng-repeat="i in [0,1,2]")
-                    product(
-                    less="true"
-                    short="true"
-                    )
-                .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
-                    a.show-products(
-                    href="javascript:void(0);"
-                    ng-click="uiState.switch({'FULL_SCREEN_TAB':'RECENT','ACCOUNT_TAB':'RECENT'})"
-                    ) show more
-        .clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-            .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
-                a.show-products(
-                href="javascript:void(0);"
-                ng-click="uiState.switch({'FULL_SCREEN_TAB':'RECENT','ACCOUNT_TAB':'RECENT'})"
-                ) show more
-
-    .section.section-wide.section-info-row(
-    id="PURCHASED"
-    in-view-half="uiState.switch('ACCOUNT_TAB','PURCHASED')"
-    ng-show="uiState.is('ACCOUNT_TAB','PURCHASED')||uiState.isAny('screen-size','screen-md','screen-lg')"
-    ng-class="{'yellow':uiState.isAny('screen-size','screen-md','screen-lg')&&!uiState.is('FULL_SCREEN_TAB','PURCHASED'),'dark-white':!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('FULL_SCREEN_TAB','PURCHASED'),'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','PURCHASED')}"
-    )
-        .container-fluid
-            a.btn.btn-exit-fullscreen.pull-right(
-            ng-click="uiState.reset('FULL_SCREEN_TAB');this.$apply()"
-            )
-                i.fa.fa-close
-        .container.container-info-row
-            div(
-            ng-class="{'row':uiState.isAny('screen-size','screen-md','screen-lg'),'row-centered':uiState.isAny('screen-size','screen-md','screen-lg')}"
-            )
-                h1.info-row-title PURCHASED
-            .row.row-centered.row-margined-bottom(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .col-sm-8.col-sm-offset-2
-                    h4.info-row-desc(
-                    fill-with-lorem-ipsum='165'
-                    ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
-                    )
-            .row
-                .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(ng-repeat="i in [0,1,2]")
-                    product(
-                    short="true"
-                    purchased="true"
-                    )
-            .row
-                .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
-                    a.show-products(
-                    href="javascript:void(0);"
-                    ng-click="uiState.switch({'FULL_SCREEN_TAB':'PURCHASED','ACCOUNT_TAB':'PURCHASED'})"
-                    ) show more
-
-
-    .section.section-wide.section-info-row.dark-white(
-    in-view-half="uiState.switch('ACCOUNT_TAB','LIKED')"
-    id="LIKED"
-    ng-show="uiState.is('ACCOUNT_TAB','LIKED')||uiState.isAny('screen-size','screen-md','screen-lg')"
-    ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','LIKED')}"
-    )
-        .container-fluid
-            a.btn.btn-exit-fullscreen.pull-right(
-            ng-click="uiState.reset('FULL_SCREEN_TAB');this.$apply()"
-            )
-                i.fa.fa-close
-        .container.container-info-row
-            .container-info-row
-                h1.info-row-title LIKED
+    div(ng-controller="DashboardCtrl as Dashboard")
+        .section.section-wide.section-info-row.dark-white.top-border-thick(
+        id="RECENT"
+        in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
+        ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
+        ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','RECENT')}"
+        )
+            .container-fluid
+                a.btn.btn-exit-fullscreen.pull-right(
+                ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                )
+                    i.fa.fa-close
+            .container.container-info-row
+                h1.info-row-title RECENT
                 p(
                 fill-with-lorem-ipsum="200"
                 is-text
                 ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
                 )
-            .container-product
+            .container.container-product
                 .row
-                    .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(ng-repeat="i in [0,1,2]")
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
+                    ng-repeat="item in Dashboard.products.recent"
+                    ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','RECENT')"
+                    ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','RECENT')}"
+                    )
                         product(
+                        model="item"
                         less="true"
-                        short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
-                        liked="true"
+                        short="true"
                         )
                     .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
                         a.show-products(
                         href="javascript:void(0);"
-                        ng-click="uiState.switch({'FULL_SCREEN_TAB':'LIKED','ACCOUNT_TAB':'LIKED'})"
+                        ng-hide="uiState.is('FULL_SCREEN_TAB','RECENT')"
+                        ng-click="Dashboard.fullScreenMode('RECENT')"
                         ) show more
-            .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
-                .col-sm-6.col-sm-offset-3
+            .clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
                     a.show-products(
                     href="javascript:void(0);"
-                    ng-click="uiState.switch({'FULL_SCREEN_TAB':'LIKED','ACCOUNT_TAB':'LIKED'})"
+                    ng-hide="uiState.is('FULL_SCREEN_TAB','RECENT')"
+                    ng-click="Dashboard.fullScreenMode('RECENT')"
                     ) show more
 
-    .section.section-wide.section-info-row.top-border
-        .container.container-info-row
-            .row.row-centered
-                h1.info-row-title Search
-            .row.row-centered.row-margined-bottom
-                .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2.search-product
-                    .form-group.inner-addon.left-addon
-                        i.fa.fa-search
-                        input.form-control(type="search")
-            .row.row-centered.row-margined-bottom
-                .col-xs-12.col-xs-offset-0.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1.col-lg-10.col-lg-offset-1.search-tags
-                    search-tag(ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]")
+        .section.section-wide.section-info-row(
+        id="PURCHASED"
+        in-view-half="uiState.switch('ACCOUNT_TAB','PURCHASED')"
+        ng-show="uiState.is('ACCOUNT_TAB','PURCHASED')||uiState.isAny('screen-size','screen-md','screen-lg')"
+        ng-class="{'yellow':uiState.isAny('screen-size','screen-md','screen-lg')&&!uiState.is('FULL_SCREEN_TAB','PURCHASED'),'dark-white':!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('FULL_SCREEN_TAB','PURCHASED'),'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','PURCHASED')}"
+        )
+            .container-fluid
+                a.btn.btn-exit-fullscreen.pull-right(
+                ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                )
+                    i.fa.fa-close
+            .container.container-info-row
+                div(
+                ng-class="{'row':uiState.isAny('screen-size','screen-md','screen-lg'),'row-centered':uiState.isAny('screen-size','screen-md','screen-lg')}"
+                )
+                    h1.info-row-title PURCHASED
+                .row.row-centered.row-margined-bottom(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                    .col-sm-8.col-sm-offset-2
+                        h4.info-row-desc(
+                        fill-with-lorem-ipsum='165'
+                        ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
+                        )
+                .row
+                    .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
+                    ng-repeat="i in Dashboard.products.purchased"
+                    ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','PURCHASED')"
+                    ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','PURCHASED')}"
+                    )
+                        product(
+                        short="true"
+                        purchased="true"
+                        )
+                .row
+                    .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+                        a.show-products(
+                        href="javascript:void(0);"
+                        ng-hide="uiState.is('FULL_SCREEN_TAB','PURCHASED')"
+                        ng-click="Dashboard.fullScreenMode('PURCHASED')"
+                        ) show more
 
-    .section.section-wide.section-info-row.violet(
-    id="SUGGESTIONS"
-    )
-        include ./suggestions.jade
+
+        .section.section-wide.section-info-row.dark-white.top-border-thick(
+        in-view-half="uiState.switch('ACCOUNT_TAB','LIKED')"
+        id="LIKED"
+        ng-show="uiState.is('ACCOUNT_TAB','LIKED')||uiState.isAny('screen-size','screen-md','screen-lg')"
+        ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','LIKED')}"
+        )
+            .container-fluid
+                a.btn.btn-exit-fullscreen.pull-right(
+                ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                )
+                    i.fa.fa-close
+            .container.container-info-row
+                .container-info-row
+                    h1.info-row-title LIKED
+                    p(
+                    fill-with-lorem-ipsum="200"
+                    is-text
+                    ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
+                    )
+                .container-product
+                    .row
+                        .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
+                        ng-repeat="i in Dashboard.products.liked"
+                        ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','LIKED')"
+                        ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','LIKED')}"
+                        )
+                            product(
+                            less="true"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            liked="true"
+                            )
+                        .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                            a.show-products(
+                            href="javascript:void(0);"
+                            ng-hide="uiState.is('FULL_SCREEN_TAB','LIKED')"
+                            ng-click="Dashboard.fullScreenMode('LIKED')"
+                            ) show more
+                .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
+                    .col-sm-6.col-sm-offset-3
+                        a.show-products(
+                        href="javascript:void(0);"
+                        ng-hide="uiState.is('FULL_SCREEN_TAB','LIKED')"
+                        ng-click="Dashboard.fullScreenMode('LIKED')"
+                        ) show more
+
+        .section.section-wide.section-info-row.violet(
+        id="SUGGESTIONS"
+        )
+            include ./suggestions.jade

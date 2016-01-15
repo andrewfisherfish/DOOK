@@ -318,15 +318,16 @@
                 transition: color .25s;
             }
         }
+        .product-image-object {
+            transform: scale(1.2);
+            transition: transform .25s, opacity .25s;
+        }
         &[short="true"],
         &[recent="true"] {
             .product-image-object {
                 opacity: 0.7;
             }
-            .product-image-object {
-                transform: scale(1.2);
-                transition: transform .25s, opacity .25s;
-            }
+
         }
     }
 

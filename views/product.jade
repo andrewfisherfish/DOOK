@@ -119,7 +119,7 @@ block content
                             span(fill-with-lorem-ipsum, is-title, max="105", min="15")
                             i.fa.fa-link
     .section.section-wide.section-info-row(
-    ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg')}"
+    ng-class="{'blue':uiState.isAny('screen-size','screen-md','screen-lg'),'dark-white':!uiState.isAny('screen-size','screen-md','screen-lg')}"
     id="TEST"
     ng-show="uiState.is('ACCOUNT_TAB','TEST')||uiState.isAny('screen-size','screen-md','screen-lg')"
     in-view-half="uiState.switch('ACCOUNT_TAB','TEST')"
@@ -136,9 +136,8 @@ block content
                     a.btn.btn-lg(href="#")
                         div Start Test
 
-    .section.section-info-row.dark-white(
+    .section.section-info-row(
     id="SUGGESTIONS"
-    in-view-half="uiState.switch('ACCOUNT_TAB','SUGGESTIONS')"
-    ng-show="uiState.is('ACCOUNT_TAB','SUGGESTIONS')||uiState.isAny('screen-size','screen-md','screen-lg')"
+    ng-class="{'violet':!uiState.isAny('screen-size','screen-md','screen-lg'),'dark-white':uiState.isAny('screen-size','screen-md','screen-lg')}"
     )
         include ./suggestions.jade

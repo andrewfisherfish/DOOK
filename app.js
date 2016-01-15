@@ -24,6 +24,11 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+    res.locals.requestUrl = req.url;
+    next();
+});
+
 app.use('/', index);
 app.use('/book', routes);
 app.use('/api', api);

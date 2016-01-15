@@ -147,6 +147,16 @@
         }
     }
 
+    module.service('promiseWrapper', ['$q', '$timeout', function ($q, $timeout) {
+        this.create = function (data) {
+            var deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(data);
+            }, 1000);
+            return deferred.promise;
+        }
+    }]);
+
     module.service('uiState', [function () {
         var statesContainer = {};
 
@@ -226,12 +236,13 @@
             return uiState;
         };
 
-        this.switch = function (name, val, customStatesContainer) {
+        uiState.switch = function (name, val, customStatesContainer) {
             var container = customStatesContainer || statesContainer;
             if (_.isObject(name)) {
                 _.extend(container, name);
                 return;
             }
+
             if (_.isUndefined(val) || _.isNull(val))
                 container[name] = !container[name];
             else {
@@ -356,5 +367,29 @@
             }
         ]);
     });
+
+    var helper = {
+        formatInt: function (n) {
+            return n > 9 ? "" + n : "0" + n;
+        },
+        randomInt: function (min, max) {
+            if (min === max)return min;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        randomDate: function (start, end) {
+            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        },
+        randomArray: function (min, max) {
+            var array = [];
+            if (min === max)return min;
+            var len = Math.floor(Math.random() * (max - min + 1)) + min;
+            for (var i = 0; i < len; i++) {
+                array.push(i);
+            }
+            return array;
+        }
+    };
+
+    module.constant('helper', helper);
 
 }(angular, _);

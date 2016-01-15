@@ -106,24 +106,16 @@
 
     module.directive('product', ['$sce', function ($sce) {
         return {
+            scope: {
+                model: '=model'
+            },
             replace: true,
             templateUrl: '/indexApp/views/product.html',
             link: function (scope, element, attr) {
                 scope.isShort = 'short' in attr;
                 scope.isPurchased = 'purchased' in attr;
 
-                scope.authors = getUsers(3);
-                scope.productImageSrc = '/img/products/product-' + n(getRandomInt(1, 17)) + '.jpg';
-
                 var productTypes = ['book', 'lecture'];
-
-                var randomIndex = getRandomInt(0, 1);
-
-                scope.productType = productTypes[randomIndex];
-
-                var productCategories = ['books', 'courses'];
-
-                scope.productCategory = productCategories[randomIndex];
 
                 scope.prodAttr = [];
 
@@ -135,15 +127,12 @@
                             link: '/product',
                             caption: 'read'
                         };
-                        scope.prodAttr.push($sce.trustAsHtml('Pages: <span>244</span>'));
                         break;
                     case productTypes[1]:
                         scope.bottomButton = {
                             link: '/product',
                             caption: 'start'
                         };
-                        scope.prodAttr.push($sce.trustAsHtml('Lectures: <span>10 + 2 bonus</span>'));
-                        scope.prodAttr.push($sce.trustAsHtml('Duration: <span>3 month</span>'));
                         break;
                     default:
                         break;
@@ -191,7 +180,27 @@
 
     module.controller('productCtrl', [function () {
         this.authors = getUsers(3, false);
-        this.productImageSrc = '/img/products/product-' + n(getRandomInt(1, 17)) + '.jpg';
+    }]);
+
+    module.controller('DashboardCtrl', ['uiState', 'productsService', function (uiState, productsService) {
+        var Dashboard = this;
+
+        Dashboard.products = {
+            recent: [0, 1, 2],
+            purchased: [0, 1, 2],
+            liked: [0, 1, 2],
+            suggested: [0, 1, 2]
+        };
+
+        Dashboard.fullScreenMode = function (type) {
+            return productsService[type.toLowerCase()]().then(function (data) {
+                uiState.switch({'FULL_SCREEN_TAB': type.toUpperCase(), 'ACCOUNT_TAB': type.toUpperCase()});
+
+                Dashboard.products[type.toLowerCase()] = data;
+
+                return data;
+            });
+        };
     }]);
 
 }(angular, document, _));

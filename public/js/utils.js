@@ -11,30 +11,6 @@
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
-    var helper = {
-        formatInt: function (n) {
-            return n > 9 ? "" + n : "0" + n;
-        },
-        randomInt: function (min, max) {
-            if (min === max)return min;
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        },
-        randomDate: function (start, end) {
-            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-        },
-        randomArray: function (min, max) {
-            var array = [];
-            if (min === max)return min;
-            var len = Math.floor(Math.random() * (max - min + 1)) + min;
-            for (var i = 0; i < len; i++) {
-                array.push(i);
-            }
-            return array;
-        }
-    };
-
-    module.constant('helper', helper);
-
     module.directive('fillWithLoremIpsum', ['loremIpsumService', '$compile', '$filter',
         function (loremIpsumService, $compile, $filter) {
             return {
@@ -111,4 +87,5 @@
             }
         }
     ]);
+
 }(angular, document, _));
