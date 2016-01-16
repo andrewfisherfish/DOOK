@@ -22,38 +22,20 @@ block header
         ul(
         class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'side-menu':'nav navbar-pills subnav'}}"
         )
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','RECENT')}",
-            ng-click="uiState.switch('ACCOUNT_TAB','RECENT')"
-            )
-                a(
-                href="#RECENT"
-                ).eclipse-text
-                    i.fa.fa-history
-                    span RECENT
-            li.line
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','PURCHASED')}",
-            ng-click="uiState.switch('ACCOUNT_TAB','PURCHASED')"
-            )
-                a(
-                href="#PURCHASED"
-                ).eclipse-text
-                    i.fa.fa-shopping-cart
-                    span PURCHASED
-            li.line
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','LIKED')}",
-            ng-click="uiState.switch('ACCOUNT_TAB','LIKED')"
-            )
-                a(
-                href="#LIKED"
-                ).eclipse-text
-                    i.fa.fa-thumbs-up
-                    span LIKED
+            each link in [{name:'RECENT','fa-icon':'history'},{name:'PURCHASED','fa-icon':'shopping-cart '},{name:'LIKED','fa-icon':'thumbs-o-up'}]
+                li(
+                class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+                ng-class="{'active':uiState.is('ACCOUNT_TAB','" + link.name + "')}",
+                ng-click="uiState.switch('ACCOUNT_TAB','" + link.name + "')"
+                )
+                    a(
+                    href="#" + link.name + ""
+                    ).eclipse-text
+                        i.fa(
+                        class="fa-" + link['fa-icon']
+                        )
+                        span=link.name
+                li.line
 
 block content
     div(ng-controller="DashboardCtrl as Dashboard")
@@ -62,10 +44,11 @@ block content
         in-view-half="uiState.switch('ACCOUNT_TAB','RECENT')"
         ng-show="uiState.is('ACCOUNT_TAB','RECENT')||uiState.isAny('screen-size','screen-md','screen-lg')"
         ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','RECENT')}"
+        ng-init="uiState.switch('recentListViewType','LIST')"
         )
             .container-fluid
                 a.btn.btn-exit-fullscreen.pull-right(
-                ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                ng-click="uiState.reset('FULL_SCREEN_TAB').switch('recentListViewType','LIST');"
                 )
                     i.fa.fa-close
             .container.container-info-row
@@ -75,6 +58,14 @@ block content
                 is-text
                 ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
                 )
+
+                .row.row-margined-top.row-margined-bottom(
+                switch-list-style="recentListViewType"
+                ng-if="uiState.is('FULL_SCREEN_TAB','RECENT')"
+                )
+                    .col-xs-12
+                        include ./switch-list-style.jade
+
             .container.container-product
                 .row
                     .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
@@ -85,7 +76,7 @@ block content
                         product(
                         model="item"
                         less="true"
-                        short="true"
+                        short="{{uiState.is('recentListViewType','LIST')}}"
                         )
                     .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
                         a.show-products(
@@ -118,10 +109,11 @@ block content
         in-view-half="uiState.switch('ACCOUNT_TAB','PURCHASED')"
         ng-show="uiState.is('ACCOUNT_TAB','PURCHASED')||uiState.isAny('screen-size','screen-md','screen-lg')"
         ng-class="{'yellow':uiState.isAny('screen-size','screen-md','screen-lg')&&!uiState.is('FULL_SCREEN_TAB','PURCHASED'),'dark-white':!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('FULL_SCREEN_TAB','PURCHASED'),'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','PURCHASED')}"
+        ng-init="uiState.switch('purchasedListViewType','LIST')"
         )
             .container-fluid
                 a.btn.btn-exit-fullscreen.pull-right(
-                ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                ng-click="uiState.reset('FULL_SCREEN_TAB').switch('purchasedListViewType','LIST');"
                 )
                     i.fa.fa-close
             .container.container-info-row
@@ -135,6 +127,14 @@ block content
                         fill-with-lorem-ipsum='165'
                         ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
                         )
+
+                .row.row-margined-top.row-margined-bottom(
+                switch-list-style="purchasedListViewType"
+                ng-if="uiState.is('FULL_SCREEN_TAB','PURCHASED')"
+                )
+                    .col-xs-12
+                        include ./switch-list-style.jade
+
                 .row
                     .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
                     ng-repeat="item in Dashboard.getModel('PURCHASED')"
@@ -143,7 +143,7 @@ block content
                     )
                         product(
                         model="item"
-                        short="true"
+                        short="{{uiState.is('purchasedListViewType','LIST')}}"
                         purchased="true"
                         )
                 .row
@@ -166,6 +166,7 @@ block content
         id="LIKED"
         ng-show="uiState.is('ACCOUNT_TAB','LIKED')||uiState.isAny('screen-size','screen-md','screen-lg')"
         ng-class="{'section-fullscreen-on':uiState.is('FULL_SCREEN_TAB','LIKED')}"
+        ng-init="uiState.switch('likedListViewType','LIST')"
         )
             .container-fluid
                 a.btn.btn-exit-fullscreen.pull-right(
@@ -180,6 +181,14 @@ block content
                     is-text
                     ng-show="uiState.isAny('screen-size','screen-md','screen-lg')"
                     )
+
+                    .row.row-margined-top.row-margined-bottom(
+                    switch-list-style="likedListViewType"
+                    ng-if="uiState.is('FULL_SCREEN_TAB','LIKED')"
+                    )
+                        .col-xs-12
+                            include ./switch-list-style.jade
+
                 .container-product
                     .row
                         .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
@@ -190,7 +199,7 @@ block content
                             ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
                             model="item"
                             less="true"
-                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('likedListViewType','LIST')}}"
                             liked="true"
                             )
                         .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
@@ -201,7 +210,7 @@ block content
                             ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
                             model="item"
                             less="true"
-                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('likedListViewType','LIST')}}"
                             liked="true"
                             )
                         .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
@@ -212,7 +221,7 @@ block content
                             ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
                             model="item"
                             less="true"
-                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')||uiState.is('likedListViewType','LIST')}}"
                             liked="true"
                             )
                         .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
@@ -236,7 +245,7 @@ block content
                         a.show-products(
                         href="javascript:void(0);"
                         ng-show="uiState.is('FULL_SCREEN_TAB','LIKED')"
-                        ng-click="Dashboard.fullScreenMode('LIKED')"
+                        ng-click="Dashboard.loadMore('LIKED')"
                         ) show more
 
         .section.section-wide.section-info-row.violet(

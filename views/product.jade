@@ -13,40 +13,20 @@ block header
         ul(
         class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'side-menu':'nav navbar-pills subnav'}}"
         )
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','INFO')}"
-            ng-click="uiState.switch('ACCOUNT_TAB','INFO')"
-            )
-                a(
-                href="#INFO"
-                ).eclipse-text
-                    i.fa.fa-info
-                    span INFO
-            li.line
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','CONTENT')}"
-            ng-click="uiState.switch('ACCOUNT_TAB','CONTENT');"
-            )
-                a(
-                href="#CONTENT"
-                ).eclipse-text
-                    i.fa.fa-list-alt
-                    span CONTENT
-            li.line
-            li(
-            class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
-            ng-class="{'active':uiState.is('ACCOUNT_TAB','TEST')}"
-            ng-click="uiState.switch('ACCOUNT_TAB','TEST')"
-            )
-                a(
-                href="#TEST"
-                ).eclipse-text
-                    i.fa.fa-check
-                    span TEST
-
-
+            each link in [{name:'INFO','fa-icon':'info'},{name:'CONTENT','fa-icon':'list-alt'},{name:'TEST','fa-icon':'check-square-o'}]
+                li(
+                class="{{uiState.isAny('screen-size','screen-md','screen-lg')?'circle':'col-xs-4 col-padding-0'}}"
+                ng-class="{'active':uiState.is('ACCOUNT_TAB','" + link.name + "')}"
+                ng-click="uiState.switch('ACCOUNT_TAB','" + link.name + "')"
+                )
+                    a(
+                    href="#" + link.name + ""
+                    ).eclipse-text
+                        i.fa(
+                        class="fa-" + link['fa-icon']
+                        )
+                        span=link.name
+                li.line
 
     .container-fluid.product-details-header.row.section(
     ng-controller="productDetailsCtrl as ProductDetails"

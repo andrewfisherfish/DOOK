@@ -1,5 +1,7 @@
 <div class="product {{model.productType}}">
-    <div class="product-background"></div>
+    <div class="product-background-wrapper">
+        <div class="product-background"></div>
+    </div>
     <div class="product-body">
         <h4 class="product-category top if-short-hide"><a class="product-type-color" href="#"
                                                           ng-bind="model.productCategory"></a></span></h4>
@@ -29,7 +31,7 @@
             <h4 class="product-title-short if-short-show" ng-bind="model.title"></h4>
 
             <h6 class="product-category if-short-show"><a class="product-type-color" href="#"
-                                                          ng-bind="productCategory"></a></span></h6>
+                                                          ng-bind="model.productCategory"></a></span></h6>
 
             <p class="if-short-show if-recent-hide" ng-bind="model.shortDescription"></p>
 
@@ -54,7 +56,9 @@
             </div>
         </div>
 
-        <a href="/product" class="product-link-cover if-short-show"></a>
+        <a href="/product" class="product-link-cover if-short-show if-purchased-hide"></a>
+
+        <a href="/book" class="product-link-cover if-short-show if-purchased-show"></a>
 
         <div class="product-extra" uib-dropdown>
             <button class="btn pull-right"

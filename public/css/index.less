@@ -682,8 +682,14 @@ a.media.search-tag {
   width: @width;
   height: @height;
   padding: 0;
+  .fix-overflow-radius-scale-issue();
   img {
     width: 100%;
+    transition: transform .25s, opacity .25s;
+    &:hover {
+      transform: scale(1.2);
+      transition: transform .25s, opacity .25s;
+    }
   }
 }
 
@@ -1175,7 +1181,7 @@ ul.subnav {
       }
     }
     &.active {
-      border-bottom: solid 5px #3b3e43;
+      border-bottom: solid 5px #666;
     }
   }
 }
@@ -1189,7 +1195,7 @@ ul.side-menu {
   margin-left: @size/2;
   width: 0;
   z-index: 1;
-  li.line {
+  li.line:not(:last-child) {
     width: 1px;
     //background-color: rgba(255, 255, 255, 0.5);
     border-left: solid 2px #ddd;
@@ -1260,3 +1266,16 @@ ul.side-menu {
   }
 }
 
+.list-panel {
+  button {
+    background: transparent;
+    &:hover {
+      background: transparent;
+    }
+    .btn-hovered-border-and-color(@theme-bg-color);
+    i {
+      font-size: 2em;
+
+    }
+  }
+}

@@ -24,9 +24,6 @@ class="navbar navbar-inverse top")
                     ng-mouseenter="uiState.switch('userMenuOn',true)"
                     )
                         user-logged-in
-                //li.pull-right
-                //    button.navbar-button(ng-click="uiState.switch({'isNavbarSearch':true,'isNavbarLogin':false,'isNavbarNavigation':false})", type='button')
-                //        i.fa.fa-search
 
         .navbar-search.navbar-search-show.navbar-login-hide
             .navbar-brand-search
@@ -37,15 +34,13 @@ class="navbar navbar-inverse top")
                 i.fa.fa-close
 
         ul.nav.navbar-nav.content-menu.navbar-login-show.navbar-search-hide
-            li
-                a(href='#',ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)")
-                    h4 Log out
-            li
-                a(href='/Settings')
-                    h4 Settings
-            li
-                a(href='/')
-                    h4 Dashboard
+            each link in [{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)"}, {name:'Settings',url:'/Settings'},{name:'Dashboard',url:'/'}]
+                li
+                    a(
+                    href=link.url,
+                    ng-click=(link['ng-click'] || '')
+                    )
+                        h4=link.name
         ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
             each link in [{name:'Products',url:'/Products'}, {name:'Authors',url:'/Authors'},{name:'About',url:'/About'}]
                 li(class=link.url.toLowerCase() === requestUrl.toLowerCase() ? 'active' : '')
@@ -70,17 +65,12 @@ class="navbar navbar-inverse top")
     ng-mouseleave="uiState.switch('userMenuOn',false)",
     ng-mouseenter="uiState.switch('userMenuOn',true)"
     )
-        li
-            a(href='/')
-                h4 Dashboard
-        li
-            a(href='/Settings')
-                h4 Settings
-        li
-            a(
-            href='#',
-            ng-click="uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"
-            )
-                h4 Log out
+        each link in [{name:'Dashboard',url:'/'},{name:'Settings',url:'/Settings'},{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"}]
+            li
+                a(
+                href=link.url,
+                ng-click=(link['ng-click'] || '')
+                )
+                    h4=link.name
 
     block header

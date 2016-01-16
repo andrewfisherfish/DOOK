@@ -57,10 +57,6 @@
             }());
         }]);
 
-        module.controller('mainCtrl', ['$scope', '$uibModal', function ($scope, $uibModal) {
-
-        }]);
-
         var getRandomInt = function (min, max) {
             if (min === max)return min;
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -203,7 +199,7 @@
                         self.model = self.model || new Array(params.columnsLength);
                     },
                     add: function (data) {
-                        var len = Math.ceil(data.length / params.columnsLength);
+                        var len = Math.floor(data.length / params.columnsLength);
                         _.each(self.model, function (list, index) {
                             if (index === 2)
                                 console.log(data);
@@ -212,7 +208,7 @@
                         return self.model;
                     },
                     update: function (data) {
-                        var len = Math.ceil(data.length / params.columnsLength);
+                        var len = Math.floor(data.length / params.columnsLength);
                         _.each(self.model, function (list, index) {
                             self.model[index] = self.model.length - 1 === index ? data : data.splice(0, len);
                         });

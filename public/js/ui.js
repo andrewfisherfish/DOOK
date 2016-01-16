@@ -187,6 +187,8 @@
             var container = customStatesContainer || statesContainer;
 
             container[name] = undefined;
+
+            return uiState;
         };
 
         uiState.hasValue = function (name, customStatesContainer) {
@@ -367,6 +369,16 @@
             }
         ]);
     });
+
+    module.directive('switchListStyle', [function () {
+        return {
+            scope: false,
+            controllerAs: 'switchListStyleCtrl',
+            controller: ['$attrs', function ($attrs) {
+                this.listName = $attrs.switchListStyle;
+            }]
+        }
+    }]);
 
     var helper = {
         formatInt: function (n) {
