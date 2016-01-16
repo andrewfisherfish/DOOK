@@ -1,11 +1,25 @@
-.container.container-info-row
+.container.container-info-row(
+ng-controller="suggestionsCtrl as Suggestions"
+)
     .col-md-3
         .container-info-row
             h1.info-row-title we suggest
             p(fill-with-lorem-ipsum="200" is-text)
     .col-md-9.col-padding-0.container-product
         .row
-            .col-sm-6.col-md-3th-max-hide.col-lg-4th-max-hide(ng-repeat="i in [0,1]")
+            .col-sm-6.col-md-3th-max-hide.col-lg-4th-max-hide(
+            )
                 product(
+                ng-if="$index<1"
+                ng-repeat="item in Suggestions.columnLayoutInst.model[0]"
+                model="item"
+                short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                )
+            .col-sm-6.col-md-3th-max-hide.col-lg-4th-max-hide(
+            )
+                product(
+                ng-if="$index<1"
+                ng-repeat="item in Suggestions.columnLayoutInst.model[1]"
+                model="item"
                 short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
                 )

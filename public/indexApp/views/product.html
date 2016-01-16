@@ -1,17 +1,17 @@
-<div class="product {{productType}}">
+<div class="product {{model.productType}}">
     <div class="product-background"></div>
     <div class="product-body">
         <h4 class="product-category top if-short-hide"><a class="product-type-color" href="#"
-                                                          ng-bind="productCategory"></a></span></h4>
+                                                          ng-bind="model.productCategory"></a></span></h4>
 
         <div class="product-image">
             <div class="product-image-container">
-                <div class="product-image-object" style="{{'background-image:url('+productImageSrc+')'}}"></div>
+                <div class="product-image-object" style="{{'background-image:url('+model.imgSrc+')'}}"></div>
             </div>
 
             <div class="product-image-centered">
 
-                <h3 class="product-title if-short-hide" fill-with-lorem-ipsum="15" is-title></h3>
+                <h3 class="product-title if-short-hide" ng-bind="model.title"></h3>
 
                 <div class="product-search-tags if-short-hide if-recent-hide">
                     <search-tag class="no-hover" ng-repeat="i in [0,1,2,3,4,5,6]" href="#"></search-tag>
@@ -20,30 +20,30 @@
             </div>
 
             <div class="product-author if-recent-hide if-short-hide">
-                <user class="pull-left" model="item" ng-repeat="item in authors"></user>
+                <user class="pull-left" model="item" ng-repeat="item in model.authors"></user>
             </div>
         </div>
 
         <div class="product-bottom">
 
-            <h4 class="product-title-short if-short-show" fill-with-lorem-ipsum="15" is-title></h4>
+            <h4 class="product-title-short if-short-show" ng-bind="model.title"></h4>
 
             <h6 class="product-category if-short-show"><a class="product-type-color" href="#"
                                                           ng-bind="productCategory"></a></span></h6>
 
-            <p class="if-short-show if-recent-hide" fill-with-lorem-ipsum min="20" max="50" is-title></p>
+            <p class="if-short-show if-recent-hide" ng-bind="model.shortDescription"></p>
 
-            <p class="if-short-hide if-recent-hide" fill-with-lorem-ipsum min="50" max="300" is-title></p>
+            <p class="if-short-hide if-recent-hide" ng-bind="model.longDescription"></p>
 
             <div class="row row-centered if-short-hide if-less-hide">
                 <ul class="product-info col-centered col-xs-8">
-                    <li>Authors: <span ng-repeat="item in authors">
-                        <a href="/author" fill-with-lorem-ipsum="15" is-name></a></span>
+                    <li>Authors: <span ng-repeat="item in model.authors">
+                        <a href="/author" ng-bind="item.name"></a></span>
                     </li>
                     <li class="if-purchased-show"><h4>Already in your library</h4></li>
 
-                    <li class="if-purchased-hide" ng-repeat="item in prodAttr" ng-bind-html="item"></li>
-                    <li class="if-purchased-hide">Price: <span class="price" fill-with-lorem-ipsum is-price></span></li>
+                    <li class="if-purchased-hide" ng-repeat="item in model.prodAttr" ng-bind-html="item"></li>
+                    <li class="if-purchased-hide">Price: <span class="price" ng-bind="model.price"></span></li>
                 </ul>
             </div>
 

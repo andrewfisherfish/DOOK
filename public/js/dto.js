@@ -4,35 +4,36 @@
 (function (angular, document, _) {
     var module = angular.module('DOOK.DTO', []);
 
-    var getRandomInt = function (min, max) {
-        if (min === max)return min;
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-    var n = function (n) {
-        return n > 9 ? "" + n : "0" + n;
-    };
-
-    var shuffle = function (array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    };
-
     module.service('loremIpsumService', ['$http', '$compile', function ($http, $compile) {
+
+        var getRandomInt = function (min, max) {
+            if (min === max)return min;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+
+        var n = function (n) {
+            return n > 9 ? "" + n : "0" + n;
+        };
+
+        var shuffle = function (array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        };
+
         var getText = function (msgLength) {
             msgLength = msgLength || 10000;
 
@@ -78,83 +79,107 @@
         });
     }]);
 
-    module.service('authorsService', ['promiseWrapper', 'loremIpsumService', function (promiseWrapper, loremIpsumService) {
-        var author = function () {
-            return {
-                src: loremIpsumService.getAvatar(),
-                name: loremIpsumService.getName()
-            }
+    module.service('authorsService', ['$http', function ($http) {
+        this.get = function () {
+            return $http({
+                method: 'GET',
+                url: '/api/products/liked',
+                params: _.extend(params || {}, {
+                    pageNumber: -1,
+                    pageLength: 10
+                })
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
 
-        var getAuthors = function (max) {
-            var authors = [];
-            var length = getRandomInt(1, max || 3);
-
-            for (var i = 1; i <= length; i++) {
-                authors.push(author());
-            }
-
-            return shuffle(authors);
-        };
-
-        this.author = function () {
-            return promiseWrapper.create(author());
-        };
-
-        this.bookAuthors = function () {
-            return promiseWrapper.create(getAuthors());
+        this.book = function (params) {
+            params = _.extend(params || {}, {
+                pageNumber: -1,
+                pageLength: 10
+            });
+            return $http({
+                method: 'GET',
+                url: '/api/products/liked',
+                params: {
+                    pageNumber: -1,
+                    pageLength: 10,
+                    bookId: _.uniqueId()
+                }
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
     }]);
 
-    module.service('productsService', ['promiseWrapper', 'loremIpsumService', '$sce', function (promiseWrapper, loremIpsumService, $sce) {
-        var product = function () {
-            var productTypes = ['book', 'lecture'];
-            var randomIndex = getRandomInt(0, 1);
-            var productCategories = ['books', 'courses'];
-
-            var product = {
-                imgSrc: '/img/products/product-' + n(getRandomInt(1, 17)) + '.jpg',
-                title: loremIpsumService.getText(15),
-                productType: productTypes[randomIndex],
-                productCategory: productCategories[randomIndex],
-                prodAttr: [],
-                authors: []
-            };
-
-            switch (product.productType) {
-                case productTypes[0]:
-                    product.prodAttr.push($sce.trustAsHtml('Pages: <span>244</span>'));
-                    break;
-                case productTypes[1]:
-                    product.prodAttr.push($sce.trustAsHtml('Lectures: <span>10 + 2 bonus</span>'));
-                    product.prodAttr.push($sce.trustAsHtml('Duration: <span>3 month</span>'));
-                    break;
-                default:
-                    break;
-            }
+    module.service('productsService', ['$http', function ($http) {
+        this.get = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/product',
+                params: _.extend(params || {}, {
+                    id: _.uniqueId(),
+                    userId: _.uniqueId()
+                })
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
 
-        var getProducts = function () {
-            var products = [];
-            var length = getRandomInt(1, max || 3);
-
-            for (var i = 1; i <= length; i++) {
-                products.push(product());
-            }
-
-            return shuffle(authors)
+        var defParamsForListings = {
+            pageNumber: -1,
+            pageLength: 10,
+            userId: _.uniqueId()
         };
 
-        this.recent = function () {
-            return promiseWrapper.create(getProducts());
+        this.recent = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/products/recent',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
 
-        this.purchased = function () {
-            return promiseWrapper.create(getProducts());
+        this.purchased = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/products/purchased',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
 
-        this.liked = function () {
-            return promiseWrapper.create(getProducts());
+        this.liked = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/products/liked',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
+        };
+
+        this.suggested = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/products/suggested',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
+        };
+
+        this.look = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/products',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
         };
     }]);
 

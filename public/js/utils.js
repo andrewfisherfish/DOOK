@@ -11,8 +11,8 @@
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
-    module.directive('fillWithLoremIpsum', ['loremIpsumService', '$compile', '$filter',
-        function (loremIpsumService, $compile, $filter) {
+    module.directive('fillWithLoremIpsum', ['loremIpsumService', '$compile', '$filter', 'helper',
+        function (loremIpsumService, $compile, $filter, helper) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attr) {

@@ -78,7 +78,7 @@ block content
             .container.container-product
                 .row
                     .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
-                    ng-repeat="item in Dashboard.products.recent"
+                    ng-repeat="item in Dashboard.getModel('RECENT')"
                     ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','RECENT')"
                     ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','RECENT')}"
                     )
@@ -92,6 +92,12 @@ block content
                         href="javascript:void(0);"
                         ng-hide="uiState.is('FULL_SCREEN_TAB','RECENT')"
                         ng-click="Dashboard.fullScreenMode('RECENT')"
+                        ) show all
+                    .col-sm-6.col-md-4(ng-show="!uiState.isAny('screen-size','screen-md','screen-lg')")
+                        a.show-products(
+                        href="javascript:void(0);"
+                        ng-show="uiState.is('FULL_SCREEN_TAB','RECENT')"
+                        ng-click="Dashboard.loadMore('RECENT')"
                         ) show more
             .clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
                 .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
@@ -99,6 +105,12 @@ block content
                     href="javascript:void(0);"
                     ng-hide="uiState.is('FULL_SCREEN_TAB','RECENT')"
                     ng-click="Dashboard.fullScreenMode('RECENT')"
+                    ) show all
+                .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+                    a.show-products(
+                    href="javascript:void(0);"
+                    ng-show="uiState.is('FULL_SCREEN_TAB','RECENT')"
+                    ng-click="Dashboard.loadMore('RECENT')"
                     ) show more
 
         .section.section-wide.section-info-row(
@@ -125,11 +137,12 @@ block content
                         )
                 .row
                     .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
-                    ng-repeat="i in Dashboard.products.purchased"
+                    ng-repeat="item in Dashboard.getModel('PURCHASED')"
                     ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','PURCHASED')"
                     ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','PURCHASED')}"
                     )
                         product(
+                        model="item"
                         short="true"
                         purchased="true"
                         )
@@ -139,6 +152,12 @@ block content
                         href="javascript:void(0);"
                         ng-hide="uiState.is('FULL_SCREEN_TAB','PURCHASED')"
                         ng-click="Dashboard.fullScreenMode('PURCHASED')"
+                        ) show all
+                    .col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+                        a.show-products(
+                        href="javascript:void(0);"
+                        ng-show="uiState.is('FULL_SCREEN_TAB','PURCHASED')"
+                        ng-click="Dashboard.loadMore('PURCHASED')"
                         ) show more
 
 
@@ -164,11 +183,34 @@ block content
                 .container-product
                     .row
                         .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
-                        ng-repeat="i in Dashboard.products.liked"
-                        ng-if="$index<3||uiState.is('FULL_SCREEN_TAB','LIKED')"
                         ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','LIKED')}"
                         )
                             product(
+                            ng-repeat="item in Dashboard.getModel('LIKED')[0]"
+                            ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
+                            model="item"
+                            less="true"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            liked="true"
+                            )
+                        .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
+                        ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','LIKED')}"
+                        )
+                            product(
+                            ng-repeat="item in Dashboard.getModel('LIKED')[1]"
+                            ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
+                            model="item"
+                            less="true"
+                            short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
+                            liked="true"
+                            )
+                        .col-sm-6.col-lg-4.col-md-3th-max-hide.col-lg-4th-max-hide(
+                        ng-class="{'col-reset-hidden':uiState.is('FULL_SCREEN_TAB','LIKED')}"
+                        )
+                            product(
+                            ng-repeat="item in Dashboard.getModel('LIKED')[2]"
+                            ng-if="$index<1||uiState.is('FULL_SCREEN_TAB','LIKED')"
+                            model="item"
                             less="true"
                             short="{{!uiState.isAny('screen-size','screen-md','screen-lg')}}"
                             liked="true"
@@ -178,12 +220,22 @@ block content
                             href="javascript:void(0);"
                             ng-hide="uiState.is('FULL_SCREEN_TAB','LIKED')"
                             ng-click="Dashboard.fullScreenMode('LIKED')"
+                            ) show all
+                            a.show-products(
+                            href="javascript:void(0);"
+                            ng-show="uiState.is('FULL_SCREEN_TAB','LIKED')"
+                            ng-click="Dashboard.loadMore('LIKED')"
                             ) show more
                 .row.clearfix(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
                     .col-sm-6.col-sm-offset-3
                         a.show-products(
                         href="javascript:void(0);"
                         ng-hide="uiState.is('FULL_SCREEN_TAB','LIKED')"
+                        ng-click="Dashboard.fullScreenMode('LIKED')"
+                        ) show all
+                        a.show-products(
+                        href="javascript:void(0);"
+                        ng-show="uiState.is('FULL_SCREEN_TAB','LIKED')"
                         ng-click="Dashboard.fullScreenMode('LIKED')"
                         ) show more
 
