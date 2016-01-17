@@ -373,9 +373,19 @@
     module.directive('switchListStyle', [function () {
         return {
             scope: false,
-            controllerAs: 'switchListStyleCtrl',
+            controllerAs: 'switchListStyle',
             controller: ['$attrs', function ($attrs) {
-                this.listName = $attrs.switchListStyle;
+                this.name = $attrs.switchListStyle;
+            }]
+        }
+    }]);
+
+    module.directive('fullScreenState', [function () {
+        return {
+            scope: false,
+            controllerAs: 'fullScreenState',
+            controller: ['$attrs', function ($attrs) {
+                this.name = $attrs.fullScreenState;
             }]
         }
     }]);

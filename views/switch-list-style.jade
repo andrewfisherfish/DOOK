@@ -2,13 +2,13 @@
     .btn-group.pull-right
         button.btn.btn-default.btn-large(
         switch-list-style-list
-        ng-class="{'active':uiState.is(switchListStyleCtrl.listName,'LIST')}"
-        ng-click="uiState.switch(switchListStyleCtrl.listName, 'LIST')"
+        ng-class="{'active':uiState.is(switchListStyle.name,'LIST')}"
+        ng-click="uiState.switch(switchListStyle.name, 'LIST')"
         )
             i.fa.fa-th-list
         button.btn.btn-default.btn-large(
         switch-list-style-large
-        ng-class="{'active':uiState.is(switchListStyleCtrl.listName,'LARGE')}"
-        ng-click="uiState.switch(switchListStyleCtrl.listName, 'LARGE')"
+        ng-class="{'active':uiState.is(switchListStyle.name,'LARGE')}"
+        ng-click="uiState.switch(switchListStyle.name, 'LARGE')"
         )
             i.fa.fa-th-large
