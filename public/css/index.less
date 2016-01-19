@@ -61,6 +61,25 @@ content {
   }
 }
 
+nav.navbar:not(.user-menu-on),
+nav.navbar:not(.notif-menu-on) {
+  ul.user-menu {
+    > li {
+      //&:hover:before {
+      //  background: rgba(255, 255, 255, 0.3);
+      //  content: "";
+      //  width: 100%;
+      //  height: 100%;
+      //  position: fixed;
+      //  left: 0;
+      //  right: 0;
+      //}
+      ul.content-menu-sub {
+      }
+    }
+  }
+}
+
 @media (min-width: @grid-float-breakpoint) {
   .navbar-header {
     padding-right: 15px;
@@ -73,11 +92,8 @@ content {
 
   ul.user-menu {
     li {
-
       button {
-
         float: left;
-        //width: 100%;
       }
     }
   }
@@ -121,11 +137,6 @@ content {
       background-color: #fff;
       color: @navbar-inverse-bg;
       transition: background-color 250ms;
-    }
-    @media (max-width: @grid-float-breakpoint-max) {
-      &:last-child:hover {
-        border-bottom: solid 1px #ddd;
-      }
     }
   }
 }
@@ -244,8 +255,9 @@ nav.navbar {
     > li {
       .navbar-list-items();
       @media only screen and (min-width: @screen-sm) {
-        float: right;
+
       }
+      width: 100%;
       height: @navbar-height;
       > a {
         &:hover {
@@ -257,7 +269,7 @@ nav.navbar {
       }
     }
     height: 100%;
-    width: 100%;
+
     position: fixed;
     @media only screen and (max-width: @screen-xs-max) {
 
@@ -266,7 +278,7 @@ nav.navbar {
     @media only screen and (min-width: @screen-sm) {
 
       > li {
-        float: none;
+
       }
     }
   }
@@ -320,7 +332,7 @@ content {
       height: 100%;
       transition: width .25s, height .25s;
       top: 0;
-      z-index: 2;
+      z-index: 3;
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -567,7 +579,7 @@ content {
     }
     &.price {
       &:before {
-        content: "\20B4";
+        content: " \20B4 ";
       }
       font-size: 42px;
       font-weight: bold;
@@ -803,7 +815,7 @@ a.media.search-tag {
   line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-family: "Open Sans", sans-serif;
+  font-family: " Open Sans ", sans-serif;
   color: rgba(0, 0, 0, 0.7);
 
   a {
@@ -1412,12 +1424,20 @@ ul.side-menu {
   }
 }
 
+ul.content-menu-sub {
+
+}
+
 .media.notification {
   padding: 15px;
+  margin: 0;
   i {
     font-size: 2em;
   }
   p {
     padding: 15px;
+  }
+  &:not(:last-child) {
+    border-bottom: solid 1px #ddd
   }
 }
