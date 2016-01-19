@@ -16,7 +16,6 @@
 @color-navy: #21abc7;
 @color-navy-dark: #1a879d;
 
-
 @color-product-lecture: @color-orange;
 @color-product-lecture-dark: @color-orange-dark;
 
@@ -30,7 +29,7 @@
 @theme-font-family: 'headline-semi-bold', Helvetica, Arial, sans-serif;
 @font-descriptions: 'lato', sans-serif;
 
-.fix-overflow-radius-scale-issue(){
+.fix-overflow-radius-scale-issue() {
   -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
 }
 
@@ -56,6 +55,10 @@
   border-radius: 4px;
   height: 100%;
   padding: @navbar-height/3 15px;
+
+  > * {
+    vertical-align: middle;
+  }
 
   &.user {
     padding: @navbar-height/4 15px;

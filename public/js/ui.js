@@ -390,6 +390,15 @@
         }
     }]);
 
+    module.directive('applyScreenWidth', [function () {
+        return {
+            scope: false,
+            link: function (scope, element, attr) {
+                element.css('height', window.innerHeight + 'px');
+            }
+        }
+    }]);
+
     var helper = {
         formatInt: function (n) {
             return n > 9 ? "" + n : "0" + n;
@@ -413,5 +422,6 @@
     };
 
     module.constant('helper', helper);
+
 
 }(angular, _);

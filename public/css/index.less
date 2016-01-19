@@ -73,8 +73,11 @@ content {
 
   ul.user-menu {
     li {
+
       button {
-        width: 100%;
+
+        float: left;
+        //width: 100%;
       }
     }
   }
@@ -141,7 +144,7 @@ content {
 }
 
 nav.navbar {
-  z-index: 2;
+  z-index: 3;
   &:not(.is-navbar-search) {
     .navbar-search-show {
       display: none !important;
@@ -181,6 +184,9 @@ nav.navbar {
   .logo {
     img {
       height: 100%;
+      @media only screen and (max-width: @screen-sm-max) {
+        width: 50px;
+      }
     }
   }
 
@@ -193,15 +199,16 @@ nav.navbar {
 
   ul.ul-buttons {
     li {
-      height: @navbar-height;
-      color: #fff;
-      transition: background-color 450ms;
-      &:hover {
-        background-color: #fff;
-        color: @navbar-inverse-bg;
-        transition: background-color 250ms;
-      }
       button {
+        border-radius: 0;
+        height: @navbar-height;
+        color: #fff;
+        transition: background-color 450ms;
+        &:hover {
+          background-color: #fff;
+          color: @navbar-inverse-bg;
+          transition: background-color 250ms;
+        }
         .fa {
           font-size: 2em;
         }
@@ -249,17 +256,15 @@ nav.navbar {
         color: @navbar-inverse-bg;
       }
     }
+    height: 100%;
+    width: 100%;
+    position: fixed;
     @media only screen and (max-width: @screen-xs-max) {
-      width: 100%;
-      position: absolute;
 
     }
 
     @media only screen and (min-width: @screen-sm) {
-      width: 198px;
-      position: fixed;
-      right: 0;
-      height: 100%;
+
       > li {
         float: none;
       }
@@ -920,12 +925,16 @@ a.media.search-tag {
 .media.user-logged-in {
   display: inline-block;
   margin: 0;
+  @media only screen and (max-width: @screen-sm-max) {
+    //max-width: 150px;
+  }
   .media-body {
     width: auto;
   }
   h4 {
     letter-spacing: 1.5px;
     font-weight: bold;
+
   }
   .avatar {
     .avatar-styles(50px, 50px);
@@ -1318,4 +1327,97 @@ ul.side-menu {
   border: none;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: @screen-md) {
+  .hide-on-sm {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: @screen-lg) {
+  .hide-on-md {
+    display: none !important;
+  }
+}
+
+.navbar {
+  .fixed-on-sticky {
+    background-color: @navbar-inverse-bg;
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+  }
+
+  .padding-on-sticky {
+    height: @navbar-height;
+  }
+  @navbar-height-sticky: @navbar-height/2;
+  @navbar-brand-search-height-sticky: @navbar-height-sticky - 20 - 20;
+  @sticky-transition-height: height .25s;
+  @sticky-transition-top: top .25s;
+  @sticky-transition-padding: padding .25s;
+  @sticky-transition-lineheight: line-height .25s;
+  &.is-sticky {
+    h4 {
+      font-size: 14px;
+    }
+    .user-logged-in {
+      padding-right: 50px;
+      .avatar {
+        transition: @sticky-transition-top, width .25s, @sticky-transition-height;
+        position: absolute;
+        right: 15px;
+        top: 5px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .navbar-brand {
+      height: @navbar-height-sticky;
+      padding: 15px 15px;
+    }
+    @media only screen and (min-width: @screen-sm) {
+      ul.content-menu.navbar-nav {
+        > li {
+          transition: @sticky-transition-height;
+          height: @navbar-height-sticky;
+          > a, > button {
+            transition: @sticky-transition-height;
+            height: @navbar-height-sticky;
+            h4 {
+              transition: @sticky-transition-height;
+              line-height: @navbar-height-sticky;
+            }
+          }
+        }
+      }
+    }
+    ul.content-menu-sub {
+      transition: @sticky-transition-top;
+      top: @navbar-height-sticky;
+    }
+    .navbar-button {
+      transition: @sticky-transition-padding;
+      padding: @navbar-brand-search-height-sticky 15px;
+    }
+    ul.ul-buttons {
+      li {
+        button {
+          transition: @sticky-transition-height;
+          height: @navbar-height-sticky;
+        }
+      }
+    }
+  }
+}
+
+.media.notification {
+  padding: 15px;
+  i {
+    font-size: 2em;
+  }
+  p {
+    padding: 15px;
+  }
 }
