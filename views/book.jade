@@ -33,7 +33,7 @@ ng-init="uiState.switch({'isContents':false,'isSearch':false,'isMenu':false,'isN
     class="navbar navbar-inverse top"
     )
         .container-fluid
-            .navbar-header(ui-sticky-nav='', scroller-selector="uiState.is('isContents')||uiState.is('isSearch')||uiState.is('isMenu')?'nav':undefined", ng-class="{'is-sticky':uiState.is('isSticky')}")
+            .navbar-header(ui-sticky-nav='', scroller-selector="{{uiState.is('isContents')||uiState.is('isSearch')||uiState.is('isMenu')?'nav':undefined}}", ng-class="{'is-sticky':uiState.is('isSticky')}")
                 .navbar-brand(ng-hide="!uiState.is('isAtTop') && uiState.is('isFullScreen')")
                     h3.title.sub-top(
                     ng-hide="uiState.is('isSearch') || uiState.is('isSticky')",

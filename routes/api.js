@@ -153,6 +153,14 @@ function fakeDataService() {
 
 }
 
+router.get('/notifications', function (req, res, next) {
+    var fakeDataServiceInst = new fakeDataService();
+
+    res.setHeader('Content-Type', 'application/json');
+
+    res.send(JSON.stringify([]));
+});
+
 router.get('/products', function (req, res, next) {
     var fakeDataServiceInst = new fakeDataService();
 

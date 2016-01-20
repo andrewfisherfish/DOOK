@@ -6,19 +6,16 @@
         'ui.bootstrap'
     ]);
 
-    module.directive('uiStickyNav', ['$document', '$window', 'throttle', 'uiState', directive]);
+    module.directive('uiStickyNav', ['$document', '$window', 'throttle', 'uiState', uiStickyNavDirective]);
 
-    function directive($document, $window, throttle, uiState) {
+    function uiStickyNavDirective($document, $window, throttle, uiState) {
         return {
             restrict: 'AE',
-            scope: {
-                scrollerSelector: '=',
-                isSticky: '='
-            },
+            scope: false,
             link: link
         };
 
-        function link(scope, element) {
+        function link(scope, element, attr) {
             var options = {};
 
             var $bodyElement = $document.find('body');
@@ -47,7 +44,7 @@
             };
 
             scope.$watch(function () {
-                return scope.scrollerSelector;
+                return attr.scrollerSelector;
             }, init);
 
             scope.$on('destroy', destroy);

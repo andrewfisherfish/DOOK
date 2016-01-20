@@ -183,4 +183,35 @@
         };
     }]);
 
+    module.service('notificationsService', ['$http', function ($http) {
+        this.get = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/product',
+                params: _.extend(params || {}, {
+                    id: _.uniqueId(),
+                    userId: _.uniqueId()
+                })
+            }).then(function successCallback(response) {
+                return response.data;
+            });
+        };
+
+        var defParamsForListings = {
+            pageNumber: -1,
+            pageLength: 10,
+            userId: _.uniqueId()
+        };
+
+        this.look = function (params) {
+            return $http({
+                method: 'GET',
+                url: '/api/notifications',
+                params: _.extend(params || {}, defParamsForListings)
+            }).then(function successCallback(response) {
+                return response.data;
+            });
+        };
+    }]);
+
 }(angular, document, _));

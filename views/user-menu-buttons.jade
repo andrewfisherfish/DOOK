@@ -1,39 +1,69 @@
-button.navbar-button.user.pull-left(
+button.navbar-button.notif.pull-right(
+ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)"
+type='button'
+ng-mouseleave="uiState.reset('hoverMenuActive')"
+ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
+ng-class="{'active':uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')}"
+ng-click="uiState.reset('FULL_SCREEN_TAB')"
+)
+    i.fa.fa-bell-o(
+    ng-if="!uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
+    )
+    i.fa.fa-close(
+    ng-if="uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
+    )
+
+button.navbar-button.user.pull-right(
 ng-if="uiState.is('isLoggedIn',true)",
 type='button',
-ng-mouseleave="uiState.switch('userMenuOn',false)",
-ng-mouseenter="uiState.switch('userMenuOn',true)"
+ng-mouseleave="uiState.reset('hoverMenuActive')"
+ng-mouseenter="uiState.switch('hoverMenuActive','user')"
 )
     user-logged-in
 
-button.navbar-button.notif.pull-left(
-ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)"
-type='button'
-ng-mouseleave="uiState.switch('notifMenuOn',false)",
-ng-mouseenter="uiState.switch('notifMenuOn',true)"
-)
-    i.fa.fa-bell-o
 
 ul.content-menu-sub.notif(
-ng-mouseleave="uiState.switch('notifMenuOn',false)",
-ng-mouseenter="uiState.switch('notifMenuOn',true)"
+ng-mouseleave="uiState.reset('hoverMenuActive')"
+ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
 )
-    li.media.notification.pull-left(
-    ng-repeat="i in [0,1,2,3]"
+    li.header.is-full-screen-notif-show
+        h1.pull-left NOTIFS
+        a.btn.btn-exit-fullscreen.pull-right(
+        ng-click="uiState.reset('FULL_SCREEN_TAB');"
+        )
+            i.fa.fa-close
+
+    li.media.notification.lecture.pull-left(
+    ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10]"
+    ng-if="$index<3||uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
     )
         a(
         href="#"
         )
             .media-left.media-middle
-                i.fa.fa-book
-            .media-right.media-middle
-                p(
-                fill-with-lorem-ipsum max="100" min="30"
+                span.pre-text New book:
+                h4.text(
+                fill-with-lorem-ipsum max="70" min="30" is-title
                 )
+                h5.category BOOK
+                h5.date-time 6 months ago
+
+    li.is-full-screen-notif-show
+        a.show-products(
+        href="javascript:void(0);"
+        ng-click="NavbarTop.loadMoreNotifications()"
+        ) show more
+
+    li.pull-left.view-all.is-full-screen-notif-hide
+        button.link-btn(
+        href="javascript:void(0);"
+        ng-click="NavbarTop.fullScreenNotificationsMode()"
+        ) View all notifications
 
 ul.nav.navbar-nav.content-menu-sub.user.container-fluid(
-ng-mouseleave="uiState.switch('userMenuOn',false)",
-ng-mouseenter="uiState.switch('userMenuOn',true)"
+type='button',
+ng-mouseleave="uiState.reset('hoverMenuActive')"
+ng-mouseenter="uiState.switch('hoverMenuActive','user')"
 )
     each link in [{name:'Dashboard',url:'/'},{name:'Settings',url:'/Settings'},{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"}]
         li.pull-left

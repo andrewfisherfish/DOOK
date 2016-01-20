@@ -320,5 +320,32 @@
 
         }]);
 
+        module.controller('NavbarTopCtrl', ['uiState', 'notificationsService', function (uiState, notificationsService) {
+            var NavbarTop = this;
+
+            NavbarTop.columnLayoutInst = new columnLayout({
+                columnsLength: 1
+            });
+
+            NavbarTop.fullScreenNotificationsMode = function () {
+                notificationsService.look({
+                    pageNumber: 1,
+                    pageLength: 10
+                }).then(NavbarTop.columnLayoutInst.add).then(function (data) {
+                    uiState.switch({'FULL_SCREEN_TAB': 'NOTIFICATIONS'});
+
+                    return data;
+                });
+            };
+
+            NavbarTop.loadMoreNotifications = function () {
+                productsService.look({
+                    pageNumber: 1,
+                    pageLength: 10
+                }).then(NavbarTop.columnLayoutInst.add);
+            };
+
+        }]);
+
     }(angular, document, _)
 );

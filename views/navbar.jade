@@ -1,8 +1,10 @@
-nav(role="navigation",
+nav(
+role="navigation",
 ng-init="uiState.switch({'isNavbarNavigation':uiState.is('screen-size','screen-md')||uiState.is('screen-size','screen-lg'),'isNavbarSearch':false,'isNavbarLogin':false})",
-ng-class="{'is-sticky':uiState.is('isSticky'), 'is-navbar-navigation':uiState.is('isNavbarNavigation'),'is-navbar-login':uiState.is('isNavbarLogin'),'is-navbar-search':uiState.is('isNavbarSearch'),'user-menu-on':uiState.is('userMenuOn'),'notif-menu-on':uiState.is('notifMenuOn')}",
+ng-class="{'is-sticky':uiState.is('isSticky'), 'is-navbar-navigation':uiState.is('isNavbarNavigation'),'is-navbar-login':uiState.is('isNavbarLogin'),'is-navbar-search':uiState.is('isNavbarSearch'),'user-menu-on':uiState.is('hoverMenuActive', 'user'),'notif-menu-on':uiState.is('hoverMenuActive', 'notif'),'is-full-screen-notif':uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')}",
 class="navbar navbar-inverse top"
 ui-sticky-nav=''
+ng-controller="NavbarTopCtrl as NavbarTop"
 )
     .container-fluid.fixed-on-sticky
         .navbar-header.navbar-search-hide
