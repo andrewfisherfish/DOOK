@@ -1,72 +1,92 @@
 button.navbar-button.notif.pull-right(
-ng-if="uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)"
+ng-if="uiState.isAny('screen-size','screen-md','screen-lg')&&uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)"
 type='button'
 ng-mouseleave="uiState.reset('hoverMenuActive')"
-ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
+ng-mouseenter="uiState.switch('hoverMenuActive', 'notif')"
 ng-class="{'active':uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')}"
-ng-click="uiState.reset('FULL_SCREEN_TAB')"
+)
+    i.fa.fa-bell-o
+
+button.navbar-button.notif.pull-right(
+ng-if="!uiState.isAny('screen-size','screen-md','screen-lg')&&uiState.is('isNavbarLogin',false)&&uiState.is('isLoggedIn',true)"
+type='button'
+ng-class="{'active':uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')}"
+ng-click="uiState.is('hoverMenuActive', 'notif')?uiState.reset('hoverMenuActive'):uiState.switch('hoverMenuActive','notif').switchOff('isNavbarNavigation')"
 )
     i.fa.fa-bell-o(
-    ng-if="!uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
+    ng-if="!uiState.is('hoverMenuActive','notif')"
     )
     i.fa.fa-close(
-    ng-if="uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
+    ng-if="uiState.is('hoverMenuActive','notif')"
     )
 
 button.navbar-button.user.pull-right(
-ng-if="uiState.is('isLoggedIn',true)",
+ng-if="uiState.isAny('screen-size','screen-md','screen-lg')&&uiState.is('isLoggedIn',true)",
 type='button',
 ng-mouseleave="uiState.reset('hoverMenuActive')"
 ng-mouseenter="uiState.switch('hoverMenuActive','user')"
 )
     user-logged-in
 
+button.navbar-button.user.pull-right(
+ng-if="!uiState.isAny('screen-size','screen-md','screen-lg')&&uiState.is('isLoggedIn',true)",
+type='button',
+ng-click="uiState.is('hoverMenuActive', 'user')?uiState.reset('hoverMenuActive'):uiState.switch('hoverMenuActive','user').switchOff('isNavbarNavigation')"
+)
+    user-logged-in(
+    ng-if="!uiState.is('hoverMenuActive','user')"
+    )
+    i.fa.fa-close(
+    ng-if="uiState.is('hoverMenuActive','user')"
+    )
 
-ul.content-menu-sub.notif(
+div.content-menu-sub.notif(
 ng-mouseleave="uiState.reset('hoverMenuActive')"
 ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
 )
-    li.header.is-full-screen-notif-show
-        h1.pull-left NOTIFS
-        a.btn.btn-exit-fullscreen.pull-right(
+    div.header.is-full-screen-notif-show
+        h1 NOTIFS
+        a.btn.btn-exit-fullscreen(
         ng-click="uiState.reset('FULL_SCREEN_TAB');"
         )
             i.fa.fa-close
 
-    li.media.notification.lecture.pull-left(
-    ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10]"
-    ng-if="$index<3||uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
-    )
-        a(
-        href="#"
-        )
-            .media-left.media-middle
-                span.pre-text New book:
-                h4.text(
-                fill-with-lorem-ipsum max="70" min="30" is-title
+    .container
+        .row
+            div.media.notification.lecture.pull-left.col-sm-12.col-md-6.col-md-offset-3.clearfix(
+            ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10]"
+            ng-if="$index<5||uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
+            )
+                a(
+                href="#"
                 )
-                h5.category BOOK
-                h5.date-time 6 months ago
+                    .media-left.media-middle
+                        span.pre-text New book:
+                        h4.text(
+                        fill-with-lorem-ipsum max="70" min="30" is-title
+                        )
+                        h5.category BOOK
+                        h5.date-time 6 months ago
 
-    li.is-full-screen-notif-show
+    div.is-full-screen-notif-show
         a.show-products(
         href="javascript:void(0);"
         ng-click="NavbarTop.loadMoreNotifications()"
         ) show more
 
-    li.pull-left.view-all.is-full-screen-notif-hide
+    div.pull-left.view-all.is-full-screen-notif-hide
         button.link-btn(
         href="javascript:void(0);"
         ng-click="NavbarTop.fullScreenNotificationsMode()"
         ) View all notifications
 
-ul.nav.navbar-nav.content-menu-sub.user.container-fluid(
+div.nav.navbar-nav.content-menu-sub.user(
 type='button',
 ng-mouseleave="uiState.reset('hoverMenuActive')"
 ng-mouseenter="uiState.switch('hoverMenuActive','user')"
 )
     each link in [{name:'Dashboard',url:'/'},{name:'Settings',url:'/Settings'},{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"}]
-        li.pull-left
+        div.list-item.pull-left
             a(
             href=link.url,
             ng-click=(link['ng-click'] || '')

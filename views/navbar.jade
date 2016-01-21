@@ -13,7 +13,7 @@ ng-controller="NavbarTopCtrl as NavbarTop"
                     img(src='img/logo-white.svg')
             ul.nav.pull-right.ul-buttons.container.navbar-toggle-ul
                 li.pull-right
-                    button.navbar-button(ng-click="uiState.switchOff('isNavbarLogin','isNavbarSearch').switch('isNavbarNavigation')", type='button')
+                    button.navbar-button(ng-click="uiState.switchOff('isNavbarLogin','isNavbarSearch').switch('isNavbarNavigation').reset('hoverMenuActive')", type='button')
                         i.fa.fa-bars(ng-show="uiState.is('isNavbarNavigation',false)")
                         i.fa.fa-close(ng-show="uiState.is('isNavbarNavigation',true)")
 
