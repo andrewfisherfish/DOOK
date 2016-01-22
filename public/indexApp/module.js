@@ -201,8 +201,6 @@
                     add: function (data) {
                         var len = Math.floor(data.length / params.columnsLength);
                         _.each(self.model, function (list, index) {
-                            if (index === 2)
-                                console.log(data);
                             self.model[index] = (list || []).concat(self.model.length - 1 === index ? data : data.splice(0, len));
                         });
                         return self.model;
@@ -339,7 +337,7 @@
             };
 
             NavbarTop.loadMoreNotifications = function () {
-                productsService.look({
+                notificationsService.look({
                     pageNumber: 1,
                     pageLength: 10
                 }).then(NavbarTop.columnLayoutInst.add);

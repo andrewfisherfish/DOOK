@@ -51,10 +51,18 @@ ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
         )
             i.fa.fa-close
 
-    .container
+    .notification-list-empty.pull-left(
+    ng-if="NavbarTop.columnLayoutInst.model.length<1"
+    )
+        i.fa.fa-bell-o
+        h4 No new notifications
+
+    .container(
+    ng-if="NavbarTop.columnLayoutInst.model.length>1"
+    )
         .row
             div.media.notification.lecture.pull-left.col-sm-12.col-md-8.col-md-offset-3.clearfix(
-            ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10]"
+            ng-repeat="notification in NavbarTop.columnLayoutInst.model"
             ng-if="$index<3||uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
             )
                 a(

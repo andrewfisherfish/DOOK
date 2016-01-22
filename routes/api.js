@@ -18,7 +18,6 @@ router.get('/loremIpsum', function (req, res, next) {
     res.send(loremIpsum);
 });
 
-
 var getRandomInt = function (min, max) {
     if (min === max)return min;
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -151,6 +150,42 @@ function fakeDataService() {
         return shuffle(products)
     };
 
+    self.notification = function () {
+        var notificationTypes = ['new-book', 'new-lecture', 'alert', 'new-author'];
+
+        var randomIndex = getRandomInt(0, 3);
+
+        var notification = {
+            title: loremIpsumServiceInst.getText(15),
+            notificationType: notificationTypes[randomIndex]
+        };
+
+        switch (notification.notificationType) {
+            case notificationTypes[0]:
+                break;
+            case notificationTypes[1]:
+                break;
+            case notificationTypes[2]:
+                break;
+            case notificationTypes[3]:
+                break;
+            default:
+                break;
+        }
+
+        return notification;
+    };
+
+    self.notifications = function (params) {
+        var notifications = [];
+
+        for (var i = 1; i <= params.pageLength; i++) {
+            notifications.push(self.notification());
+        }
+
+        return shuffle(notifications)
+    };
+
 }
 
 router.get('/notifications', function (req, res, next) {
@@ -158,7 +193,7 @@ router.get('/notifications', function (req, res, next) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    res.send(JSON.stringify([]));
+    res.send(JSON.stringify(fakeDataServiceInst.notifications(req.query)));
 });
 
 router.get('/products', function (req, res, next) {
