@@ -61,20 +61,11 @@ ng-mouseenter="uiState.switch('hoverMenuActive','notif')"
     ng-if="NavbarTop.columnLayoutInst.model.length>1"
     )
         .row
-            div.media.notification.lecture.pull-left.col-sm-12.col-md-8.col-md-offset-2.clearfix(
+            notification.lecture.pull-left.col-sm-12.col-md-8.col-md-offset-2.clearfix(
             ng-repeat="notification in NavbarTop.columnLayoutInst.model"
+            model="notification"
             ng-if="$index<3||uiState.is('FULL_SCREEN_TAB', 'NOTIFICATIONS')"
             )
-                a(
-                href="#"
-                )
-                    .media-left.media-middle
-                        span.pre-text New book:
-                        h4.text(
-                        fill-with-lorem-ipsum max="70" min="30" is-title
-                        )
-                        h5.category BOOK
-                        h5.date-time 6 months ago
 
     div.is-full-screen-notif-show
         a.show-products(

@@ -248,7 +248,7 @@ nav.navbar {
     .content-menu-sub {
       background-color: #fff;
 
-      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
     }
 
     .content-menu-sub.notif {
@@ -291,6 +291,9 @@ nav.navbar {
     .list-item {
       display: inline-block;
       width: 100%;
+      a {
+        display: block;
+      }
     }
 
     .list-item {
@@ -299,9 +302,9 @@ nav.navbar {
         text-decoration: none;
       }
       a h4 {
-        line-height: 60px;
+        line-height: 100px;
       }
-      padding: 0 15px;
+
       @media only screen and (min-width: @screen-sm) {
 
       }
@@ -321,7 +324,7 @@ nav.navbar {
     > .header {
       padding: 0 15px;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,.15);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
       margin-bottom: 15px;
       .btn-exit-fullscreen {
         position: absolute;
@@ -1053,6 +1056,7 @@ a.media.search-tag {
 }
 
 .product-details-contents {
+  overflow: hidden;
   .chapter {
     padding: 20px;
     font-family: 'Lato,Helvetica,Arial,sans-serif';
