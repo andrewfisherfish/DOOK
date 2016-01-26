@@ -1,10 +1,15 @@
-<div class="media notification">
-    <a href="">
-        <div class="media-left media-middle">
-            <span class="pre-text">New book:</span>
-            <h4 class="text" fill-with-lorem-ipsum max="70" min="30" is-title></h4>
-            <h5 class="category">BOOK</h5>
-            <h5 class="date-time">6 months ago</h5>
-        </div>
-    </a>
+<div class="media notification {{model.type}}">
+    <div class="media-left" ng-if="showUserIcon || showCategoryIcon">
+        <user model="model.author" ng-if="showUserIcon"></user>
+        <div class="category-icon" ng-if="showCategoryIcon"></div>
+    </div>
+    <div class="media-left media-middle">
+        <span class="pre-text">{{preText}}</span>
+        <h4 class="text">{{text}}</h4>
+        <span class="post-text">{{postText}}</span>
+        <h5 class="category">{{category}}</h5>
+    </div>
+    <div>
+        <h5 class="date-time">6 months ago</h5>
+    </div>
 </div>

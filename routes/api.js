@@ -108,9 +108,9 @@ function fakeDataService() {
         return shuffle(authors);
     };
 
-    self.product = function () {
+    self.product = function (prodType) {
         var productTypes = ['book', 'lecture'];
-        var randomIndex = getRandomInt(0, 1);
+        var randomIndex = prodType || getRandomInt(0, 1);
         var productCategories = ['books', 'courses'];
 
         var product = {
@@ -151,23 +151,29 @@ function fakeDataService() {
     };
 
     self.notification = function () {
-        var notificationTypes = ['new-book', 'new-lecture', 'alert', 'new-author'];
+        var notificationTypes = ['new-book', 'new-lecture', 'internal-alert', 'new-author'];
 
         var randomIndex = getRandomInt(0, 3);
 
         var notification = {
             title: loremIpsumServiceInst.getText(15),
-            notificationType: notificationTypes[randomIndex]
+            type: notificationTypes[randomIndex]
         };
 
-        switch (notification.notificationType) {
+        switch (notification.type) {
             case notificationTypes[0]:
+                notification.authors = self.getAuthors();
+                notification.product = self.product(0);
                 break;
             case notificationTypes[1]:
+                notification.authors = self.getAuthors();
+                notification.product = self.product(1);
                 break;
             case notificationTypes[2]:
+                notification.text = loremIpsumServiceInst.getText(50, 300);
                 break;
             case notificationTypes[3]:
+                notification.author = self.author();
                 break;
             default:
                 break;

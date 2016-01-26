@@ -174,11 +174,53 @@
             return {
                 replace: true,
                 templateUrl: '/indexApp/views/search-tag.html',
-                link: function (scope, el, attr) {
+                link: function (scope, element, attr) {
                     if (_.isUndefined(attr.href)) {
-                        el.bind('click', function () {
-                            el.toggleClass('active');
+                        element.bind('click', function () {
+                            element.toggleClass('active');
                         });
+                    }
+                }
+            }
+        }]);
+
+        module.directive('notification', [function () {
+            return {
+                restrict: 'E',
+                replace: true,
+                scope: {
+                    model: '='
+                },
+                templateUrl: '/indexApp/views/notification.html',
+                link: function (scope, element, attr) {
+                    switch (scope.model.type) {
+                        case 'new-book':
+                            scope.preText = 'New book is out:';
+                            scope.text = scope.model.product.title;
+                            scope.postText = 'by ' + scope.model.authors.map(function (author) {
+                                    return author.name;
+                                }).join(', ');
+                            scope.category = 'BOOK';
+                            scope.showCategoryIcon = true;
+                            break;
+                        case 'new-lecture':
+                            scope.preText = 'New lecture is availabe:';
+                            scope.text = scope.model.product.title;
+                            scope.postText = 'by ' + scope.model.authors.map(function (author) {
+                                    return author.name;
+                                }).join(', ');
+                            scope.category = 'LECTURE';
+                            scope.showCategoryIcon = true;
+                            break;
+                        case  'internal-alert':
+                            scope.preText = 'DOOK ALERT: ';
+                            scope.text = scope.model.text;
+                            break;
+                        case  'new-author':
+                            scope.preText = 'New author joined us. Please, welcome, ';
+                            scope.text = scope.model.author.name;
+                            scope.showUserIcon = true;
+                            break;
                     }
                 }
             }

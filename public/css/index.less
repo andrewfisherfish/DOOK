@@ -1525,44 +1525,81 @@ ul.side-menu {
   padding: 15px;
   margin-top: 0;
   background: #fff;
+  font-family: 'Lato';
   &:hover {
     background: #f9f9f9;
   }
   > a {
     color: #434343;
     text-decoration: none;
-    font-family: 'Lato';
   }
   i {
     font-size: 2em;
     color: #aebdc1;
   }
+  .category-icon {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 100px;
+    &:before {
+      height: 100%;
+      display: block;
+      content: "";
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+    }
+  }
+  .post-text,
   .pre-text {
     font-size: 18px;
     color: #393d40;
     font-weight: 200;
   }
+  .pre-text {
+    margin-right: 4px;
+  }
+  .post-text {
+    margin-left: 4px;
+  }
   .text {
-    padding-left: 4px;
     display: inline;
-    color: @color-navy;
-    .btn-hovered-transition();
   }
-  &:hover {
-    .text {
+  .text {
+    color: @color-text-dark;
+  }
+  &.new-lecture {
+
+    .category-icon:before {
+      background-image: url("/img/lecture-icon.png");
     }
-  }
-  &.lecture {
+
     .category {
       color: @color-product-lecture;
     }
   }
-  &.book {
+  &.new-book {
+
+    .category-icon:before {
+      background-image: url("/img/book-icon.png");
+    }
+
     .category {
       color: @color-product-book;
     }
   }
-  &.alert {
+  &.new-author {
+
+    .category {
+      display: none;
+    }
+  }
+  &.internal-alert {
+    .text {
+      font-weight: 300;
+    }
     .category {
       display: none;
     }
@@ -1570,12 +1607,14 @@ ul.side-menu {
   .category {
     font-weight: bold;
     text-transform: uppercase;
+    margin-bottom: 0;
   }
   .date-time {
+    margin-bottom: 0;
     color: #aebdc1;
-    margin: 0;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
     font-weight: 300;
+    margin-top: 20px;
   }
   &:not(:last-of-type) {
     border-bottom: solid 1px #ddd
