@@ -200,7 +200,7 @@
                             scope.postText = 'by ' + scope.model.authors.map(function (author) {
                                     return author.name;
                                 }).join(', ');
-                            scope.category = 'BOOK';
+                            scope.category = 'BOOKS';
                             scope.showCategoryIcon = true;
                             break;
                         case 'new-lecture':
@@ -209,7 +209,7 @@
                             scope.postText = 'by ' + scope.model.authors.map(function (author) {
                                     return author.name;
                                 }).join(', ');
-                            scope.category = 'LECTURE';
+                            scope.category = 'LECTURES';
                             scope.showCategoryIcon = true;
                             break;
                         case  'internal-alert':
