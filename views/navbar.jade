@@ -40,14 +40,14 @@ ng-controller="NavbarTopCtrl as NavbarTop"
             button.navbar-toggle-like(ng-click="uiState.switch('isNavbarSearch')", type='button')
                 i.fa.fa-close
 
-        ul.nav.navbar-nav.content-menu.navbar-login-show.navbar-search-hide
-            each link in [{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)"}, {name:'Settings',url:'/Settings'},{name:'Dashboard',url:'/'}]
-                li
-                    a(
-                    href=link.url,
-                    ng-click=(link['ng-click'] || '')
-                    )
-                        h4=link.name
+        //ul.nav.navbar-nav.content-menu.navbar-login-show.navbar-search-hide
+        //    each link in [{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin').switch('isNavbarNavigation',true)"}, {name:'Settings',url:'/Settings'},{name:'Collections',url:'/collections'},{name:'Home',url:'/'}]
+        //        li
+        //            a(
+        //            href=link.url,
+        //            ng-click=(link['ng-click'] || '')
+        //            )
+        //                h4=link.name
         ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
             each link in [{name:'Products',url:'/Products'}, {name:'Authors',url:'/Authors'},{name:'About',url:'/About'}]
                 li(class=link.url.toLowerCase() === requestUrl.toLowerCase() ? 'active' : '')

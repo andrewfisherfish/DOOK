@@ -84,7 +84,7 @@ type='button',
 ng-mouseleave="uiState.reset('hoverMenuActive')"
 ng-mouseenter="uiState.switch('hoverMenuActive','user')"
 )
-    each link in [{name:'Dashboard',url:'/'},{name:'Settings',url:'/Settings'},{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"}]
+    each link in [{name:'Home',url:'/'},{name:'Collections',url:'/collections'},{name:'Settings',url:'/Settings'},{name:'Log out',url:'javascript:void(0);','ng-click':"uiState.switchOff('isLoggedIn','isNavbarLogin','userMenuOn')"}]
         div.list-item.pull-left
             a(
             href=link.url,

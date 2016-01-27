@@ -7,14 +7,31 @@ block header
             img(fill-with-lorem-ipsum is-avatar)
         .profile-details-name
             h1(fill-with-lorem-ipsum is-name)
-        .row-centered
-            .col-xs-12.col-sm-8.col-md-8.col-lg-5.col-padding-0.col-centered.search-product
-                .form-group.inner-addon.left-addon
+        .row-centered.section.search-container(
+        ng-class="{'is-full-screen':uiState.is('FULL_SCREEN_TAB', 'SEARCH')}"
+        )
+            .search-product.col-xs-12.col-sm-8.col-sm-offset-2.col-lg-offset-3.col-lg-6.col-padding-0
+                .form-group.inner-addon.left-addon.right-addon
                     i.fa.fa-search
                     input.form-control(
+                    ng-click="uiState.switch({'FULL_SCREEN_TAB':'SEARCH'});"
                     type="search"
                     placeholder="SEARCH"
                     )
+                    button.fa.fa-close.clickable.close-search.show-on-sm.show-on-fullscreen(
+                    ng-click="uiState.reset('FULL_SCREEN_TAB');"
+                    )
+
+            button.close-search.pull-right.show-on-fullscreen.hide-on-xs(
+            ng-click="uiState.reset('FULL_SCREEN_TAB');"
+            )
+                i.fa.fa-close
+            .clearfix
+            .row.row-centered.row-margined-top.show-on-fullscreen
+                .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3.search-tags.hide-on-sm(ng-class="{'hide-on-sm-disabled':uiState.is('tagsAreVisible',true)}")
+                    search-tag(ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]")
+                .col-xs-12.col-xs-offset-0.col-sm-8.col-sm-offset-2.col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2.search-tags-toggle.show-on-sm(ng-if="uiState.is('tagsAreVisible',false)")
+                    button.btn.btn-lg(ng-click="uiState.switch('tagsAreVisible')") More Options
 
     .section.section-wide.section-condensed.section-info-row.dark-white(
     ng-init="uiState.switch('ACCOUNT_TAB','RECENT')"
@@ -60,7 +77,7 @@ block content
                         href="javascript:void(0);"
                         ng-hide="uiState.is('FULL_SCREEN_TAB','RECENT')"
                         ng-click="Dashboard.fullScreenMode('RECENT')"
-                        ) View all recent
+                        ) View collection
 
                 p(
                 fill-with-lorem-ipsum="200"
@@ -122,7 +139,7 @@ block content
                         href="javascript:void(0);"
                         ng-hide="uiState.is('FULL_SCREEN_TAB','PURCHASED')"
                         ng-click="Dashboard.fullScreenMode('PURCHASED')"
-                        ) View all purchased
+                        ) View collection
 
                 .row-margined-bottom(ng-show="uiState.isAny('screen-size','screen-md','screen-lg')")
                     h4.info-row-desc(
@@ -178,7 +195,7 @@ block content
                             href="javascript:void(0);"
                             ng-hide="uiState.is('FULL_SCREEN_TAB','LIKED')"
                             ng-click="Dashboard.fullScreenMode('LIKED')"
-                            ) View all liked
+                            ) View collection
                     p(
                     fill-with-lorem-ipsum="200"
                     is-text

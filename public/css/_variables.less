@@ -34,6 +34,21 @@
 @theme-font-family: 'headline-semi-bold', Helvetica, Arial, sans-serif;
 @font-descriptions: 'lato', sans-serif;
 
+.form-group.inner-addon.left-addon.right-addon {
+  i:first-child {
+    right: initial;
+  }
+  i:last-child {
+    left: initial;
+  }
+  i {
+    top: 0;
+  }
+  i.clickable{
+    pointer-events: all;
+  }
+}
+
 .fix-overflow-radius-scale-issue() {
   -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
 }
