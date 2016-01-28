@@ -8,7 +8,7 @@ ng-controller="NavbarTopCtrl as NavbarTop"
 )
     .container-fluid.fixed-on-sticky
         .navbar-header.navbar-search-hide
-            a.navbar-brand(href='/')
+            a.navbar-brand.hide-on-sm(href='/')
                 span.logo
                     img(src='img/logo-white.svg')
             ul.nav.pull-right.ul-buttons.container.navbar-toggle-ul
@@ -53,20 +53,27 @@ ng-controller="NavbarTopCtrl as NavbarTop"
             type='button')
                 i.fa.fa-close
 
-        ul.nav.navbar-nav.content-menu.navbar-navigation-show.navbar-search-hide
+        ul.nav.navbar-nav.content-menu.navbar-search-inline-ul.navbar-navigation-show
+            li.navbar-search-inline-li.hide-on-xs
+                a.navbar-search-inline-li-hide(
+                href="javascript:void(0);"
+                ng-click="uiState.switch('isNavbarSearch', 'INLINE')"
+                )
+                    h4 Search
+                .navbar-search-inline.navbar-search-inline-li-show
+                    .navbar-brand-search
+                        .form-group.inner-addon.left-addon
+                            button.fa.fa-close(
+                            ng-click="uiState.reset('isNavbarSearch')"
+                            )
+                            input.form-control(
+                            type='search'
+                            )
             each link in [{name:'Products',url:'/Products'}, {name:'Authors',url:'/Authors'},{name:'About',url:'/About'}]
                 li(class=link.url.toLowerCase() === requestUrl.toLowerCase() ? 'active' : '')
                     a(href=link.url)
                         h4=link.name
-        .navbar-search-inline.col-md-4.col-lg-5.hide-on-sm
-            .navbar-brand-search
-                .form-group.inner-addon.left-addon
-                    i.fa.fa-search
-                    input.form-control(
-                    ng-focus="uiState.switch('isNavbarSearch', 'INLINE')"
-                    ng-blur="uiState.reset('isNavbarSearch')"
-                    type='search'
-                    )
+
         ul.nav.navbar-nav.navbar-right.ul-buttons.user-menu.navbar-search-hide(
         ng-if="uiState.isAny('screen-size','screen-md','screen-lg')"
         )
@@ -76,11 +83,6 @@ ng-controller="NavbarTopCtrl as NavbarTop"
                     i.fa.fa-user
             li
                 include ./user-menu-buttons.jade
-            li.hide-on-md
-                button.navbar-button(
-                ng-click="uiState.switch('isNavbarSearch', 'BLOCK').reset('hoverMenuActive')"
-                )
-                    i.fa.fa-search
 
     .padding-on-sticky
     block header
