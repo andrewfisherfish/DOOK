@@ -32,26 +32,42 @@ content {
   text-transform: uppercase;
 }
 
-.search-input(@height) {
+.search-input() {
   .form-group.inner-addon.left-addon {
-    height: @height;
     color: @navbar-inverse-bg;
     margin: 0;
     .fa {
       padding-top: 0;
       padding-bottom: 0;
-      line-height: @height;
       font-size: 2em;
     }
     input {
-      height: @height;
-      //font-size: 36px;
       padding-left: 45px;
     }
   }
 }
 
+.search-input-height(@height) {
+  .form-group.inner-addon.left-addon {
+    height: @height;
+    transition: height .25s;
+    .fa {
+      line-height: @height;
+      transition: line-height .25s;
+    }
+    input {
+      height: @height;
+      transition: height .25s;
+    }
+  }
+}
+
 .navbar {
+  .navbar-search-inline {
+    .navbar-brand-search {
+      padding: 15px;
+    }
+  }
   .navbar-search {
     overflow: hidden;
     position: relative;
@@ -61,11 +77,16 @@ content {
       top: 0;
       margin-right: 0;
     }
+
     .navbar-brand-search {
       padding: 15px 70px 15px 0;
-      width: 100%;
-      .search-input(@navbar-brand-search-height);
     }
+  }
+  .navbar-brand-search {
+    transition: padding .25s;
+    width: 100%;
+    .search-input();
+    .search-input-height(@navbar-brand-search-height);
   }
 }
 
@@ -632,7 +653,8 @@ content {
 }
 
 .search-product {
-  .search-input(@navbar-brand-search-height);
+  .search-input();
+  .search-input-height(@navbar-brand-search-height);
 }
 
 .eclipse-text {
@@ -1448,23 +1470,36 @@ ul.side-menu {
 .navbar {
   .fixed-on-sticky {
     background-color: @navbar-inverse-bg;
+    transition: background-color .5s;
     .box-shadow(0 1px 8px rgba(0, 0, 0, .3));
     z-index: 2;
     position: fixed;
     width: 100%;
+  }
+  &.is-navbar-search,
+  &.is-navbar-search-inline {
+    .fixed-on-sticky {
+      background-color: #455a64;
+      transition: background-color .5s;
+    }
   }
 
   .padding-on-sticky {
     height: @navbar-height;
   }
   @navbar-height-sticky: @navbar-height/2;
-  @navbar-brand-search-height-sticky: @navbar-height-sticky - 20 - 20;
+  @navbar-brand-search-height-sticky: @navbar-height-sticky - 50;
   @sticky-transition-height: height .25s;
   @sticky-transition-top: top .25s;
   @sticky-transition-padding: padding .25s;
   @sticky-transition-lineheight: line-height .25s;
   @sticky-transition-font: font .25s;
   &.is-sticky {
+
+    .navbar-brand-search {
+      padding: 2px 15px;
+      .search-input-height(@navbar-height-sticky - 4);
+    }
 
     .navbar-nav .navbar-button.login > h4,
     .media.user-logged-in h4,
