@@ -66,12 +66,28 @@ content {
   .navbar-search-inline-ul {
     position: relative;
   }
+  .navbar-search-inline-ul > li:not(.navbar-search-inline-li) {
+    opacity: 1;
+    transition: opacity .25s;
+  }
+  .navbar-search-inline-li-hide {
+    opacity: 1;
+    transition: opacity .25s;
+  }
+  a.navbar-search-inline-li-hide h4.fa {
+    font-size: 2em;
+    font-weight: 300;
+  }
   &.is-navbar-search-inline {
-    .navbar-search-inline-ul li:not(.navbar-search-inline-li) {
+    .navbar-search-inline-ul > li:not(.navbar-search-inline-li) {
       visibility: hidden;
+      opacity: 0;
+      transition: opacity .25s;
     }
     .navbar-search-inline-li-hide {
       visibility: hidden;
+      opacity: 0;
+      transition: opacity .25s;
     }
     .navbar-search-inline-li {
       position: initial;
@@ -82,7 +98,6 @@ content {
       left: 0;
       top: 0;
     }
-
   }
   &:not(.is-navbar-search-inline) {
     .navbar-search-inline-li-show {
@@ -105,6 +120,7 @@ content {
       margin-right: 0;
       background: transparent;
       border: none;
+      transition: padding .25s, margin .25s;
     }
 
     .navbar-brand-search {
@@ -1549,6 +1565,15 @@ ul.side-menu {
     .navbar-brand-search {
       padding: 5px 0;
       .search-input-height(@navbar-height-sticky - 10);
+      input {
+        padding-right: 50px;
+      }
+    }
+
+    .navbar-toggle-like {
+      margin: 0;
+      padding: 4px 10px;
+      transition: padding .25s, margin .25s;
     }
 
     .navbar-nav .navbar-button.login > h4,
